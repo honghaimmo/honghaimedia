@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HỒNG HẢI MMO — DIGITAL SERVICES ECOSYSTEM 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#080B14',
+                        neonCyan: '#00E5FF',
+                        brandBlue: '#1677FF',
+                        electricPurple: '#8B5CF6',
+                        cardGlass: 'rgba(13, 17, 32, 0.75)',
+                        borderGlass: 'rgba(0, 229, 255, 0.2)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #080B14; color: #F3F4F6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .font-cyber { font-family: 'Orbitron', sans-serif; }
+        .glass-panel {
+            background: rgba(13, 17, 32, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+        .glass-card {
+            background: rgba(18, 24, 43, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: #00E5FF;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        .aurora-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,229,255,0.15) 0%, rgba(139,92,246,0.1) 50%, transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            animation: floatAurora 12s infinite alternate ease-in-out;
+        }
+        @keyframes floatAurora {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, 50px) scale(1.1); }
+            100% { transform: translate(-50px, 80px) scale(0.95); }
+        }
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.5);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #080B14; }
+        ::-webkit-scrollbar-thumb { background: #1677FF; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 min-h-screen flex flex-col relative selection:bg-neonCyan selection:text-black">
+
+    <!-- Aurora Background Blobs -->
+    <div class="aurora-bg top-0 left-1/4"></div>
+    <div class="aurora-bg bottom-1/3 right-10" style="animation-delay: -5s;"></div>
+
+    <!-- 1. Thanh thông báo khuyến mãi -->
+    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-xs py-2 px-4 text-center font-medium border-b border-cyan-500/20 relative z-50 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-bolt text-neonCyan animate-bounce"></i>
+        <span>HỆ THỐNG DIGITAL SERVICES 2026: Giảm ngay 20% toàn bộ dịch vụ Facebook & TikTok với mã <span class="text-neonCyan font-bold">HONGHAI2026</span></span>
+        <span class="hidden md:inline bg-neonCyan/20 text-neonCyan px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Flash Sale</span>
+    </div>
+
+    <!-- Header Cố Định -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-cyan-500/20 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Logo & Brand -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-neonCyan via-brandBlue to-electricPurple p-0.5 shadow-lg shadow-cyan-500/30 flex items-center justify-center">
+                    <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-neonCyan text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-cyber font-black text-xl tracking-wider text-white neon-glow">HỒNG HẢI <span class="text-neonCyan">MMO</span></h1>
+                    <p class="text-[10px] text-gray-400 tracking-widest uppercase font-medium">Digital Services Ecosystem</p>
+                </div>
+            </div>
+
+            <!-- Thanh tìm kiếm -->
+            <div class="hidden md:flex flex-1 max-w-md relative">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm dịch vụ, phần mềm, công cụ MMO..." oninput="handleSearch(this.value)"
+                    class="w-full bg-darkBg/80 border border-cyan-500/30 rounded-xl px-4 py-2.5 pl-11 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan transition-all">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400"></i>
+                <div id="searchDropdown" class="absolute top-12 left-0 right-0 glass-panel rounded-xl mt-1 p-2 hidden z-50 max-h-80 overflow-y-auto"></div>
+            </div>
+
+            <!-- Menu Actions: Giỏ hàng, Tài khoản, Admin -->
+            <div class="flex items-center gap-3">
+                <!-- Nút Đổi giao diện / Giảm chuyển động -->
+                <button onclick="toggleMotion()" title="Giảm chuyển động" class="p-2.5 rounded-xl glass-card text-gray-300 hover:text-neonCyan transition hidden sm:flex">
+                    <i class="fa-solid fa-person-running"></i>
+                </button>
+
+                <!-- Giỏ hàng -->
+                <button onclick="toggleCartModal()" class="relative p-2.5 rounded-xl glass-card text-gray-300 hover:text-neonCyan transition flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-neonCyan text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+                </button>
+
+                <!-- Tài khoản -->
+                <button onclick="openAuthModal()" class="glass-card px-4 py-2 rounded-xl text-sm font-semibold text-white hover:border-neonCyan transition flex items-center gap-2">
+                    <i class="fa-regular fa-user text-neonCyan"></i>
+                    <span id="accountBtnText" class="hidden sm:inline">Tài khoản</span>
+                </button>
+
+                <!-- Nút Quản Trị Admin -->
+                <button onclick="switchView('admin')" class="bg-gradient-to-r from-brandBlue to-electricPurple text-white px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 shadow-lg shadow-purple-500/20 transition flex items-center gap-2">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span class="hidden lg:inline">Admin Panel</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu danh mục sản phẩm (Sticky Subheader) -->
+        <div class="border-t border-cyan-500/10 bg-darkBg/90 backdrop-blur-md overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-6 py-2.5 text-sm whitespace-nowrap">
+                <button onclick="filterCategory('all')" class="cat-tab font-semibold text-neonCyan flex items-center gap-2 transition hover:text-neonCyan">
+                    <i class="fa-solid fa-globe"></i> Tất cả dịch vụ
+                </button>
+                <button onclick="filterCategory('facebook')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-brands fa-facebook text-blue-500"></i> Facebook
+                </button>
+                <button onclick="filterCategory('tiktok')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-brands fa-tiktok text-pink-500"></i> TikTok
+                </button>
+                <button onclick="filterCategory('youtube')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-brands fa-youtube text-red-500"></i> YouTube
+                </button>
+                <button onclick="filterCategory('social')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-solid fa-share-nodes text-purple-400"></i> Instagram & Telegram
+                </button>
+                <button onclick="filterCategory('software')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-solid fa-laptop-code text-cyan-400"></i> Phần mềm MMO
+                </button>
+                <button onclick="filterCategory('digital')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-solid fa-key text-yellow-400"></i> Tài khoản & Bản quyền
+                </button>
+                <button onclick="filterCategory('entertainment')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-solid fa-gamepad text-green-400"></i> Giải trí & Tiện ích
+                </button>
+                <button onclick="filterCategory('webhosting')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-solid fa-server text-indigo-400"></i> Website & Hosting
+                </button>
+                <button onclick="filterCategory('custom')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
+                    <i class="fa-solid fa-handshake-angle text-orange-400"></i> Dịch vụ theo yêu cầu
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <main id="mainViewContainer" class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- ================= VIEW: HOMEPAGE ================= -->
+        <div id="homeView" class="space-y-12">
+            
+            <!-- Banner Aurora lớn -->
+            <section class="relative rounded-3xl overflow-hidden glass-panel p-8 md:p-12 border border-cyan-500/30 shadow-2xl">
+                <div class="absolute right-0 top-0 w-1/2 h-full hidden lg:flex items-center justify-center opacity-30 pointer-events-none">
+                    <i class="fa-solid fa-microchip text-[260px] text-neonCyan"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neonCyan/10 border border-neonCyan/30 text-neonCyan text-xs font-bold tracking-wider uppercase">
+                        <i class="fa-solid fa-sparkles"></i> Hệ sinh thái MMO Đẳng cấp 2026
+                    </div>
+                    <h2 class="font-cyber text-3xl sm:text-5xl font-black text-white leading-tight">
+                        TĂNG TRƯỞNG SỐ <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-brandBlue to-electricPurple">VỮNG CHẮC & TOÀN DIỆN</span>
+                    </h2>
+                    <p class="text-gray-300 text-base sm:text-lg">
+                        Cung cấp giải pháp phần mềm MMO, dịch vụ phát triển mạng xã hội, tài nguyên số và hạ tầng công nghệ bảo mật cao cho doanh nghiệp và nhà sáng tạo nội dung.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="scrollToProducts()" class="bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-cyan-500/30 hover:opacity-90 transition flex items-center gap-2">
+                            <i class="fa-solid fa-rocket"></i> Khám phá sản phẩm
+                        </button>
+                        <button onclick="openCustomServiceModal()" class="glass-card px-8 py-3.5 rounded-xl font-semibold text-white hover:border-neonCyan transition flex items-center gap-2">
+                            <i class="fa-solid fa-headset text-neonCyan"></i> Đặt dịch vụ riêng
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bộ đếm thống kê nhanh -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-cyber font-black text-neonCyan mb-1">99.8%</div>
+                    <div class="text-xs text-gray-400 font-medium">Tỷ lệ hoàn thành đơn</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-cyber font-black text-brandBlue mb-1">45,000+</div>
+                    <div class="text-xs text-gray-400 font-medium">Khách hàng tin tưởng</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-cyber font-black text-electricPurple mb-1">24/7</div>
+                    <div class="text-xs text-gray-400 font-medium">Hỗ trợ tự động & KTV</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-cyber font-black text-green-400 mb-1">100%</div>
+                    <div class="text-xs text-gray-400 font-medium">Bảo mật & An toàn giao dịch</div>
+                </div>
+            </div>
+
+            <!-- Danh sách sản phẩm & Dịch vụ -->
+            <div id="productSection" class="space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-cyan-500/20 pb-4">
+                    <div>
+                        <h3 id="categoryTitle" class="font-cyber text-2xl font-bold text-white flex items-center gap-3">
+                            <i class="fa-solid fa-box-open text-neonCyan"></i> Sản phẩm & Dịch vụ Nổi bật
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">Lựa chọn các gói dịch vụ chất lượng cao được kiểm duyệt chặt chẽ</p>
+                    </div>
+                    <!-- Bộ lọc sắp xếp -->
+                    <div class="flex items-center gap-3">
+                        <select id="sortSelect" onchange="sortProducts(this.value)" class="bg-darkBg border border-cyan-500/30 text-sm rounded-xl px-4 py-2 text-white focus:outline-none focus:border-neonCyan">
+                            <option value="default">Sắp xếp: Mặc định</option>
+                            <option value="price-asc">Giá: Thấp đến Cao</option>
+                            <option value="price-desc">Giá: Cao đến Thấp</option>
+                            <option value="popular">Độ phổ biến</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Grid Sản Phẩm -->
+                <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Sản phẩm sẽ được render tự động qua JS -->
+                </div>
+            </div>
+
+            <!-- Khu vực Flash Sale & Voucher -->
+            <section class="glass-panel rounded-3xl p-8 border border-purple-500/30 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-electricPurple/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                    <div class="space-y-2 text-center md:text-left">
+                        <span class="bg-electricPurple/20 text-electricPurple border border-electricPurple/40 text-xs font-bold px-3 py-1 rounded-full uppercase">Mã Giảm Giá Độc Quyền</span>
+                        <h3 class="font-cyber text-2xl font-black text-white">Voucher Giảm 100k Cho Đơn Hàng Đầu Tiên</h3>
+                        <p class="text-sm text-gray-300">Áp dụng cho mọi dịch vụ Facebook, TikTok và Phần mềm MMO tại Hồng Hải.</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-darkBg/90 border border-cyan-500/30 p-3 rounded-2xl">
+                        <div class="font-cyber font-bold text-neonCyan text-lg px-3 tracking-wider">HONGHAIMMO</div>
+                        <button onclick="copyVoucher('HONGHAIMMO')" class="bg-neonCyan text-black font-semibold px-4 py-2 rounded-xl hover:opacity-90 transition text-sm">
+                            <i class="fa-regular fa-copy"></i> Sao chép
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phần đánh giá khách hàng -->
+            <section class="space-y-6">
+                <div class="text-center">
+                    <h3 class="font-cyber text-2xl font-bold text-white">Khách Hàng Nói Gì Về Chúng Tôi</h3>
+                    <p class="text-xs text-gray-400 mt-1">Đánh giá thực tế từ các nhà sáng lập và doanh nghiệp số</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl space-y-4">
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-gray-300 italic">"Dịch vụ phát triển Fanpage Facebook và bảo mật của Hồng Hải MMO rất chuyên nghiệp. Đội ngũ hỗ trợ nhiệt tình và bàn giao đúng hạn."</p>
+                        <div class="flex items-center gap-3 pt-2 border-t border-cyan-500/10">
+                            <div class="w-10 h-10 rounded-full bg-brandBlue/30 text-neonCyan flex items-center justify-center font-bold">TM</div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Trần Minh Quân</h4>
+                                <p class="text-xs text-gray-400">Chủ cửa hàng Thời trang số</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl space-y-4">
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-gray-300 italic">"Phần mềm MMO tự động hóa ở đây cực kỳ ổn định. Giúp tiết kiệm 80% thời gian quản lý nội dung đa nền tảng. Rất đáng tiền!"</p>
+                        <div class="flex items-center gap-3 pt-2 border-t border-cyan-500/10">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/30 text-electricPurple flex items-center justify-center font-bold">NH</div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Nguyễn Hoàng Long</h4>
+                                <p class="text-xs text-gray-400">Content Creator TikTok</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl space-y-4">
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-gray-300 italic">"Quy trình thanh toán chuyển khoản và nhận tài nguyên số tự động rất nhanh gọn. An toàn và uy tín hàng đầu."</p>
+                        <div class="flex items-center gap-3 pt-2 border-t border-cyan-500/10">
+                            <div class="w-10 h-10 rounded-full bg-cyan-500/30 text-neonCyan flex items-center justify-center font-bold">PL</div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Phạm Linh Chi</h4>
+                                <p class="text-xs text-gray-400">Digital Marketer Agency</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= VIEW: ADMIN PANEL ================= -->
+        <div id="adminView" class="space-y-8 hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cyan-500/20 pb-4">
+                <div>
+                    <h2 class="font-cyber text-3xl font-black text-white flex items-center gap-3">
+                        <i class="fa-solid fa-gauge-high text-neonCyan"></i> TRUNG TÂM QUẢN TRỊ ADMIN
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">Hệ thống quản lý đơn hàng, sản phẩm và doanh thu Hồng Hải MMO 2026</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="switchView('home')" class="glass-card px-4 py-2 rounded-xl text-sm font-semibold text-white hover:border-neonCyan transition">
+                        <i class="fa-solid fa-arrow-left"></i> Quay lại cửa hàng
+                    </button>
+                    <button onclick="exportCSVReport()" class="bg-neonCyan text-black px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 transition">
+                        <i class="fa-solid fa-file-excel"></i> Xuất báo cáo CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Thống kê tổng quan -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-neonCyan">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Doanh thu đã xác nhận</div>
+                    <div class="text-2xl font-cyber font-black text-white mt-2" id="adminRevenue">48,520,000 đ</div>
+                    <div class="text-xs text-green-400 mt-1"><i class="fa-solid fa-arrow-up"></i> +15.8% so với tháng trước</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-brandBlue">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Tổng số đơn hàng</div>
+                    <div class="text-2xl font-cyber font-black text-white mt-2" id="adminTotalOrders">1,248</div>
+                    <div class="text-xs text-blue-400 mt-1">Đang xử lý: 14 đơn</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-electricPurple">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Sản phẩm đang hoạt động</div>
+                    <div class="text-2xl font-cyber font-black text-white mt-2">36 dịch vụ</div>
+                    <div class="text-xs text-purple-400 mt-1">Tất cả đều trực tuyến</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-yellow-400">
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Khách hàng đăng ký</div>
+                    <div class="text-2xl font-cyber font-black text-white mt-2">12,850</div>
+                    <div class="text-xs text-yellow-400 mt-1">+320 người dùng mới hôm nay</div>
+                </div>
+            </div>
+
+            <!-- Bảng quản lý đơn hàng gần đây -->
+            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/20 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-cyber text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-neonCyan"></i> Quản Lý Đơn Hàng Thực Tế
+                    </h3>
+                    <span class="text-xs bg-brandBlue/20 text-brandBlue px-3 py-1 rounded-full font-semibold">Thời gian thực</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-darkBg/80 text-gray-400 uppercase text-xs border-b border-cyan-500/20">
+                            <tr>
+                                <th class="p-3">Mã Đơn</th>
+                                <th class="p-3">Khách Hàng</th>
+                                <th class="p-3">Sản Phẩm</th>
+                                <th class="p-3">Tổng Tiền</th>
+                                <th class="p-3">Trạng Thái</th>
+                                <th class="p-3 text-center">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrderTableBody" class="divide-y divide-cyan-500/10">
+                            <!-- Render bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER CHUYÊN NGHIỆP -->
+    <footer class="glass-panel border-t border-cyan-500/20 mt-20 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-cyan-500/10">
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-neonCyan to-brandBlue flex items-center justify-center text-black font-bold">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="font-cyber font-black text-lg text-white">HỒNG HẢI MMO</span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    Hệ sinh thái dịch vụ số và phần mềm MMO chuyên nghiệp hàng đầu 2026. Cam kết uy tín, bảo mật tuyệt đối và hỗ trợ 24/7.
+                </p>
+                <div class="flex items-center gap-3 text-neonCyan text-lg">
+                    <i class="fa-brands fa-facebook cursor-pointer hover:opacity-80"></i>
+                    <i class="fa-brands fa-telegram cursor-pointer hover:opacity-80"></i>
+                    <i class="fa-brands fa-youtube cursor-pointer hover:opacity-80"></i>
+                    <i class="fa-brands fa-tiktok cursor-pointer hover:opacity-80"></i>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-cyber font-bold text-sm text-white mb-4 uppercase tracking-wider">Danh Mục Dịch Vụ</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#" onclick="filterCategory('facebook')" class="hover:text-neonCyan transition">Dịch vụ Facebook & Fanpage</a></li>
+                    <li><a href="#" onclick="filterCategory('tiktok')" class="hover:text-neonCyan transition">Phát triển Kênh TikTok</a></li>
+                    <li><a href="#" onclick="filterCategory('youtube')" class="hover:text-neonCyan transition">Tối ưu YouTube & Thumbnail</a></li>
+                    <li><a href="#" onclick="filterCategory('software')" class="hover:text-neonCyan transition">Phần mềm MMO & AI</a></li>
+                    <li><a href="#" onclick="filterCategory('webhosting')" class="hover:text-neonCyan transition">Website & Hosting cao cấp</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-cyber font-bold text-sm text-white mb-4 uppercase tracking-wider">Chính Sách & Hỗ Trợ</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#" class="hover:text-neonCyan transition">Chính sách bảo hành & Hoàn tiền</a></li>
+                    <li><a href="#" class="hover:text-neonCyan transition">Điều khoản sử dụng dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-neonCyan transition">Cam kết bảo mật thông tin</a></li>
+                    <li><a href="#" class="hover:text-neonCyan transition">Trung tâm trợ giúp & FAQ</a></li>
+                </ul>
+            </div>
+            <div class="space-y-3">
+                <h4 class="font-cyber font-bold text-sm text-white mb-4 uppercase tracking-wider">Đăng Ký Bản Tin MMO</h4>
+                <p class="text-xs text-gray-400">Nhận thông tin cập nhật công cụ và mã giảm giá mới nhất mỗi tuần.</p>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="Email của bạn..." class="bg-darkBg border border-cyan-500/30 rounded-xl px-3 py-2 text-xs text-white flex-1 focus:outline-none focus:border-neonCyan">
+                    <button onclick="showToast('Đăng ký nhận bản tin thành công!')" class="bg-neonCyan text-black font-bold px-4 py-2 rounded-xl text-xs hover:opacity-90 transition">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>&copy; 2026 HỒNG HẢI MMO — DIGITAL SERVICES ECOSYSTEM. All rights reserved.</p>
+            <p class="mt-2 sm:mt-0">Design with Cyberpunk Aurora UI 2026</p>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS & WIDGETS ================= -->
+
+    <!-- Modal Chi Tiết Sản Phẩm -->
+    <div id="productModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-cyan-500/40 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeProductModal()" class="absolute top-6 right-6 text-gray-400 hover:text-neonCyan text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="productModalContent">
+                <!-- Nội dung sản phẩm đổ vào đây -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Giỏ Hàng & Thanh Toán Chuyển Khoản -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-cyan-500/40 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleCartModal()" class="absolute top-6 right-6 text-gray-400 hover:text-neonCyan text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="font-cyber text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-cart-shopping text-neonCyan"></i> Giỏ Hàng Của Bạn
+            </h3>
+            
+            <div id="cartItemsList" class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2">
+                <!-- Danh sách sản phẩm trong giỏ -->
+            </div>
+
+            <!-- Nhập Voucher -->
+            <div class="flex gap-2 mb-6">
+                <input type="text" id="voucherInput" placeholder="Nhập mã voucher (vd: HONGHAI2026)" class="bg-darkBg border border-cyan-500/30 rounded-xl px-4 py-2.5 text-xs text-white flex-1 focus:outline-none focus:border-neonCyan">
+                <button onclick="applyVoucher()" class="bg-brandBlue text-white font-semibold px-5 py-2.5 rounded-xl text-xs hover:opacity-90 transition">Áp dụng</button>
+            </div>
+
+            <!-- Tổng thanh toán -->
+            <div class="glass-card p-4 rounded-2xl space-y-2 mb-6 text-sm">
+                <div class="flex justify-between text-gray-400">
+                    <span>Tạm tính:</span>
+                    <span id="cartSubtotal">0 đ</span>
+                </div>
+                <div class="flex justify-between text-gray-400">
+                    <span>Giảm giá (Voucher):</span>
+                    <span id="cartDiscount" class="text-green-400">-0 đ</span>
+                </div>
+                <div class="flex justify-between text-white font-bold text-base pt-2 border-t border-cyan-500/10">
+                    <span>Tổng thanh toán:</span>
+                    <span id="cartTotal" class="text-neonCyan font-cyber text-lg">0 đ</span>
+                </div>
+            </div>
+
+            <!-- Phần Thông Tin Chuyển Khoản Ngân Hàng & QR -->
+            <div class="space-y-4 mb-6">
+                <h4 class="font-cyber font-bold text-sm text-white flex items-center gap-2">
+                    <i class="fa-solid fa-qrcode text-neonCyan"></i> Thanh toán chuyển khoản ngân hàng
+                </h4>
+                <div class="glass-card p-4 rounded-2xl text-xs space-y-2 border border-cyan-500/30">
+                    <div class="flex justify-between"><span class="text-gray-400">Ngân hàng:</span><span class="font-bold text-white">MB Bank (Quân Đội)</span></div>
+                    <div class="flex justify-between"><span class="text-gray-400">Số tài khoản:</span><span class="font-bold text-neonCyan select-all">888899992026</span></div>
+                    <div class="flex justify-between"><span class="text-gray-400">Chủ tài khoản:</span><span class="font-bold text-white">CONG TY TNHH HONG HAI MMO</span></div>
+                    <div class="flex justify-between"><span class="text-gray-400">Nội dung CK:</span><span class="font-bold text-yellow-400 select-all" id="bankMemoCode">HHMMO 8521</span></div>
+                </div>
+                <div class="text-center text-[11px] text-gray-400">
+                    * Hệ thống tự động xác nhận sau 1-3 phút khi nhận được chuyển khoản đúng nội dung.
+                </div>
+            </div>
+
+            <button onclick="checkoutOrder()" class="w-full bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-3.5 rounded-xl shadow-lg shadow-cyan-500/30 hover:opacity-90 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-shield-check"></i> Xác Nhận & Đặt Hàng Ngay
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Tài Khoản / Đăng Nhập -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-8 border border-cyan-500/40 relative">
+            <button onclick="openAuthModal()" class="absolute top-6 right-6 text-gray-400 hover:text-neonCyan text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-neonCyan to-brandBlue mx-auto flex items-center justify-center text-black text-xl font-bold mb-3 shadow-lg shadow-cyan-500/30">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="font-cyber text-2xl font-bold text-white">Đăng Nhập Tài Khoản</h3>
+                <p class="text-xs text-gray-400 mt-1">Hệ sinh thái HỒNG HẢI MMO 2026</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1 font-medium">Email hoặc Tên đăng nhập</label>
+                    <input type="text" id="loginEmail" placeholder="admin@honghaimmo.vn" class="w-full bg-darkBg border border-cyan-500/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-neonCyan">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1 font-medium">Mật khẩu</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full bg-darkBg border border-cyan-500/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-neonCyan">
+                </div>
+                <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-3.5 rounded-xl shadow-lg shadow-cyan-500/30 hover:opacity-90 transition">
+                    Đăng Nhập Ngay
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút Chatbot Nổi & Cửa Sổ Chat -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChatbot()" id="chatbotToggleBtn" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-neonCyan via-brandBlue to-electricPurple text-black shadow-2xl shadow-cyan-500/50 flex items-center justify-center text-2xl hover:scale-105 transition transform">
+            <i class="fa-solid fa-robot text-white"></i>
+        </button>
+        
+        <!-- Cửa sổ Chatbot Glassmorphism -->
+    <div id="chatbotWindow" class="absolute bottom-20 right-0 w-80 sm:w-96 glass-panel rounded-3xl border border-cyan-500/40 shadow-2xl hidden flex-col overflow-hidden transition-all">
+            <div class="bg-gradient-to-r from-blue-900 to-purple-900 p-4 border-b border-cyan-500/20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-neonCyan/20 text-neonCyan flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-cyber font-bold text-sm text-white">Hồng Hải AI Assistant</h4>
+                        <p class="text-[10px] text-green-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Sẵn sàng hỗ trợ 24/7</p>
+                    </div>
+                </div>
+                <button onclick="toggleChatbot()" class="text-gray-300 hover:text-neonCyan"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div id="chatMessages" class="p-4 space-y-3 h-80 overflow-y-auto text-xs text-gray-300">
+                <div class="flex items-start gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-neonCyan/20 text-neonCyan flex items-center justify-center shrink-0 font-bold"><i class="fa-solid fa-robot text-xs"></i></div>
+                    <div class="glass-card p-3 rounded-2xl rounded-tl-none max-w-[80%] text-white">
+                        Xin chào! Tôi là trợ lý ảo Hồng Hải AI. Tôi có thể giúp gì cho bạn về dịch vụ Facebook, TikTok, Phần mềm MMO hoặc tra cứu đơn hàng hôm nay?
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border-t border-cyan-500/20 bg-darkBg/90 flex gap-2">
+                <input type="text" id="chatInput" placeholder="Nhập câu hỏi của bạn..." onkeypress="if(event.key==='Enter') sendChatMessage()" class="flex-1 bg-darkBg border border-cyan-500/30 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-neonCyan">
+                <button onclick="sendChatMessage()" class="bg-neonCyan text-black px-4 py-2 rounded-xl text-xs font-bold hover:opacity-90 transition"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-24 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // Dữ liệu mẫu Sản phẩm & Dịch vụ Hồng Hải MMO 2026
+        const products = [
+            {
+                id: 1,
+                name: "Gói Quản Lý & Phát Triển Fanpage Facebook Pro",
+                code: "FB-PRO-01",
+                category: "facebook",
+                price: 1500000,
+                oldPrice: 2000000,
+                rating: 5.0,
+                reviewsCount: 142,
+                stock: "Sẵn sàng (Không giới hạn)",
+                deliveryTime: "Kích hoạt trong 30 phút",
+                warranty: "Bảo hành tương tác & hỗ trợ suốt thời gian gói",
+                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
+                description: "Dịch vụ toàn diện giúp tối ưu hóa Fanpage Facebook, lên chiến lược nội dung chuẩn SEO, thiết kế hình ảnh độc quyền và hỗ trợ bảo mật tài khoản chính chủ."
+            },
+            {
+                id: 2,
+                name: "Phần Mềm Tự Động Hóa Nội Dung TikTok Automation",
+                code: "TT-AUTO-02",
+                category: "tiktok",
+                price: 890000,
+                oldPrice: 1200000,
+                rating: 4.9,
+                reviewsCount: 230,
+                stock: "Còn 85 license bản quyền",
+                deliveryTime: "Giao key bản quyền tự động ngay lập tức",
+                warranty: "Bảo hành trọn đời phiên bản phần mềm",
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+                description: "Công cụ hỗ trợ biên tập, lên lịch và quản lý nội dung video ngắn TikTok hợp pháp, an toàn và tối ưu tương tác cao."
+            },
+            {
+                id: 3,
+                name: "Gói Tối Ưu Kênh YouTube & Thiết Kế Thumbnail VIP",
+                code: "YT-VIP-03",
+                category: "youtube",
+                price: 1200000,
+                oldPrice: 1600000,
+                rating: 4.8,
+                reviewsCount: 98,
+                stock: "Nhận 10 kênh / tuần",
+                deliveryTime: "Hoàn thành trong 2 ngày làm việc",
+                warranty: "Cam kết tối ưu chuẩn SEO YouTube",
+                image: "https://images.unsplash.com/photo-1626544827763-d516dce335e2?auto=format&fit=crop&w=600&q=80",
+                description: "Thiết kế bộ thumbnail độc quyền, tối ưu tiêu đề, mô tả chuẩn algorithm YouTube giúp tăng tỷ lệ click-through rate (CTR) vượt trội."
+            },
+            {
+                id: 4,
+                name: "Bộ Công Cụ AI Content & SEO Marketing 2026",
+                code: "MMO-AI-04",
+                category: "software",
+                price: 2500000,
+                oldPrice: 3500000,
+                rating: 5.0,
+                reviewsCount: 310,
+                stock: "Sẵn kho 50 suất",
+                deliveryTime: "Nhận tài khoản & hướng dẫn tức thì",
+                warranty: "Bảo hành 12 tháng liên tục",
+                image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80",
+                description: "Phần mềm tích hợp AI tiên tiến hỗ trợ viết content đa nền tảng, nghiên cứu từ khóa SEO và tự động hóa email marketing có sự đồng ý."
+            },
+            {
+                id: 5,
+                name: "Tài Khoản Bản Quyền Phần Mềm Thiết Kế Đồ Họa Số",
+                code: "DIGI-KEY-05",
+                category: "digital",
+                price: 650000,
+                oldPrice: 900000,
+                rating: 4.9,
+                reviewsCount: 180,
+                stock: "Sẵn sàng",
+                deliveryTime: "Giao mã kích hoạt tự động 24/7",
+                warranty: "Bảo hành toàn bộ thời gian sử dụng",
+                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+                description: "Mã kích hoạt phần mềm thiết kế và công cụ sáng tạo nội dung chính hãng, phân phối hợp pháp với hướng dẫn bàn giao chi tiết."
+            },
+            {
+                id: 6,
+                name: "Thiết Kế Website Doanh Nghiệp & Landing Page Cyberpunk",
+                code: "WEB-PRO-06",
+                category: "webhosting",
+                price: 3200000,
+                oldPrice: 4500000,
+                rating: 5.0,
+                reviewsCount: 76,
+                stock: "Nhận 3 dự án / tuần",
+                deliveryTime: "Hoàn thành trong 3-5 ngày",
+                warranty: "Bảo trì kỹ thuật miễn phí 1 năm",
+                image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
+                description: "Thiết kế website trọn gói chuẩn UI/UX hiện đại, tốc độ tải siêu nhanh, tích hợp SSL, Chatbot AI và tối ưu chuyển đổi khách hàng."
+            },
+            {
+                id: 7,
+                name: "Gói Dịch Vụ Telegram & Zalo Automation Chăm Sóc Khách Hàng",
+                code: "SOC-AUTO-07",
+                category: "social",
+                price: 1100000,
+                oldPrice: 1500000,
+                rating: 4.8,
+                reviewsCount: 115,
+                stock: "Sẵn sàng",
+                deliveryTime: "Cài đặt trong 1 giờ",
+                warranty: "Hỗ trợ kỹ thuật 24/7",
+                image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80",
+                description: "Công cụ tự động hóa chăm sóc khách hàng qua Telegram và Zalo theo đúng quy định, giúp tối ưu tỷ lệ giữ chân khách hàng."
+            },
+            {
+                id: 8,
+                name: "Gói Sáng Tạo Nội Dung & Chỉnh Sửa Video Giải Trí",
+                code: "ENT-VID-08",
+                category: "entertainment",
+                price: 950000,
+                oldPrice: 1300000,
+                rating: 4.9,
+                reviewsCount: 92,
+                stock: "Sẵn sàng",
+                deliveryTime: "Bàn giao theo yêu cầu",
+                warranty: "Chỉnh sửa đến khi hài lòng",
+                image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80",
+                description: "Dịch vụ biên tập video, thiết kế banner poster và cung cấp tài nguyên sáng tạo nội dung bản quyền cao cấp."
+            }
+        ];
+
+        // Giỏ hàng lưu trữ
+        let cart = [];
+        let appliedDiscount = 0;
+        let currentFilter = 'all';
+
+        // Đơn hàng quản lý mẫu cho Admin
+        let adminOrders = [
+            { id: "HHM-9821", customer: "Trần Minh Quân", product: "Gói Quản Lý Fanpage Facebook", total: "1,500,000 đ", status: "Đã thanh toán" },
+            { id: "HHM-9822", customer: "Nguyễn Hoàng Long", product: "TikTok Automation Software", total: "890,000 đ", status: "Chờ xác nhận" },
+            { id: "HHM-9823", customer: "Phạm Linh Chi", product: "Website Doanh Nghiệp Cyberpunk", total: "3,200,000 đ", status: "Đang xử lý" }
+        ];
+
+        // Khởi tạo trang
+        window.onload = function() {
+            renderProducts(products);
+            renderAdminOrders();
+        };
+
+        // Render danh sách sản phẩm
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            if(list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">Không tìm thấy sản phẩm phù hợp.</div>`;
+                return;
+            }
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl overflow-hidden flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden h-48">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute top-3 left-3 bg-darkBg/85 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-neonCyan border border-cyan-500/30 uppercase">
+                                ${item.category}
+                            </div>
+                            <div class="absolute top-3 right-3 bg-red-500/90 text-white px-2 py-0.5 rounded-lg text-[10px] font-bold">
+                                -${Math.round((1 - item.price/item.oldPrice)*100)}%
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex items-center justify-between text-xs text-gray-400">
+                                <span>Mã: <strong class="text-white">${item.code}</strong></span>
+                                <span class="flex items-center gap-1 text-yellow-400 font-semibold"><i class="fa-solid fa-star"></i> ${item.rating} (${item.reviewsCount})</span>
+                            </div>
+                            <h4 class="font-cyber font-bold text-base text-white line-clamp-2 group-hover:text-neonCyan transition">${item.name}</h4>
+                            <p class="text-xs text-gray-400 line-clamp-2">${item.description}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 space-y-3">
+                        <div class="flex items-baseline justify-between">
+                            <span class="font-cyber font-black text-lg text-neonCyan">${item.price.toLocaleString()} đ</span>
+                            <span class="text-xs text-gray-500 line-through">${item.oldPrice.toLocaleString()} đ</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="openProductDetail(${item.id})" class="glass-card py-2.5 rounded-xl text-xs font-semibold text-white hover:border-neonCyan transition text-center">
+                                Chi tiết
+                            </button>
+                            <button onclick="addToCart(${item.id})" class="bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-2.5 rounded-xl text-xs hover:opacity-90 transition text-center shadow-md shadow-cyan-500/20">
+                                <i class="fa-solid fa-cart-plus"></i> Chọn mua
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Lọc danh mục
+        function filterCategory(cat) {
+            currentFilter = cat;
+            // Cập nhật tab active
+            document.querySelectorAll('.cat-tab').forEach(btn => {
+                btn.classList.remove('text-neonCyan', 'font-semibold');
+                btn.classList.add('text-gray-300');
+            });
+            event.currentTarget.classList.remove('text-gray-300');
+            event.currentTarget.classList.add('text-neonCyan', 'font-semibold');
+
+            if(cat === 'all') {
+                renderProducts(products);
+                document.getElementById('categoryTitle').innerHTML = `<i class="fa-solid fa-box-open text-neonCyan"></i> Sản phẩm & Dịch vụ Nổi bật`;
+            } else {
+                const filtered = products.filter(p => p.category === cat);
+                renderProducts(filtered);
+                document.getElementById('categoryTitle').innerHTML = `<i class="fa-solid fa-filter text-neonCyan"></i> Danh mục: ${cat.toUpperCase()}`;
+            }
+        }
+
+        // Sắp xếp sản phẩm
+        function sortProducts(type) {
+            let sorted = [...products];
+            if(type === 'price-asc') sorted.sort((a,b) => a.price - b.price);
+            else if(type === 'price-desc') sorted.sort((a,b) => b.price - a.price);
+            else if(type === 'popular') sorted.sort((a,b) => b.reviewsCount - a.reviewsCount);
+            renderProducts(sorted);
+        }
+
+        // Tìm kiếm tức thì
+        function handleSearch(keyword) {
+            const dropdown = document.getElementById('searchDropdown');
+            if(!keyword.trim()) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+            const res = products.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()) || p.code.toLowerCase().includes(keyword.toLowerCase()));
+            dropdown.innerHTML = '';
+            if(res.length === 0) {
+                dropdown.innerHTML = `<div class="p-3 text-xs text-gray-400 text-center">Không tìm thấy sản phẩm</div>`;
+            } else {
+                res.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'p-2 hover:bg-cyan-500/10 rounded-lg cursor-pointer flex items-center justify-between text-xs text-white';
+                    div.innerHTML = `<span>${item.name}</span> <span class="text-neonCyan font-bold">${item.price.toLocaleString()} đ</span>`;
+                    div.onclick = () => { openProductDetail(item.id); dropdown.classList.add('hidden'); };
+                    dropdown.appendChild(div);
+                });
+            }
+            dropdown.classList.remove('hidden');
+        }
+
+        // Chuyển đổi View (Trang chủ / Admin)
+        function switchView(view) {
+            const home = document.getElementById('homeView');
+            const admin = document.getElementById('adminView');
+            if(view === 'home') {
+                home.classList.remove('hidden');
+                admin.classList.add('hidden');
+                window.scrollTo({top:0, behavior:'smooth'});
+            } else if(view === 'admin') {
+                home.classList.add('hidden');
+                admin.classList.remove('hidden');
+                window.scrollTo({top:0, behavior:'smooth'});
+            }
+        }
+
+        // Chi tiết sản phẩm modal
+        function openProductDetail(id) {
+            const item = products.find(p => p.id === id);
+            if(!item) return;
+            const content = document.getElementById('productModalContent');
+            content.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="rounded-2xl overflow-hidden h-64 border border-cyan-500/20">
+                        <img src="${item.image}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-neonCyan font-bold uppercase">Mã: ${item.code}</span>
+                            <span class="text-yellow-400"><i class="fa-solid fa-star"></i> ${item.rating} (${item.reviewsCount} đánh giá)</span>
+                        </div>
+                        <h3 class="font-cyber font-bold text-xl text-white">${item.name}</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">${item.description}</p>
+                        
+                        <div class="space-y-1.5 text-xs text-gray-400 bg-darkBg/60 p-3 rounded-xl border border-cyan-500/20">
+                            <div><i class="fa-solid fa-box text-neonCyan mr-2"></i> Tồn kho: <span class="text-white">${item.stock}</span></div>
+                            <div><i class="fa-solid fa-clock text-neonCyan mr-2"></i> Thời gian: <span class="text-white">${item.deliveryTime}</span></div>
+                            <div><i class="fa-solid fa-shield-halved text-neonCyan mr-2"></i> Bảo hành: <span class="text-white">${item.warranty}</span></div>
+                        </div>
+
+                        <div class="flex items-baseline justify-between pt-2">
+                            <span class="font-cyber font-black text-2xl text-neonCyan">${item.price.toLocaleString()} đ</span>
+                            <span class="text-sm text-gray-500 line-through">${item.oldPrice.toLocaleString()} đ</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-2">
+                            <button onclick="addToCart(${item.id}); closeProductModal();" class="glass-card py-3 rounded-xl text-xs font-bold text-white hover:border-neonCyan transition text-center">
+                                Thêm vào giỏ
+                            </button>
+                            <button onclick="buyNow(${item.id})" class="bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-3 rounded-xl text-xs hover:opacity-90 transition text-center shadow-lg shadow-cyan-500/30">
+                                Mua ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('productModal').classList.add('flex');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            document.getElementById('productModal').classList.remove('flex');
+        }
+
+        // Thêm vào giỏ hàng
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            const found = cart.find(c => c.id === id);
+            if(found) {
+                found.qty++;
+            } else {
+                cart.push({...item, qty: 1});
+            }
+            updateCartUI();
+            showToast(`Đã thêm "${item.name}" vào giỏ hàng!`);
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.innerText = totalQty;
+
+            const list = document.getElementById('cartItemsList');
+            list.innerHTML = '';
+            if(cart.length === 0) {
+                list.innerHTML = `<div class="text-center py-6 text-xs text-gray-400">Giỏ hàng trống</div>`;
+                document.getElementById('cartSubtotal').innerText = '0 đ';
+                document.getElementById('cartTotal').innerText = '0 đ';
+                return;
+            }
+
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between glass-card p-3 rounded-xl text-xs';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
+                        <div>
+                            <h5 class="font-bold text-white line-clamp-1">${item.name}</h5>
+                            <span class="text-neonCyan">${item.price.toLocaleString()} đ x ${item.qty}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 rounded bg-darkBg border border-cyan-500/30 text-white flex items-center justify-center">+</button>
+                        <button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 rounded bg-darkBg border border-cyan-500/30 text-white flex items-center justify-center">-</button>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-400 hover:text-red-300 ml-2"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+
+            document.getElementById('cartSubtotal').innerText = subtotal.toLocaleString() + ' đ';
+            const finalTotal = Math.max(0, subtotal - appliedDiscount);
+            document.getElementById('cartTotal').innerText = finalTotal.toLocaleString() + ' đ';
+            document.getElementById('bankMemoCode').innerText = 'HHMMO ' + Math.floor(1000 + Math.random() * 9000);
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(c => c.id === id);
+            if(item) {
+                item.qty += delta;
+                if(item.qty <= 0) cart = cart.filter(c => c.id !== id);
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+            showToast('Đã xóa sản phẩm khỏi giỏ hàng.');
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+            updateCartUI();
+        }
+
+        function applyVoucher() {
+            const code = document.getElementById('voucherInput').value.trim();
+            if(code === 'HONGHAI2026' || code === 'HONGHAIMMO') {
+                appliedDiscount = 100000;
+                showToast('Áp dụng mã giảm giá thành công (-100,000 đ)!');
+                updateCartUI();
+            } else {
+                showToast('Mã voucher không hợp lệ hoặc đã hết hạn.');
+            }
+        }
+
+        function copyVoucher(code) {
+            navigator.clipboard.writeText(code);
+            showToast(`Đã sao chép mã voucher: ${code}`);
+        }
+
+        function checkoutOrder() {
+            if(cart.length === 0) {
+                showToast('Giỏ hàng của bạn đang trống!');
+                return;
+            }
+            showToast('Đặt hàng thành công! Vui lòng chuyển khoản theo thông tin.');
+            cart = [];
+            appliedDiscount = 0;
+            toggleCartModal();
+            updateCartUI();
+        }
+
+        function buyNow(id) {
+            addToCart(id);
+            closeProductModal();
+            toggleCartModal();
+        }
+
+        // Auth Modal
+        function openAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            if(!email) {
+                showToast('Vui lòng nhập thông tin đăng nhập.');
+                return;
+            }
+            document.getElementById('accountBtnText').innerText = email.split('@')[0];
+            openAuthModal();
+            showToast('Đăng nhập thành công!');
+        }
+
+        // Chatbot Widget
+        function toggleChatbot() {
+            const win = document.getElementById('chatbotWindow');
+            win.classList.toggle('hidden');
+            win.classList.toggle('flex');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `
+                <div class="flex items-end justify-end gap-2">
+                    <div class="bg-brandBlue p-3 rounded-2xl rounded-tr-none max-w-[80%] text-white">${text}</div>
+                    <div class="w-7 h-7 rounded-lg bg-brandBlue text-white flex items-center justify-center shrink-0 font-bold text-xs"><i class="fa-solid fa-user"></i></div>
+                </div>
+            `;
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Phản hồi tự động từ AI Chatbot
+            setTimeout(() => {
+                let reply = "Cảm ơn bạn đã liên hệ Hồng Hải MMO. Yêu cầu của bạn đã được chuyển đến bộ phận chuyên môn. Bạn có thể đặt hàng trực tiếp trên website hoặc gọi hotline 24/7.";
+                const lower = text.toLowerCase();
+                if(lower.includes('facebook') || lower.includes('fb')) {
+                    reply = "Hồng Hải cung cấp gói Quản lý & Phát triển Fanpage Pro từ 1,500,000 đ. Bạn có thể xem chi tiết trong danh mục Facebook.";
+                } else if(lower.includes('tiktok') || lower.includes('tool')) {
+                    reply = "Phần mềm TikTok Automation hiện có giá 890,000 đ, bàn giao key bản quyền tự động ngay lập tức.";
+                } else if(lower.includes('thanh toán') || lower.includes('ck')) {
+                    reply = "Bạn có thể chuyển khoản qua MB Bank số: 888899992026 (CONG TY TNHH HONG HAI MMO). Hệ thống tự động xác nhận sau 1-3 phút.";
+                }
+
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-neonCyan/20 text-neonCyan flex items-center justify-center shrink-0 font-bold"><i class="fa-solid fa-robot text-xs"></i></div>
+                        <div class="glass-card p-3 rounded-2xl rounded-tl-none max-w-[80%] text-white">${reply}</div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        // Admin Orders Render
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrderTableBody');
+            tbody.innerHTML = '';
+            adminOrders.forEach(ord => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-cyan-500/5 transition">
+                        <td class="p-3 font-bold text-neonCyan">${ord.id}</td>
+                        <td class="p-3 text-white">${ord.customer}</td>
+                        <td class="p-3 text-gray-300">${ord.product}</td>
+                        <td class="p-3 font-semibold text-white">${ord.total}</td>
+                        <td class="p-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${ord.status==='Đã thanh toán'?'bg-green-500/20 text-green-400':'bg-yellow-500/20 text-yellow-400'}">${ord.status}</span></td>
+                        <td class="p-3 text-center">
+                            <button onclick="confirmOrderAdmin('${ord.id}')" class="bg-neonCyan text-black px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90 transition">Xác nhận</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function confirmOrderAdmin(id) {
+            const ord = adminOrders.find(o => o.id === id);
+            if(ord) {
+                ord.status = "Đã thanh toán";
+                renderAdminOrders();
+                showToast(`Đã xác nhận đơn hàng ${id} thành công!`);
+            }
+        }
+
+        function exportCSVReport() {
+            showToast('Đang xuất báo cáo doanh thu CSV...');
+        }
+
+        function openCustomServiceModal() {
+            showToast('Mở biểu mẫu gửi yêu cầu dịch vụ riêng. KTV sẽ liên hệ trong 15 phút.');
+        }
+
+        function toggleMotion() {
+            showToast('Đã chuyển đổi chế độ giảm chuyển động giao diện.');
+        }
+
+        function scrollToProducts() {
+            document.getElementById('productSection').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Toast thông báo
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel px-4 py-3 rounded-xl border border-cyan-500/40 text-xs text-white shadow-xl flex items-center gap-3 animate-fade-in pointer-events-auto';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-neonCyan text-base"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
