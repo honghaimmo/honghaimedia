@@ -137,12 +137,6 @@ function setFieldError(id, msg){
   if(inp){ inp.style.borderColor = msg ? 'var(--neon-pink)' : ''; }
 }
 
-function showError(msg){
-  const el = document.getElementById('errorAlert');
-  el.textContent = msg;
-  el.classList.add('show');
-}
-
 /* Đo độ mạnh mật khẩu */
 document.getElementById('password').addEventListener('input', (e) => {
   const v = e.target.value;
@@ -170,6 +164,7 @@ document.getElementById('password').addEventListener('input', (e) => {
   txt.style.color = lvl.c;
 });
 
+/* XỬ LÝ ĐĂNG KÝ BẰNG LOCALSTORAGE (DEMO) */
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const fullname = document.getElementById('fullname').value.trim();
@@ -187,7 +182,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setFieldError('email', 'Email không hợp lệ'); ok = false; }
   if(phone && !/^0\d{9,10}$/.test(phone)){ setFieldError('phone', 'SĐT phải bắt đầu bằng 0, 10-11 số'); ok = false; }
   if(!password){ setFieldError('password', 'Vui lòng nhập mật khẩu'); ok = false; }
-  else if(password.length < 8){ setFieldError('password', 'Mật khẩu tối thiểu 8 ký tự'); ok = false; }
+  else if(password.length < 6){ setFieldError('password', 'Mật khẩu tối thiểu 6 ký tự'); ok = false; }
   if(password !== password2){ setFieldError('password2', 'Mật khẩu nhập lại không khớp'); ok = false; }
   if(!agree){ setFieldError('agree', 'Bạn phải đồng ý điều khoản'); ok = false; }
 
@@ -195,25 +190,26 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
   const btn = document.getElementById('submitBtn');
   btn.classList.add('btn-loading');
-  btn.innerHTML = '<span class="spinner"></span> Đang tạo tài khoản...';
+  btn.innerHTML = '<span class="spinner"></span> Đang tạo...';
 
-  try {
-    /* ============ KHI CÓ BACKEND: BỎ COMMENT ============
-    await apiFetch('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({ fullname, email, phone, password })
-    });
-    window.location.href = 'login.html?registered=1';
-    return;
-    */
-    await new Promise(r => setTimeout(r, 800));
-    showError('⚠️ Chưa kết nối backend. Đây là giao diện frontend — cần API /api/auth/register để đăng ký thật.');
-  } catch(err){
-    showError('Lỗi: ' + (err.message || 'Không thể đăng ký'));
-  } finally {
-    btn.classList.remove('btn-loading');
-    btn.textContent = 'Tạo tài khoản';
-  }
+  // GIẢ LẬP LƯU VÀO LOCALSTORAGE
+  setTimeout(() => {
+    let users = JSON.parse(localStorage.getItem('hhm_all_users')) || [];
+    if(users.find(u => u.email === email)) {
+      setFieldError('email', 'Email này đã được đăng ký!');
+      btn.classList.remove('btn-loading');
+      btn.textContent = 'Tạo tài khoản';
+      return;
+    }
+
+    // Tạo user mới
+    const newUser = { fullname, email, password, balance: 0 };
+    users.push(newUser);
+    localStorage.setItem('hhm_all_users', JSON.stringify(users));
+
+    alert('Đăng ký thành công! Hãy đăng nhập.');
+    window.location.href = 'login.html';
+  }, 800);
 });
 </script>
 </body>
