@@ -3,798 +3,260 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="HỒNG HẢI MMO - Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam 2026">
 <title>HỒNG HẢI MMO — Ultimate Enterprise 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 <style>
-/* ============ RESET & BASE ============ */
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --neon-cyan:#00f0ff;
-  --neon-purple:#b026ff;
-  --neon-pink:#ff2ec4;
-  --bg-void:#05060a;
-  --bg-deep:#0a0d16;
-  --bg-titanium:#121826;
-  --bg-glass:rgba(20,26,42,0.55);
-  --border-glass:rgba(0,240,255,0.15);
-  --text-primary:#eef2ff;
-  --text-secondary:#9aa5c0;
-  --text-muted:#5c6784;
-  --gradient-brand:linear-gradient(135deg,#00f0ff 0%,#b026ff 50%,#ff2ec4 100%);
-  --gradient-aurora:linear-gradient(135deg,#00f0ff 0%,#b026ff 100%);
-  --shadow-neon:0 0 24px rgba(0,240,255,0.35),0 0 48px rgba(176,38,255,0.15);
-  --radius-md:12px;
-  --radius-lg:20px;
-  --radius-xl:28px;
-  --transition:all .3s cubic-bezier(.4,0,.2,1);
+/* HIỆU ỨNG CẦU VỒNG PHÁT SÁNG */
+@keyframes rainbowGlow {
+  0% { box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000; border-color: #ff0000; }
+  17% { box-shadow: 0 0 20px #ff7f00, 0 0 40px #ff7f00; border-color: #ff7f00; }
+  33% { box-shadow: 0 0 20px #ffff00, 0 0 40px #ffff00; border-color: #ffff00; }
+  50% { box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00; border-color: #00ff00; }
+  67% { box-shadow: 0 0 20px #0000ff, 0 0 40px #0000ff; border-color: #0000ff; }
+  83% { box-shadow: 0 0 20px #4b0082, 0 0 40px #4b0082; border-color: #4b0082; }
+  100% { box-shadow: 0 0 20px #9400d3, 0 0 40px #9400d3; border-color: #9400d3; }
 }
-[data-theme="light"]{
-  --bg-void:#f4f6fb;
-  --bg-deep:#ffffff;
-  --bg-titanium:#eef1f8;
-  --bg-glass:rgba(255,255,255,0.75);
-  --border-glass:rgba(0,120,200,0.18);
-  --text-primary:#0a0d16;
-  --text-secondary:#4a5570;
-  --text-muted:#8b95ac;
-  --shadow-neon:0 0 24px rgba(0,180,220,0.2),0 0 48px rgba(150,30,220,0.1);
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Be Vietnam Pro',system-ui,sans-serif;
-  background:var(--bg-void);
-  color:var(--text-primary);
-  line-height:1.6;
-  overflow-x:hidden;
-  min-height:100vh;
-}
-/* Aurora background */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 15% 20%,rgba(0,240,255,0.12),transparent 45%),
-    radial-gradient(circle at 85% 30%,rgba(176,38,255,0.12),transparent 45%),
-    radial-gradient(circle at 50% 90%,rgba(255,46,196,0.08),transparent 50%);
-  z-index:-2;
-  pointer-events:none;
-  animation:auroraShift 20s ease-in-out infinite;
-}
-@keyframes auroraShift{
-  0%,100%{transform:translate(0,0) scale(1)}
-  50%{transform:translate(-3%,2%) scale(1.05)}
-}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-img{max-width:100%;display:block}
-ul{list-style:none}
 
-/* ============ HEADER ============ */
-.header{
-  position:sticky;top:0;z-index:1000;
-  background:var(--bg-glass);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border-glass);
-  transition:var(--transition);
+.auth-modal {
+  position: fixed; inset: 0; background: rgba(5,6,10,0.85);
+  backdrop-filter: blur(10px); display: none; place-items: center; z-index: 9999;
+  padding: 20px;
 }
-.header-inner{
-  max-width:1400px;margin:0 auto;
-  padding:14px 28px;
-  display:flex;align-items:center;gap:24px;
-}
-.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.3rem;letter-spacing:-0.5px;white-space:nowrap}
-.logo-mark{
-  width:40px;height:40px;border-radius:10px;
-  background:var(--gradient-brand);
-  display:grid;place-items:center;
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:800;color:#05060a;font-size:1.1rem;
-  box-shadow:0 0 20px rgba(0,240,255,0.5);
-}
-.logo-text{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
-.logo-text span{font-weight:400;font-size:.65rem;display:block;letter-spacing:2px;color:var(--text-muted);-webkit-text-fill-color:var(--text-muted)}
+.auth-modal.show { display: grid; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-.nav{display:flex;gap:6px;margin-left:20px;flex:1}
-.nav a{
-  padding:8px 14px;border-radius:8px;
-  font-size:.9rem;font-weight:500;
-  color:var(--text-secondary);
-  transition:var(--transition);
-  position:relative;
+.auth-box {
+  width: 100%; max-width: 400px; padding: 35px 30px;
+  background: var(--bg-titanium);
+  border: 3px solid transparent;
+  border-radius: var(--radius-xl);
+  animation: rainbowGlow 3s linear infinite;
+  position: relative;
 }
-.nav a:hover{color:var(--text-primary);background:rgba(0,240,255,0.08)}
-.nav a.active{color:var(--neon-cyan);background:rgba(0,240,255,0.1)}
 
-.search-wrap{
-  display:flex;align-items:center;
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--border-glass);
-  border-radius:10px;
-  padding:0 6px 0 14px;
-  transition:var(--transition);
-  min-width:220px;
+.auth-title-modal {
+  font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem;
+  font-weight: 700; text-align: center; margin-bottom: 20px;
+  background: var(--gradient-brand); -webkit-background-clip: text; color: transparent;
 }
-[data-theme="light"] .search-wrap{background:rgba(0,0,0,0.03)}
-.search-wrap:focus-within{border-color:var(--neon-cyan);box-shadow:0 0 0 3px rgba(0,240,255,0.12)}
-.search-wrap input{
-  background:none;border:none;outline:none;color:var(--text-primary);
-  padding:9px 8px;font-size:.88rem;width:100%;font-family:inherit;
-}
-.search-wrap input::placeholder{color:var(--text-muted)}
-.search-wrap button{padding:8px;color:var(--text-secondary)}
 
-.header-actions{display:flex;align-items:center;gap:8px}
-.icon-btn{
-  width:42px;height:42px;border-radius:10px;
-  display:grid;place-items:center;
-  background:rgba(255,255,255,0.05);
-  border:1px solid var(--border-glass);
-  color:var(--text-primary);
-  position:relative;
-  transition:var(--transition);
+.close-btn {
+  position: absolute; top: 15px; right: 15px;
+  color: var(--text-muted); font-size: 1.5rem; cursor: pointer;
 }
-[data-theme="light"] .icon-btn{background:rgba(0,0,0,0.03)}
-.icon-btn:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-2px)}
-.badge{
-  position:absolute;top:-6px;right:-6px;
-  background:var(--neon-pink);color:white;
-  font-size:.7rem;font-weight:700;
-  min-width:20px;height:20px;border-radius:10px;
-  display:grid;place-items:center;padding:0 5px;
-  box-shadow:0 0 12px rgba(255,46,196,0.6);
-}
-.btn{
-  padding:10px 20px;border-radius:10px;font-weight:600;font-size:.9rem;
-  transition:var(--transition);display:inline-flex;align-items:center;gap:8px;
-  white-space:nowrap;
-}
-.btn-primary{background:var(--gradient-aurora);color:#05060a;box-shadow:0 4px 20px rgba(0,240,255,0.35)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,240,255,0.5)}
-.btn-ghost{background:rgba(255,255,255,0.05);border:1px solid var(--border-glass);color:var(--text-primary)}
-.btn-ghost:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+.close-btn:hover { color: var(--neon-pink); }
 
-.mobile-toggle{display:none}
+.tab-switch {
+  display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-glass);
+}
+.tab-switch button {
+  flex: 1; padding: 10px; background: none; border: none;
+  color: var(--text-secondary); font-weight: 600; cursor: pointer;
+}
+.tab-switch button.active { color: var(--neon-cyan); border-bottom: 2px solid var(--neon-cyan); }
 
-/* ============ HERO ============ */
-.hero{
-  max-width:1400px;margin:0 auto;
-  padding:60px 28px 40px;
-  position:relative;
-}
-.hero-grid{
-  display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 14px;border-radius:999px;
-  background:rgba(0,240,255,0.08);
-  border:1px solid rgba(0,240,255,0.3);
-  font-size:.8rem;font-weight:600;color:var(--neon-cyan);
-  margin-bottom:20px;
-  animation:pulseGlow 3s ease-in-out infinite;
-}
-@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,240,255,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,240,255,0.15)}}
-.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--neon-cyan);box-shadow:0 0 8px var(--neon-cyan)}
-.hero h1{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(2.2rem,5vw,4rem);
-  font-weight:700;line-height:1.1;
-  letter-spacing:-1.5px;
-  margin-bottom:20px;
-}
-.hero h1 .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.form-container { display: none; }
+.form-container.active { display: block; }
+
+/* CSS Cơ bản cho Hero */
+.hero{max-width:1400px;margin:0 auto;padding:60px 28px 40px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.3);font-size:.8rem;font-weight:600;color:var(--neon-cyan);margin-bottom:20px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.1;margin-bottom:20px}
+.hero h1 .grad{background:var(--gradient-brand);-webkit-background-clip:text;color:transparent}
 .hero p.lead{font-size:1.05rem;color:var(--text-secondary);margin-bottom:32px;max-width:560px}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
 .hero-stats{display:flex;gap:36px;flex-wrap:wrap}
-.stat-num{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;background:var(--gradient-aurora);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;line-height:1}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;background:var(--gradient-aurora);-webkit-background-clip:text;color:transparent;display:block;}
 .stat-label{font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:6px;display:block}
-
-/* Hero visual */
-.hero-visual{position:relative;height:420px}
-.orb{
-  position:absolute;border-radius:50%;
-  filter:blur(60px);opacity:.6;
-}
-.orb-1{width:280px;height:280px;background:var(--neon-cyan);top:20px;left:20px;animation:float 8s ease-in-out infinite}
-.orb-2{width:240px;height:240px;background:var(--neon-purple);bottom:20px;right:20px;animation:float 10s ease-in-out infinite reverse}
-.orb-3{width:180px;height:180px;background:var(--neon-pink);top:50%;left:50%;transform:translate(-50%,-50%);animation:float 12s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
-.hero-card{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:280px;padding:24px;
-  background:var(--bg-glass);
-  backdrop-filter:blur(20px);
-  border:1px solid var(--border-glass);
-  border-radius:var(--radius-xl);
-  box-shadow:var(--shadow-neon);
-  z-index:2;
-}
-.hero-card-icon{
-  width:56px;height:56px;border-radius:14px;
-  background:var(--gradient-brand);
-  display:grid;place-items:center;font-size:1.6rem;
-  margin-bottom:16px;
-}
-.hero-card h4{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:6px}
-.hero-card p{font-size:.85rem;color:var(--text-secondary);margin-bottom:14px}
-.hero-card-price{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--neon-cyan)}
-
-/* ============ SECTION ============ */
-.section{max-width:1400px;margin:0 auto;padding:60px 28px}
-.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:20px;flex-wrap:wrap}
-.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-0.8px}
-.section-title .accent{background:var(--gradient-aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
-.section-sub{color:var(--text-secondary);font-size:.95rem;margin-top:8px}
-.section-link{color:var(--neon-cyan);font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:var(--transition)}
-.section-link:hover{gap:12px}
-
-/* ============ CATEGORIES ============ */
-.categories{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:14px;
-}
-.cat-card{
-  padding:20px 16px;border-radius:var(--radius-md);
-  background:var(--bg-glass);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--border-glass);
-  text-align:center;
-  transition:var(--transition);
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-}
-.cat-card::before{
-  content:'';position:absolute;inset:0;
-  background:var(--gradient-aurora);opacity:0;
-  transition:opacity .3s;z-index:0;
-}
-.cat-card:hover{transform:translateY(-4px);border-color:var(--neon-cyan);box-shadow:0 8px 24px rgba(0,240,255,0.15)}
-.cat-card:hover::before{opacity:.08}
-.cat-icon{font-size:1.8rem;margin-bottom:10px;display:block;position:relative;z-index:1}
-.cat-name{font-size:.85rem;font-weight:600;position:relative;z-index:1}
-
-/* ============ PRODUCTS ============ */
-.products-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:20px;
-}
-.product-card{
-  background:var(--bg-glass);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--border-glass);
-  border-radius:var(--radius-lg);
-  overflow:hidden;
-  transition:var(--transition);
-  position:relative;
-  display:flex;flex-direction:column;
-}
-.product-card:hover{transform:translateY(-6px);border-color:rgba(0,240,255,0.4);box-shadow:var(--shadow-neon)}
-.product-thumb{
-  height:170px;position:relative;overflow:hidden;
-  background:linear-gradient(135deg,rgba(0,240,255,0.15),rgba(176,38,255,0.15));
-  display:grid;place-items:center;font-size:3rem;
-}
-.product-thumb::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 30% 30%,rgba(0,240,255,0.3),transparent 60%);
-}
-.product-tag{
-  position:absolute;top:12px;left:12px;z-index:2;
-  padding:4px 10px;border-radius:6px;
-  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-}
-.tag-hot{background:var(--neon-pink);color:white;box-shadow:0 0 12px rgba(255,46,196,0.5)}
-.tag-new{background:var(--neon-cyan);color:#05060a;box-shadow:0 0 12px rgba(0,240,255,0.5)}
-.tag-sale{background:var(--neon-purple);color:white}
-.product-body{padding:18px;flex:1;display:flex;flex-direction:column}
-.product-cat{font-size:.72rem;color:var(--neon-cyan);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:6px}
-.product-name{font-weight:600;font-size:.98rem;margin-bottom:8px;line-height:1.35;min-height:2.6em}
-.product-meta{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text-muted);margin-bottom:12px}
-.stars{color:#ffd93d;letter-spacing:-1px}
-.product-price{display:flex;align-items:baseline;gap:8px;margin-bottom:14px;margin-top:auto}
-.price-now{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;color:var(--neon-cyan)}
-.price-old{font-size:.85rem;color:var(--text-muted);text-decoration:line-through}
-.product-btn{
-  width:100%;padding:11px;border-radius:10px;
-  background:var(--gradient-aurora);color:#05060a;
-  font-weight:700;font-size:.88rem;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:var(--transition);
-}
-.product-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,240,255,0.4)}
-
-/* ============ FEATURES ============ */
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.feature{
-  padding:28px 24px;border-radius:var(--radius-lg);
-  background:var(--bg-glass);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--border-glass);
-  transition:var(--transition);
-}
-.feature:hover{transform:translateY(-4px);border-color:var(--neon-cyan)}
-.feature-icon{
-  width:52px;height:52px;border-radius:14px;
-  background:rgba(0,240,255,0.1);
-  border:1px solid rgba(0,240,255,0.3);
-  display:grid;place-items:center;font-size:1.5rem;
-  margin-bottom:18px;color:var(--neon-cyan);
-}
-.feature h4{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin-bottom:8px}
-.feature p{font-size:.88rem;color:var(--text-secondary);line-height:1.6}
-
-/* ============ CTA ============ */
-.cta-banner{
-  max-width:1400px;margin:40px auto;padding:0 28px;
-}
-.cta-inner{
-  padding:50px 40px;border-radius:var(--radius-xl);
-  background:linear-gradient(135deg,rgba(0,240,255,0.12),rgba(176,38,255,0.12));
-  border:1px solid var(--border-glass);
-  backdrop-filter:blur(20px);
-  text-align:center;
-  position:relative;overflow:hidden;
-}
-.cta-inner::before{
-  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-  background:conic-gradient(from 0deg,transparent,rgba(0,240,255,0.1),transparent);
-  animation:rotate 20s linear infinite;
-}
-@keyframes rotate{to{transform:rotate(360deg)}}
-.cta-inner > *{position:relative;z-index:1}
-.cta-inner h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:14px;letter-spacing:-1px}
-.cta-inner p{color:var(--text-secondary);max-width:600px;margin:0 auto 28px}
-
-/* ============ FOOTER ============ */
-.footer{
-  margin-top:60px;
-  background:var(--bg-deep);
-  border-top:1px solid var(--border-glass);
-  padding:50px 28px 24px;
-}
-.footer-inner{
-  max-width:1400px;margin:0 auto;
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
-  margin-bottom:40px;
-}
-.footer-brand p{font-size:.88rem;color:var(--text-secondary);margin-top:16px;max-width:340px}
-.footer-col h5{font-family:'Space Grotesk',sans-serif;font-size:.95rem;margin-bottom:16px;color:var(--text-primary)}
-.footer-col a{display:block;font-size:.85rem;color:var(--text-secondary);padding:5px 0;transition:var(--transition)}
-.footer-col a:hover{color:var(--neon-cyan);padding-left:4px}
-.footer-bottom{
-  max-width:1400px;margin:0 auto;
-  padding-top:24px;border-top:1px solid var(--border-glass);
-  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
-  font-size:.8rem;color:var(--text-muted);
-}
-.socials{display:flex;gap:10px}
-.socials a{
-  width:36px;height:36px;border-radius:8px;
-  background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);
-  display:grid;place-items:center;transition:var(--transition);
-}
-.socials a:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-2px)}
-
-/* ============ MODAL ============ */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(5,6,10,0.8);
-  backdrop-filter:blur(8px);
-  display:none;place-items:center;z-index:2000;
-  padding:20px;
-}
-.modal-overlay.show{display:grid;animation:fadeIn .25s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{
-  max-width:440px;width:100%;padding:36px 32px;
-  background:var(--bg-titanium);
-  border:1px solid var(--border-glass);
-  border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-neon);
-  text-align:center;
-  animation:slideUp .3s ease;
-}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-icon{
-  width:64px;height:64px;border-radius:50%;
-  background:rgba(0,240,255,0.1);border:2px solid var(--neon-cyan);
-  display:grid;place-items:center;margin:0 auto 20px;font-size:1.8rem;
-}
-.modal h3{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;margin-bottom:10px}
-.modal p{color:var(--text-secondary);font-size:.92rem;margin-bottom:24px;line-height:1.6}
-.modal-actions{display:flex;gap:10px;justify-content:center}
-
-/* ============ RESPONSIVE ============ */
-@media(max-width:1024px){
-  .hero-grid{grid-template-columns:1fr}
-  .hero-visual{display:none}
-  .footer-inner{grid-template-columns:1fr 1fr}
-  .nav{display:none}
-}
-@media(max-width:768px){
-  .header-inner{padding:12px 16px;gap:12px}
-  .search-wrap{display:none}
-  .logo-text span{display:none}
-  .btn-ghost.login-btn{display:none}
-  .section{padding:40px 16px}
-  .hero{padding:40px 16px 20px}
-  .hero h1{letter-spacing:-1px}
-  .categories{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-  .cat-card{padding:16px 10px}
-  .cat-icon{font-size:1.4rem}
-  .cat-name{font-size:.78rem}
-  .products-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-  .product-thumb{height:120px;font-size:2.2rem}
-  .product-body{padding:12px}
-  .product-name{font-size:.88rem;min-height:auto}
-  .product-price{flex-wrap:wrap}
-  .footer-inner{grid-template-columns:1fr;gap:28px}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .cta-inner{padding:36px 20px}
-  .mobile-toggle{display:grid}
-}
-/* Reduced motion */
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:20px}
+.cat-card{padding:20px 16px;border-radius:var(--radius-md);background:var(--bg-glass);border:1px solid var(--border-glass);text-align:center;cursor:pointer}
+.cat-icon{font-size:1.8rem;margin-bottom:10px;display:block}
+.cat-name{font-size:.85rem;font-weight:600}
 </style>
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
+<!-- HEADER -->
 <header class="header">
   <div class="header-inner">
-    <a href="/" class="logo" aria-label="HỒNG HẢI MMO - Trang chủ">
+    <a href="index.html" class="logo">
       <div class="logo-mark">H3</div>
       <div class="logo-text">HỒNG HẢI <span>MMO ENTERPRISE 2026</span></div>
     </a>
-
-    <nav class="nav" aria-label="Menu chính">
-      <a href="/" class="active">Trang chủ</a>
-      <a href="/products">Sản phẩm</a>
-      <a href="/categories">Danh mục</a>
-      <a href="/news">Tin tức</a>
-      <a href="/support">Hỗ trợ</a>
-      <a href="/about">Giới thiệu</a>
-    </nav>
-
-    <div class="search-wrap">
-      <input type="search" placeholder="Tìm sản phẩm, dịch vụ..." aria-label="Tìm kiếm" id="searchInput">
-      <button aria-label="Tìm kiếm" onclick="handleSearch()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
-    </div>
-
     <div class="header-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện" title="Sáng/Tối">
+      <button class="icon-btn" onclick="toggleTheme()" aria-label="Đổi giao diện">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <a href="/cart" class="icon-btn" aria-label="Giỏ hàng">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span class="badge" id="cartBadge">0</span>
+      <a href="account.html" class="icon-btn" aria-label="Tài khoản" title="Tài khoản của tôi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </a>
-      <a href="/login" class="btn btn-ghost login-btn">Đăng nhập</a>
-      <a href="/register" class="btn btn-primary">Đăng ký</a>
+      <!-- NÚT ĐĂNG KÝ MỞ MODAL -->
+      <button class="btn btn-primary" onclick="openAuthModal('register')">Đăng ký</button>
     </div>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
+<!-- HERO SECTION -->
 <section class="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-badge"><span class="dot"></span> Nền tảng MMO Enterprise 2026</div>
-      <h1>HỒNG HẢI MMO<br><span class="grad">Ultimate Enterprise</span></h1>
-      <p class="lead">Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam. 20 danh mục dịch vụ, thanh toán an toàn, xử lý đơn tự động, hỗ trợ 24/7.</p>
-      <div class="hero-actions">
-        <a href="/products" class="btn btn-primary">
-          Khám phá ngay
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="/register" class="btn btn-ghost">Tạo tài khoản</a>
-      </div>
-      <div class="hero-stats">
-        <div><span class="stat-num">20+</span><span class="stat-label">Danh mục dịch vụ</span></div>
-        <div><span class="stat-num">24/7</span><span class="stat-label">Hỗ trợ khách hàng</span></div>
-        <div><span class="stat-num">100%</span><span class="stat-label">Bảo mật giao dịch</span></div>
-      </div>
-    </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-      <div class="hero-card">
-        <div class="hero-card-icon">💎</div>
-        <h4>Gói Diamond Member</h4>
-        <p>Ưu đãi đặc quyền, hỗ trợ VIP, chiết khấu toàn hệ thống</p>
-        <div class="hero-card-price">Liên hệ báo giá</div>
-      </div>
-    </div>
+  <div class="hero-badge"><span style="width:8px;height:8px;border-radius:50%;background:var(--neon-cyan)"></span> Nền tảng MMO Enterprise 2026</div>
+  <h1>HỒNG HẢI MMO<br><span class="grad">Ultimate Enterprise</span></h1>
+  <p class="lead">Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam. 20 danh mục dịch vụ, thanh toán an toàn, xử lý đơn tự động, hỗ trợ 24/7.</p>
+  <div class="hero-actions">
+    <a href="products.html" class="btn btn-primary">Khám phá ngay →</a>
+    <button onclick="openAuthModal('login')" class="btn btn-ghost">Đăng nhập</button>
+  </div>
+  <div class="hero-stats">
+    <div><span class="stat-num">20+</span><span class="stat-label">Danh mục dịch vụ</span></div>
+    <div><span class="stat-num">24/7</span><span class="stat-label">Hỗ trợ khách hàng</span></div>
+    <div><span class="stat-num">100%</span><span class="stat-label">Bảo mật giao dịch</span></div>
   </div>
 </section>
 
-<!-- ============ CATEGORIES ============ -->
-<section class="section">
-  <div class="section-head">
-    <div>
-      <h2 class="section-title">20 <span class="accent">Danh mục</span> dịch vụ</h2>
-      <p class="section-sub">Đầy đủ giải pháp kỹ thuật số cho cá nhân và doanh nghiệp</p>
-    </div>
-    <a href="/categories" class="section-link">Xem tất cả →</a>
-  </div>
-  <div class="categories" id="categoriesGrid"></div>
-</section>
-
-<!-- ============ FEATURED PRODUCTS ============ -->
-<section class="section">
-  <div class="section-head">
-    <div>
-      <h2 class="section-title">Sản phẩm <span class="accent">nổi bật</span></h2>
-      <p class="section-sub">Được khách hàng tin chọn nhiều nhất tháng này</p>
-    </div>
-    <a href="/products" class="section-link">Xem tất cả →</a>
-  </div>
-  <div class="products-grid" id="productsGrid"></div>
-</section>
-
-<!-- ============ FEATURES ============ -->
-<section class="section">
-  <div class="section-head">
-    <div>
-      <h2 class="section-title">Vì sao chọn <span class="accent">HỒNG HẢI MMO</span>?</h2>
-    </div>
-  </div>
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <h4>Bảo mật đa lớp</h4>
-      <p>Xác thực 2 bước, mã hóa dữ liệu, phân quyền chặt chẽ theo tiêu chuẩn enterprise.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <h4>Xử lý tự động</h4>
-      <p>Đơn hàng được xử lý tự động 24/7, rút ngắn thời gian chờ đợi của khách hàng.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💳</div>
-      <h4>Thanh toán an toàn</h4>
-      <p>Nạp ví qua cổng thanh toán uy tín, đối soát tự động, hoàn tiền minh bạch.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🎯</div>
-      <h4>Dịch vụ chất lượng</h4>
-      <p>Đội ngũ chuyên gia giàu kinh nghiệm, cam kết chất lượng và tiến độ.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🛡️</div>
-      <h4>Tuân thủ pháp lý</h4>
-      <p>Hoạt động theo quy định thương mại điện tử Việt Nam và điều khoản nền tảng.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🎁</div>
-      <h4>Ưu đãi thành viên</h4>
-      <p>Hệ thống cấp bậc Bronze, Silver, Gold, Diamond với nhiều đặc quyền hấp dẫn.</p>
-    </div>
+<!-- CATEGORIES SECTION -->
+<section class="section" style="max-width:1400px;margin:0 auto;padding:0 28px 60px;">
+  <h2 class="section-title">20 <span class="accent" style="color:var(--neon-purple)">Danh mục</span> dịch vụ</h2>
+  <div class="categories">
+    <div class="cat-card"><span class="cat-icon">📘</span><span class="cat-name">Facebook</span></div>
+    <div class="cat-card"><span class="cat-icon">🎵</span><span class="cat-name">TikTok</span></div>
+    <div class="cat-card"><span class="cat-icon">▶️</span><span class="cat-name">YouTube</span></div>
+    <div class="cat-card"><span class="cat-icon">📸</span><span class="cat-name">Instagram</span></div>
+    <div class="cat-card"><span class="cat-icon">✈️</span><span class="cat-name">Telegram</span></div>
+    <div class="cat-card"><span class="cat-icon">💬</span><span class="cat-name">Zalo</span></div>
+    <div class="cat-card"><span class="cat-icon">🧵</span><span class="cat-name">Threads</span></div>
+    <div class="cat-card"><span class="cat-icon">🐦</span><span class="cat-name">X / Twitter</span></div>
+    <div class="cat-card"><span class="cat-icon">🔍</span><span class="cat-name">Google</span></div>
+    <div class="cat-card"><span class="cat-icon">📢</span><span class="cat-name">Quảng cáo</span></div>
+    <div class="cat-card"><span class="cat-icon">🌐</span><span class="cat-name">Thiết kế Web</span></div>
+    <div class="cat-card"><span class="cat-icon">🖥️</span><span class="cat-name">Hosting</span></div>
+    <div class="cat-card"><span class="cat-icon">🤖</span><span class="cat-name">Công cụ AI</span></div>
+    <div class="cat-card"><span class="cat-icon">🎨</span><span class="cat-name">Đồ họa</span></div>
+    <div class="cat-card"><span class="cat-icon">🎬</span><span class="cat-name">Video</span></div>
+    <div class="cat-card"><span class="cat-icon">📡</span><span class="cat-name">Livestream</span></div>
+    <div class="cat-card"><span class="cat-icon">💿</span><span class="cat-name">Phần mềm</span></div>
+    <div class="cat-card"><span class="cat-icon">📧</span><span class="cat-name">Email DN</span></div>
+    <div class="cat-card"><span class="cat-icon">🏆</span><span class="cat-name">Thương hiệu</span></div>
+    <div class="cat-card"><span class="cat-icon">💎</span><span class="cat-name">Gói TV</span></div>
   </div>
 </section>
 
-<!-- ============ CTA ============ -->
-<div class="cta-banner">
-  <div class="cta-inner">
-    <h2>Sẵn sàng khởi nghiệp cùng HỒNG HẢI MMO?</h2>
-    <p>Đăng ký tài khoản miễn phí, nạp tiền vào ví và bắt đầu sử dụng dịch vụ chỉ trong vài phút.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a href="/register" class="btn btn-primary">Đăng ký ngay</a>
-      <a href="/support" class="btn btn-ghost">Liên hệ tư vấn</a>
+<!-- MODAL ĐĂNG KÝ / ĐĂNG NHẬP (CẦU VỒNG) -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-box">
+    <span class="close-btn" onclick="closeAuthModal()">✕</span>
+    <h2 class="auth-title-modal" id="modalTitle">Tạo tài khoản</h2>
+    
+    <div class="tab-switch">
+      <button id="tabRegBtn" class="active" onclick="switchAuthTab('register')">Đăng ký</button>
+      <button id="tabLoginBtn" onclick="switchAuthTab('login')">Đăng nhập</button>
     </div>
-  </div>
-</div>
 
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <a href="/" class="logo">
-        <div class="logo-mark">H3</div>
-        <div class="logo-text">HỒNG HẢI <span>MMO ENTERPRISE 2026</span></div>
-      </a>
-      <p>Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam. Cam kết chất lượng, bảo mật và minh bạch.</p>
-      <div class="socials" style="margin-top:18px">
-        <a href="#" aria-label="Facebook">f</a>
-        <a href="#" aria-label="TikTok">♪</a>
-        <a href="#" aria-label="YouTube">▶</a>
-        <a href="#" aria-label="Telegram">✈</a>
+    <!-- FORM ĐĂNG KÝ -->
+    <div class="form-container active" id="formRegister">
+      <div class="form-group">
+        <input type="text" id="regName" class="form-input" placeholder="Họ và tên">
       </div>
+      <div class="form-group">
+        <input type="email" id="regEmail" class="form-input" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input type="password" id="regPass" class="form-input" placeholder="Mật khẩu">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="handleRegister()">Tạo tài khoản</button>
     </div>
-    <div class="footer-col">
-      <h5>Về chúng tôi</h5>
-      <a href="/about">Giới thiệu</a>
-      <a href="/news">Tin tức</a>
-      <a href="/contact">Liên hệ</a>
-      <a href="/faq">Câu hỏi thường gặp</a>
-    </div>
-    <div class="footer-col">
-      <h5>Chính sách</h5>
-      <a href="/terms">Điều khoản sử dụng</a>
-      <a href="/privacy">Chính sách bảo mật</a>
-      <a href="/refund-policy">Chính sách hoàn tiền</a>
-      <a href="/payment-policy">Chính sách giao dịch</a>
-    </div>
-    <div class="footer-col">
-      <h5>Hỗ trợ</h5>
-      <a href="/account/wallet">Ví tiền</a>
-      <a href="/account/orders">Đơn hàng</a>
-      <a href="/support">Trung tâm hỗ trợ</a>
-      <a href="/account">Tài khoản</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 HỒNG HẢI MMO. Bảo lưu mọi quyền. GPKD số: [đang cập nhật]</span>
-    <span>Made with 💙 in Vietnam</span>
-  </div>
-</footer>
 
-<!-- ============ MODAL ============ -->
-<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="modal-icon">ℹ️</div>
-    <h3 id="modalTitle">Thông báo</h3>
-    <p id="modalText">Nội dung thông báo.</p>
-    <div class="modal-actions">
-      <button class="btn btn-primary" onclick="closeModal()">Đã hiểu</button>
+    <!-- FORM ĐĂNG NHẬP -->
+    <div class="form-container" id="formLogin">
+      <div class="form-group">
+        <input type="email" id="loginEmail" class="form-input" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input type="password" id="loginPass" class="form-input" placeholder="Mật khẩu">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="handleLogin()">Đăng nhập</button>
     </div>
+
   </div>
 </div>
 
 <script>
-/* ============ DỮ LIỆU MẪU (TĨNH) ============
- * LƯU Ý: Đây chỉ là dữ liệu hiển thị giao diện.
- * Khi có backend, thay thế bằng fetch() tới API thật.
- */
-const CATEGORIES = [
-  {slug:'facebook', name:'Facebook', icon:'📘'},
-  {slug:'tiktok', name:'TikTok', icon:'🎵'},
-  {slug:'youtube', name:'YouTube', icon:'▶️'},
-  {slug:'instagram', name:'Instagram', icon:'📸'},
-  {slug:'telegram', name:'Telegram', icon:'✈️'},
-  {slug:'zalo', name:'Zalo', icon:'💬'},
-  {slug:'threads', name:'Threads', icon:'🧵'},
-  {slug:'x-twitter', name:'X / Twitter', icon:'🐦'},
-  {slug:'google', name:'Google', icon:'🔍'},
-  {slug:'quang-cao', name:'Quảng cáo', icon:'📢'},
-  {slug:'thiet-ke-website', name:'Thiết kế Web', icon:'🌐'},
-  {slug:'hosting', name:'Hosting', icon:'🖥️'},
-  {slug:'cong-cu-ai', name:'Công cụ AI', icon:'🤖'},
-  {slug:'thiet-ke-do-hoa', name:'Đồ họa', icon:'🎨'},
-  {slug:'san-xuat-video', name:'Sản xuất Video', icon:'🎬'},
-  {slug:'livestream', name:'Livestream', icon:'📡'},
-  {slug:'phan-mem', name:'Phần mềm', icon:'💿'},
-  {slug:'email-doanh-nghiep', name:'Email DN', icon:'📧'},
-  {slug:'thuong-hieu', name:'Thương hiệu', icon:'🏆'},
-  {slug:'goi-thanh-vien', name:'Gói thành viên', icon:'💎'}
-];
-
-const PRODUCTS = [
-  {id:'P001', slug:'thiet-ke-landing-page', name:'Thiết kế Landing Page chuyển đổi cao', cat:'Thiết kế Web', icon:'🌐', price:2500000, oldPrice:3500000, tag:'hot', rating:4.9, sold:342},
-  {id:'P002', slug:'quan-ly-fanpage', name:'Gói quản lý Fanpage 30 ngày', cat:'Facebook', icon:'📘', price:1500000, oldPrice:2000000, tag:'sale', rating:4.8, sold:521},
-  {id:'P003', slug:'dung-video-tiktok', name:'Dựng video TikTok viral 15s', cat:'TikTok', icon:'🎵', price:450000, oldPrice:600000, tag:'new', rating:4.9, sold:1288},
-  {id:'P004', slug:'hosting-business', name:'Hosting Business 1 năm - SSD NVMe', cat:'Hosting', icon:'🖥️', price:1200000, oldPrice:1800000, tag:'hot', rating:4.7, sold:203},
-  {id:'P005', slug:'chatbot-ai', name:'Chatbot AI đa kênh - Gói Pro', cat:'Công cụ AI', icon:'🤖', price:3500000, oldPrice:null, tag:'new', rating:5.0, sold:87},
-  {id:'P006', slug:'thiet-ke-logo', name:'Thiết kế Logo thương hiệu chuyên nghiệp', cat:'Đồ họa', icon:'🎨', price:800000, oldPrice:1200000, tag:'sale', rating:4.8, sold:456},
-  {id:'P007', slug:'email-doanh-nghiep', name:'Email doanh nghiệp 50 users', cat:'Email DN', icon:'📧', price:2000000, oldPrice:null, tag:null, rating:4.6, sold:142},
-  {id:'P008', slug:'goi-diamond', name:'Gói Diamond Member - 12 tháng', cat:'Gói thành viên', icon:'💎', price:9990000, oldPrice:15000000, tag:'hot', rating:5.0, sold:34}
-];
-
-/* ============ HELPERS ============ */
-const fmt = n => new Intl.NumberFormat('vi-VN').format(n) + '₫';
-
-function showModal(title, text){
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalText').textContent = text;
-  document.getElementById('modal').classList.add('show');
-}
-function closeModal(){
-  document.getElementById('modal').classList.remove('show');
-}
-document.getElementById('modal').addEventListener('click', e => {
-  if(e.target.id === 'modal') closeModal();
-});
-
-/* ============ RENDER CATEGORIES ============ */
-function renderCategories(){
-  const grid = document.getElementById('categoriesGrid');
-  grid.innerHTML = CATEGORIES.map(c => `
-    <a href="/categories/${c.slug}" class="cat-card">
-      <span class="cat-icon">${c.icon}</span>
-      <span class="cat-name">${c.name}</span>
-    </a>
-  `).join('');
-}
-
-/* ============ RENDER PRODUCTS ============ */
-function renderProducts(){
-  const grid = document.getElementById('productsGrid');
-  grid.innerHTML = PRODUCTS.map(p => {
-    let tagHtml = '';
-    if(p.tag === 'hot') tagHtml = '<span class="product-tag tag-hot">🔥 Hot</span>';
-    else if(p.tag === 'new') tagHtml = '<span class="product-tag tag-new">✨ Mới</span>';
-    else if(p.tag === 'sale') tagHtml = '<span class="product-tag tag-sale">-Giảm giá</span>';
-    
-    return `
-      <div class="product-card">
-        <div class="product-thumb">
-          ${tagHtml}
-          <span>${p.icon}</span>
-        </div>
-        <div class="product-body">
-          <div class="product-cat">${p.cat}</div>
-          <div class="product-name">${p.name}</div>
-          <div class="product-meta">
-            <span class="stars">★★★★★</span>
-            <span>${p.rating} · Đã bán ${p.sold}</span>
-          </div>
-          <div class="product-price">
-            <span class="price-now">${fmt(p.price)}</span>
-            ${p.oldPrice ? `<span class="price-old">${fmt(p.oldPrice)}</span>` : ''}
-          </div>
-          <button class="product-btn" onclick="handleBuy('${p.id}')">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            Thêm vào giỏ
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-/* ============ ACTIONS ============ */
-function handleBuy(productId){
-  // KHÔNG tự cộng tiền, KHÔNG tự đặt hàng.
-  // Trong hệ thống thật: kiểm tra đăng nhập → gọi API /api/cart
-  showModal(
-    'Chưa kết nối Backend',
-    'Chức năng giỏ hàng cần máy chủ xác thực. Vui lòng đăng nhập và kết nối API /api/cart để sử dụng. Đây là bản giao diện frontend, không có giao dịch thật.'
-  );
-}
-
-function handleSearch(){
-  const q = document.getElementById('searchInput').value.trim();
-  if(!q) return;
-  // Trong hệ thống thật: window.location.href = `/search?q=${encodeURIComponent(q)}`
-  showModal('Tìm kiếm', `Bạn đang tìm: "${q}". Trang tìm kiếm /search sẽ được triển khai ở file tiếp theo.`);
-}
-
-/* Theme toggle */
-const themeToggle = document.getElementById('themeToggle');
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
-themeToggle.addEventListener('click', () => {
+/* ================= THEME ================= */
+function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-});
+  document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+}
 
-/* Header scroll effect */
-window.addEventListener('scroll', () => {
-  const h = document.querySelector('.header');
-  if(window.scrollY > 20) h.style.boxShadow = '0 4px 24px rgba(0,0,0,0.3)';
-  else h.style.boxShadow = 'none';
-});
+/* ================= MODAL LOGIC ================= */
+function openAuthModal(tab) {
+  document.getElementById('authModal').classList.add('show');
+  switchAuthTab(tab);
+}
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('show');
+}
+function switchAuthTab(tab) {
+  document.getElementById('tabRegBtn').classList.toggle('active', tab === 'register');
+  document.getElementById('tabLoginBtn').classList.toggle('active', tab === 'login');
+  document.getElementById('formRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('formLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('modalTitle').innerText = tab === 'register' ? 'Tạo tài khoản' : 'Đăng nhập';
+}
 
-/* ============ INIT ============ */
-renderCategories();
-renderProducts();
-document.getElementById('searchInput').addEventListener('keypress', e => {
-  if(e.key === 'Enter') handleSearch();
-});
+/* ================= XỬ LÝ ĐĂNG KÝ ================= */
+function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+
+  if(!name || !email || !pass) {
+    alert('Vui lòng nhập đầy đủ thông tin!'); return;
+  }
+
+  // Lấy danh sách users từ máy
+  let users = JSON.parse(localStorage.getItem('hhm_all_users')) || [];
+
+  // Kiểm tra email đã tồn tại chưa
+  if(users.find(u => u.email === email)) {
+    alert('Email này đã được tạo tài khoản rồi! Mỗi email chỉ được tạo 1 lần.');
+    return;
+  }
+
+  // Tạo user mới
+  const newUser = { fullname: name, email, password: pass, balance: 0 };
+  users.push(newUser);
+  localStorage.setItem('hhm_all_users', JSON.stringify(users));
+
+  alert('Tạo tài khoản thành công! Hãy đăng nhập.');
+  switchAuthTab('login'); // Tự động chuyển sang tab đăng nhập
+  document.getElementById('loginEmail').value = email; // Điền sẵn email
+}
+
+/* ================= XỬ LÝ ĐĂNG NHẬP ================= */
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+
+  if(!email || !pass) {
+    alert('Vui lòng nhập email và mật khẩu!'); return;
+  }
+
+  // Lấy danh sách users
+  let users = JSON.parse(localStorage.getItem('hhm_all_users')) || [];
+  
+  // Tìm user khớp
+  let user = users.find(u => u.email === email && u.password === pass);
+
+  if(!user) {
+    alert('Sai email hoặc mật khẩu!'); return;
+  }
+
+  // Đăng nhập thành công -> Lưu vào bộ nhớ
+  localStorage.setItem('hhm_user', JSON.stringify(user));
+  
+  // Chuyển sang trang ví tiền / tài khoản
+  window.location.href = 'account.html';
+}
 </script>
 </body>
 </html>
