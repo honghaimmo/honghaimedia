@@ -1,925 +1,800 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <!-- Khóa phóng to bằng cử chỉ (Viewport configuration) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HỒNG HẢI MMO — DIGITAL SERVICES ECOSYSTEM 2026</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#080B14',
-                        neonCyan: '#00E5FF',
-                        brandBlue: '#1677FF',
-                        electricPurple: '#8B5CF6',
-                        cardGlass: 'rgba(13, 17, 32, 0.75)',
-                        borderGlass: 'rgba(0, 229, 255, 0.2)'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Orbitron', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { background-color: #080B14; color: #F3F4F6; font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
-        .light body { background-color: #F8FAFC; color: #0F172A; }
-        .font-cyber { font-family: 'Orbitron', sans-serif; }
-        .glass-panel {
-            background: rgba(13, 17, 32, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-        }
-        .light .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(22, 119, 255, 0.2);
-        }
-        .glass-card {
-            background: rgba(18, 24, 43, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 229, 255, 0.15);
-            transition: all 0.3s ease;
-        }
-        .light .glass-card {
-            background: rgba(241, 245, 249, 0.8);
-            border: 1px solid rgba(22, 119, 255, 0.15);
-        }
-        .glass-card:hover {
-            border-color: #00E5FF;
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
-            transform: translateY(-3px);
-        }
-        .aurora-bg {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0,229,255,0.15) 0%, rgba(139,92,246,0.1) 50%, transparent 70%);
-            filter: blur(80px);
-            z-index: -1;
-            animation: floatAurora 12s infinite alternate ease-in-out;
-        }
-        @keyframes floatAurora {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(100px, 50px) scale(1.1); }
-            100% { transform: translate(-50px, 80px) scale(0.95); }
-        }
-        .neon-glow {
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.5);
-        }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: inherit; }
-        ::-webkit-scrollbar-thumb { background: #1677FF; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HỒNG HẢI MMO - Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam 2026">
+<title>HỒNG HẢI MMO — Ultimate Enterprise 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET & BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --neon-cyan:#00f0ff;
+  --neon-purple:#b026ff;
+  --neon-pink:#ff2ec4;
+  --bg-void:#05060a;
+  --bg-deep:#0a0d16;
+  --bg-titanium:#121826;
+  --bg-glass:rgba(20,26,42,0.55);
+  --border-glass:rgba(0,240,255,0.15);
+  --text-primary:#eef2ff;
+  --text-secondary:#9aa5c0;
+  --text-muted:#5c6784;
+  --gradient-brand:linear-gradient(135deg,#00f0ff 0%,#b026ff 50%,#ff2ec4 100%);
+  --gradient-aurora:linear-gradient(135deg,#00f0ff 0%,#b026ff 100%);
+  --shadow-neon:0 0 24px rgba(0,240,255,0.35),0 0 48px rgba(176,38,255,0.15);
+  --radius-md:12px;
+  --radius-lg:20px;
+  --radius-xl:28px;
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="light"]{
+  --bg-void:#f4f6fb;
+  --bg-deep:#ffffff;
+  --bg-titanium:#eef1f8;
+  --bg-glass:rgba(255,255,255,0.75);
+  --border-glass:rgba(0,120,200,0.18);
+  --text-primary:#0a0d16;
+  --text-secondary:#4a5570;
+  --text-muted:#8b95ac;
+  --shadow-neon:0 0 24px rgba(0,180,220,0.2),0 0 48px rgba(150,30,220,0.1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;
+  background:var(--bg-void);
+  color:var(--text-primary);
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+/* Aurora background */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(0,240,255,0.12),transparent 45%),
+    radial-gradient(circle at 85% 30%,rgba(176,38,255,0.12),transparent 45%),
+    radial-gradient(circle at 50% 90%,rgba(255,46,196,0.08),transparent 50%);
+  z-index:-2;
+  pointer-events:none;
+  animation:auroraShift 20s ease-in-out infinite;
+}
+@keyframes auroraShift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-3%,2%) scale(1.05)}
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* ============ HEADER ============ */
+.header{
+  position:sticky;top:0;z-index:1000;
+  background:var(--bg-glass);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-glass);
+  transition:var(--transition);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;
+  padding:14px 28px;
+  display:flex;align-items:center;gap:24px;
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.3rem;letter-spacing:-0.5px;white-space:nowrap}
+.logo-mark{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--gradient-brand);
+  display:grid;place-items:center;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:800;color:#05060a;font-size:1.1rem;
+  box-shadow:0 0 20px rgba(0,240,255,0.5);
+}
+.logo-text{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo-text span{font-weight:400;font-size:.65rem;display:block;letter-spacing:2px;color:var(--text-muted);-webkit-text-fill-color:var(--text-muted)}
+
+.nav{display:flex;gap:6px;margin-left:20px;flex:1}
+.nav a{
+  padding:8px 14px;border-radius:8px;
+  font-size:.9rem;font-weight:500;
+  color:var(--text-secondary);
+  transition:var(--transition);
+  position:relative;
+}
+.nav a:hover{color:var(--text-primary);background:rgba(0,240,255,0.08)}
+.nav a.active{color:var(--neon-cyan);background:rgba(0,240,255,0.1)}
+
+.search-wrap{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border-glass);
+  border-radius:10px;
+  padding:0 6px 0 14px;
+  transition:var(--transition);
+  min-width:220px;
+}
+[data-theme="light"] .search-wrap{background:rgba(0,0,0,0.03)}
+.search-wrap:focus-within{border-color:var(--neon-cyan);box-shadow:0 0 0 3px rgba(0,240,255,0.12)}
+.search-wrap input{
+  background:none;border:none;outline:none;color:var(--text-primary);
+  padding:9px 8px;font-size:.88rem;width:100%;font-family:inherit;
+}
+.search-wrap input::placeholder{color:var(--text-muted)}
+.search-wrap button{padding:8px;color:var(--text-secondary)}
+
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{
+  width:42px;height:42px;border-radius:10px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border-glass);
+  color:var(--text-primary);
+  position:relative;
+  transition:var(--transition);
+}
+[data-theme="light"] .icon-btn{background:rgba(0,0,0,0.03)}
+.icon-btn:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-2px)}
+.badge{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--neon-pink);color:white;
+  font-size:.7rem;font-weight:700;
+  min-width:20px;height:20px;border-radius:10px;
+  display:grid;place-items:center;padding:0 5px;
+  box-shadow:0 0 12px rgba(255,46,196,0.6);
+}
+.btn{
+  padding:10px 20px;border-radius:10px;font-weight:600;font-size:.9rem;
+  transition:var(--transition);display:inline-flex;align-items:center;gap:8px;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--gradient-aurora);color:#05060a;box-shadow:0 4px 20px rgba(0,240,255,0.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,240,255,0.5)}
+.btn-ghost{background:rgba(255,255,255,0.05);border:1px solid var(--border-glass);color:var(--text-primary)}
+.btn-ghost:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+
+.mobile-toggle{display:none}
+
+/* ============ HERO ============ */
+.hero{
+  max-width:1400px;margin:0 auto;
+  padding:60px 28px 40px;
+  position:relative;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:999px;
+  background:rgba(0,240,255,0.08);
+  border:1px solid rgba(0,240,255,0.3);
+  font-size:.8rem;font-weight:600;color:var(--neon-cyan);
+  margin-bottom:20px;
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,240,255,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,240,255,0.15)}}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--neon-cyan);box-shadow:0 0 8px var(--neon-cyan)}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.2rem,5vw,4rem);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-1.5px;
+  margin-bottom:20px;
+}
+.hero h1 .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.05rem;color:var(--text-secondary);margin-bottom:32px;max-width:560px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:flex;gap:36px;flex-wrap:wrap}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;background:var(--gradient-aurora);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;line-height:1}
+.stat-label{font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:6px;display:block}
+
+/* Hero visual */
+.hero-visual{position:relative;height:420px}
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(60px);opacity:.6;
+}
+.orb-1{width:280px;height:280px;background:var(--neon-cyan);top:20px;left:20px;animation:float 8s ease-in-out infinite}
+.orb-2{width:240px;height:240px;background:var(--neon-purple);bottom:20px;right:20px;animation:float 10s ease-in-out infinite reverse}
+.orb-3{width:180px;height:180px;background:var(--neon-pink);top:50%;left:50%;transform:translate(-50%,-50%);animation:float 12s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+.hero-card{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:280px;padding:24px;
+  background:var(--bg-glass);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-xl);
+  box-shadow:var(--shadow-neon);
+  z-index:2;
+}
+.hero-card-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:var(--gradient-brand);
+  display:grid;place-items:center;font-size:1.6rem;
+  margin-bottom:16px;
+}
+.hero-card h4{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:6px}
+.hero-card p{font-size:.85rem;color:var(--text-secondary);margin-bottom:14px}
+.hero-card-price{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--neon-cyan)}
+
+/* ============ SECTION ============ */
+.section{max-width:1400px;margin:0 auto;padding:60px 28px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:20px;flex-wrap:wrap}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-0.8px}
+.section-title .accent{background:var(--gradient-aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-sub{color:var(--text-secondary);font-size:.95rem;margin-top:8px}
+.section-link{color:var(--neon-cyan);font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:var(--transition)}
+.section-link:hover{gap:12px}
+
+/* ============ CATEGORIES ============ */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:14px;
+}
+.cat-card{
+  padding:20px 16px;border-radius:var(--radius-md);
+  background:var(--bg-glass);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border-glass);
+  text-align:center;
+  transition:var(--transition);
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+}
+.cat-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gradient-aurora);opacity:0;
+  transition:opacity .3s;z-index:0;
+}
+.cat-card:hover{transform:translateY(-4px);border-color:var(--neon-cyan);box-shadow:0 8px 24px rgba(0,240,255,0.15)}
+.cat-card:hover::before{opacity:.08}
+.cat-icon{font-size:1.8rem;margin-bottom:10px;display:block;position:relative;z-index:1}
+.cat-name{font-size:.85rem;font-weight:600;position:relative;z-index:1}
+
+/* ============ PRODUCTS ============ */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+}
+.product-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  transition:var(--transition);
+  position:relative;
+  display:flex;flex-direction:column;
+}
+.product-card:hover{transform:translateY(-6px);border-color:rgba(0,240,255,0.4);box-shadow:var(--shadow-neon)}
+.product-thumb{
+  height:170px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(0,240,255,0.15),rgba(176,38,255,0.15));
+  display:grid;place-items:center;font-size:3rem;
+}
+.product-thumb::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(0,240,255,0.3),transparent 60%);
+}
+.product-tag{
+  position:absolute;top:12px;left:12px;z-index:2;
+  padding:4px 10px;border-radius:6px;
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+}
+.tag-hot{background:var(--neon-pink);color:white;box-shadow:0 0 12px rgba(255,46,196,0.5)}
+.tag-new{background:var(--neon-cyan);color:#05060a;box-shadow:0 0 12px rgba(0,240,255,0.5)}
+.tag-sale{background:var(--neon-purple);color:white}
+.product-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.product-cat{font-size:.72rem;color:var(--neon-cyan);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:6px}
+.product-name{font-weight:600;font-size:.98rem;margin-bottom:8px;line-height:1.35;min-height:2.6em}
+.product-meta{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text-muted);margin-bottom:12px}
+.stars{color:#ffd93d;letter-spacing:-1px}
+.product-price{display:flex;align-items:baseline;gap:8px;margin-bottom:14px;margin-top:auto}
+.price-now{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;color:var(--neon-cyan)}
+.price-old{font-size:.85rem;color:var(--text-muted);text-decoration:line-through}
+.product-btn{
+  width:100%;padding:11px;border-radius:10px;
+  background:var(--gradient-aurora);color:#05060a;
+  font-weight:700;font-size:.88rem;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:var(--transition);
+}
+.product-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,240,255,0.4)}
+
+/* ============ FEATURES ============ */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.feature{
+  padding:28px 24px;border-radius:var(--radius-lg);
+  background:var(--bg-glass);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border-glass);
+  transition:var(--transition);
+}
+.feature:hover{transform:translateY(-4px);border-color:var(--neon-cyan)}
+.feature-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(0,240,255,0.1);
+  border:1px solid rgba(0,240,255,0.3);
+  display:grid;place-items:center;font-size:1.5rem;
+  margin-bottom:18px;color:var(--neon-cyan);
+}
+.feature h4{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin-bottom:8px}
+.feature p{font-size:.88rem;color:var(--text-secondary);line-height:1.6}
+
+/* ============ CTA ============ */
+.cta-banner{
+  max-width:1400px;margin:40px auto;padding:0 28px;
+}
+.cta-inner{
+  padding:50px 40px;border-radius:var(--radius-xl);
+  background:linear-gradient(135deg,rgba(0,240,255,0.12),rgba(176,38,255,0.12));
+  border:1px solid var(--border-glass);
+  backdrop-filter:blur(20px);
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-inner::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(from 0deg,transparent,rgba(0,240,255,0.1),transparent);
+  animation:rotate 20s linear infinite;
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.cta-inner > *{position:relative;z-index:1}
+.cta-inner h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:14px;letter-spacing:-1px}
+.cta-inner p{color:var(--text-secondary);max-width:600px;margin:0 auto 28px}
+
+/* ============ FOOTER ============ */
+.footer{
+  margin-top:60px;
+  background:var(--bg-deep);
+  border-top:1px solid var(--border-glass);
+  padding:50px 28px 24px;
+}
+.footer-inner{
+  max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+  margin-bottom:40px;
+}
+.footer-brand p{font-size:.88rem;color:var(--text-secondary);margin-top:16px;max-width:340px}
+.footer-col h5{font-family:'Space Grotesk',sans-serif;font-size:.95rem;margin-bottom:16px;color:var(--text-primary)}
+.footer-col a{display:block;font-size:.85rem;color:var(--text-secondary);padding:5px 0;transition:var(--transition)}
+.footer-col a:hover{color:var(--neon-cyan);padding-left:4px}
+.footer-bottom{
+  max-width:1400px;margin:0 auto;
+  padding-top:24px;border-top:1px solid var(--border-glass);
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  font-size:.8rem;color:var(--text-muted);
+}
+.socials{display:flex;gap:10px}
+.socials a{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);
+  display:grid;place-items:center;transition:var(--transition);
+}
+.socials a:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);transform:translateY(-2px)}
+
+/* ============ MODAL ============ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(5,6,10,0.8);
+  backdrop-filter:blur(8px);
+  display:none;place-items:center;z-index:2000;
+  padding:20px;
+}
+.modal-overlay.show{display:grid;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  max-width:440px;width:100%;padding:36px 32px;
+  background:var(--bg-titanium);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-neon);
+  text-align:center;
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(0,240,255,0.1);border:2px solid var(--neon-cyan);
+  display:grid;place-items:center;margin:0 auto 20px;font-size:1.8rem;
+}
+.modal h3{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;margin-bottom:10px}
+.modal p{color:var(--text-secondary);font-size:.92rem;margin-bottom:24px;line-height:1.6}
+.modal-actions{display:flex;gap:10px;justify-content:center}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+}
+@media(max-width:768px){
+  .header-inner{padding:12px 16px;gap:12px}
+  .search-wrap{display:none}
+  .logo-text span{display:none}
+  .btn-ghost.login-btn{display:none}
+  .section{padding:40px 16px}
+  .hero{padding:40px 16px 20px}
+  .hero h1{letter-spacing:-1px}
+  .categories{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+  .cat-card{padding:16px 10px}
+  .cat-icon{font-size:1.4rem}
+  .cat-name{font-size:.78rem}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .product-thumb{height:120px;font-size:2.2rem}
+  .product-body{padding:12px}
+  .product-name{font-size:.88rem;min-height:auto}
+  .product-price{flex-wrap:wrap}
+  .footer-inner{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .cta-inner{padding:36px 20px}
+  .mobile-toggle{display:grid}
+}
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
 </head>
-<body class="bg-darkBg text-gray-100 min-h-screen flex flex-col relative selection:bg-neonCyan selection:text-black">
+<body>
 
-    <!-- Aurora Background Blobs -->
-    <div class="aurora-bg top-0 left-1/4"></div>
-    <div class="aurora-bg bottom-1/3 right-10" style="animation-delay: -5s;"></div>
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo" aria-label="HỒNG HẢI MMO - Trang chủ">
+      <div class="logo-mark">H3</div>
+      <div class="logo-text">HỒNG HẢI <span>MMO ENTERPRISE 2026</span></div>
+    </a>
 
-    <!-- 1. Thanh thông báo khuyến mãi -->
-    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-xs py-2 px-4 text-center font-medium border-b border-cyan-500/20 relative z-50 flex items-center justify-center gap-2 text-white">
-        <i class="fa-solid fa-bolt text-neonCyan animate-bounce"></i>
-        <span>HỆ THỐNG DIGITAL SERVICES 2026: Giảm ngay 20% toàn bộ dịch vụ với mã <span class="text-neonCyan font-bold">HONGHAI2026</span></span>
-        <span class="hidden md:inline bg-neonCyan/20 text-neonCyan px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Flash Sale</span>
+    <nav class="nav" aria-label="Menu chính">
+      <a href="/" class="active">Trang chủ</a>
+      <a href="/products">Sản phẩm</a>
+      <a href="/categories">Danh mục</a>
+      <a href="/news">Tin tức</a>
+      <a href="/support">Hỗ trợ</a>
+      <a href="/about">Giới thiệu</a>
+    </nav>
+
+    <div class="search-wrap">
+      <input type="search" placeholder="Tìm sản phẩm, dịch vụ..." aria-label="Tìm kiếm" id="searchInput">
+      <button aria-label="Tìm kiếm" onclick="handleSearch()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
     </div>
 
-    <!-- Header Cố Định -->
-    <header class="sticky top-0 z-40 glass-panel border-b border-cyan-500/20 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-            
-            <!-- Logo & Brand -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-neonCyan via-brandBlue to-electricPurple p-0.5 shadow-lg shadow-cyan-500/30 flex items-center justify-center">
-                    <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
-                        <i class="fa-solid fa-shield-halved text-neonCyan text-xl"></i>
-                    </div>
-                </div>
-                <div>
-                    <h1 class="font-cyber font-black text-xl tracking-wider text-white neon-glow">HỒNG HẢI <span class="text-neonCyan">MMO</span></h1>
-                    <p class="text-[10px] text-gray-400 tracking-widest uppercase font-medium">Digital Services Ecosystem 2026</p>
-                </div>
-            </div>
-
-            <!-- Thanh tìm kiếm (Hỗ trợ phím tắt / hoặc Ctrl+K) -->
-            <div class="hidden md:flex flex-1 max-w-md relative">
-                <input type="text" id="searchInput" placeholder="Tìm kiếm dịch vụ, phần mềm (Nhấn '/' hoặc Ctrl+K)..." oninput="handleSearch(this.value)"
-                    class="w-full bg-darkBg/80 border border-cyan-500/30 rounded-xl px-4 py-2.5 pl-11 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-neonCyan focus:ring-1 focus:ring-neonCyan transition-all">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400"></i>
-                <div id="searchDropdown" class="absolute top-12 left-0 right-0 glass-panel rounded-xl mt-1 p-2 hidden z-50 max-h-80 overflow-y-auto"></div>
-            </div>
-
-            <!-- Menu Actions -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Đổi giao diện Sáng / Tối -->
-                <button onclick="toggleTheme()" title="Đổi giao diện Sáng/Tối" class="p-2.5 rounded-xl glass-card text-gray-300 hover:text-neonCyan transition">
-                    <i id="themeIcon" class="fa-solid fa-moon"></i>
-                </button>
-
-                <!-- Toàn màn hình (Fullscreen) -->
-                <button onclick="toggleFullscreen()" title="Chế độ toàn màn hình" class="p-2.5 rounded-xl glass-card text-gray-300 hover:text-neonCyan transition hidden sm:flex">
-                    <i class="fa-solid fa-expand"></i>
-                </button>
-
-                <!-- Yêu thích -->
-                <button onclick="toggleWishlistModal()" title="Sản phẩm yêu thích" class="relative p-2.5 rounded-xl glass-card text-gray-300 hover:text-neonCyan transition flex items-center gap-2">
-                    <i class="fa-solid fa-heart text-red-400"></i>
-                    <span id="wishlistBadge" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
-                </button>
-
-                <!-- Giỏ hàng -->
-                <button onclick="toggleCartModal()" title="Giỏ hàng" class="relative p-2.5 rounded-xl glass-card text-gray-300 hover:text-neonCyan transition flex items-center gap-2">
-                    <i class="fa-solid fa-cart-shopping text-lg"></i>
-                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-neonCyan text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
-                </button>
-
-                <!-- Tài khoản -->
-                <button onclick="openAuthModal()" class="glass-card px-4 py-2 rounded-xl text-sm font-semibold text-white hover:border-neonCyan transition flex items-center gap-2">
-                    <i class="fa-regular fa-user text-neonCyan"></i>
-                    <span id="accountBtnText" class="hidden sm:inline">Tài khoản</span>
-                </button>
-
-                <!-- Admin Panel Nâng Cao -->
-                <button onclick="switchView('admin')" class="bg-gradient-to-r from-brandBlue to-electricPurple text-white px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 shadow-lg shadow-purple-500/20 transition flex items-center gap-2">
-                    <i class="fa-solid fa-gauge-high"></i>
-                    <span class="hidden lg:inline">Admin Dashboard</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Menu danh mục sản phẩm -->
-        <div class="border-t border-cyan-500/10 bg-darkBg/90 backdrop-blur-md overflow-x-auto">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-6 py-2.5 text-sm whitespace-nowrap">
-                <button onclick="filterCategory('all')" class="cat-tab font-semibold text-neonCyan flex items-center gap-2 transition hover:text-neonCyan">
-                    <i class="fa-solid fa-globe"></i> Tất cả dịch vụ
-                </button>
-                <button onclick="filterCategory('facebook')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-brands fa-facebook text-blue-500"></i> Facebook
-                </button>
-                <button onclick="filterCategory('tiktok')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-brands fa-tiktok text-pink-500"></i> TikTok
-                </button>
-                <button onclick="filterCategory('youtube')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-brands fa-youtube text-red-500"></i> YouTube
-                </button>
-                <button onclick="filterCategory('social')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-solid fa-share-nodes text-purple-400"></i> Instagram & Telegram
-                </button>
-                <button onclick="filterCategory('software')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-solid fa-laptop-code text-cyan-400"></i> Phần mềm MMO
-                </button>
-                <button onclick="filterCategory('digital')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-solid fa-key text-yellow-400"></i> Tài khoản & Bản quyền
-                </button>
-                <button onclick="filterCategory('entertainment')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-solid fa-gamepad text-green-400"></i> Giải trí & Tiện ích
-                </button>
-                <button onclick="filterCategory('webhosting')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-solid fa-server text-indigo-400"></i> Website & Hosting
-                </button>
-                <button onclick="filterCategory('custom')" class="cat-tab text-gray-300 hover:text-neonCyan flex items-center gap-2 transition">
-                    <i class="fa-solid fa-handshake-angle text-orange-400"></i> Dịch vụ theo yêu cầu
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN VIEW CONTAINER -->
-    <main id="mainViewContainer" class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-
-        <!-- ================= VIEW: HOMEPAGE ================= -->
-        <div id="homeView" class="space-y-12">
-            
-            <!-- Banner Aurora lớn -->
-            <section class="relative rounded-3xl overflow-hidden glass-panel p-8 md:p-12 border border-cyan-500/30 shadow-2xl">
-                <div class="absolute right-0 top-0 w-1/2 h-full hidden lg:flex items-center justify-center opacity-30 pointer-events-none">
-                    <i class="fa-solid fa-microchip text-[260px] text-neonCyan"></i>
-                </div>
-                <div class="relative z-10 max-w-2xl space-y-6">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neonCyan/10 border border-neonCyan/30 text-neonCyan text-xs font-bold tracking-wider uppercase">
-                        <i class="fa-solid fa-sparkles"></i> Hệ sinh thái Marketplace Đẳng cấp 2026
-                    </div>
-                    <h2 class="font-cyber text-3xl sm:text-5xl font-black text-white leading-tight">
-                        TĂNG TRƯỞNG SỐ <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-brandBlue to-electricPurple">ĐA NHÀ BÁN HÀNG</span>
-                    </h2>
-                    <p class="text-gray-300 text-base sm:text-lg">
-                        Nền tảng thương mại dịch vụ số kết nối nhà cung cấp uy tín, giao hàng tự động qua API, thanh toán đối soát minh bạch và bảo mật tuyệt đối.
-                    </p>
-                    <div class="flex flex-wrap gap-4 pt-2">
-                        <button onclick="scrollToProducts()" class="bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-cyan-500/30 hover:opacity-90 transition flex items-center gap-2">
-                            <i class="fa-solid fa-rocket"></i> Khám phá sản phẩm
-                        </button>
-                        <button onclick="openCustomServiceModal()" class="glass-card px-8 py-3.5 rounded-xl font-semibold text-white hover:border-neonCyan transition flex items-center gap-2">
-                            <i class="fa-solid fa-headset text-neonCyan"></i> Đặt dịch vụ riêng
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Bộ đếm thống kê -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <div class="text-3xl font-cyber font-black text-neonCyan mb-1">99.9%</div>
-                    <div class="text-xs text-gray-400 font-medium">Giao hàng tự động API</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <div class="text-3xl font-cyber font-black text-brandBlue mb-1">150+</div>
-                    <div class="text-xs text-gray-400 font-medium">Nhà bán hàng đa quốc gia</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <div class="text-3xl font-cyber font-black text-electricPurple mb-1">24/7</div>
-                    <div class="text-xs text-gray-400 font-medium">AI Semantic Search & Support</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <div class="text-3xl font-cyber font-black text-green-400 mb-1">100%</div>
-                    <div class="text-xs text-gray-400 font-medium">Đối soát thanh toán thực</div>
-                </div>
-            </div>
-
-            <!-- Danh sách sản phẩm & Dịch vụ -->
-            <div id="productSection" class="space-y-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-cyan-500/20 pb-4">
-                    <div>
-                        <h3 id="categoryTitle" class="font-cyber text-2xl font-bold text-white flex items-center gap-3">
-                            <i class="fa-solid fa-box-open text-neonCyan"></i> Sản phẩm & Dịch vụ Nổi bật
-                        </h3>
-                        <p class="text-xs text-gray-400 mt-1">Lựa chọn các gói dịch vụ chất lượng từ hệ thống Multi-Vendor Marketplace</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <select id="sortSelect" onchange="sortProducts(this.value)" class="bg-darkBg border border-cyan-500/30 text-sm rounded-xl px-4 py-2 text-white focus:outline-none focus:border-neonCyan">
-                            <option value="default">Sắp xếp: Mặc định</option>
-                            <option value="price-asc">Giá: Thấp đến Cao</option>
-                            <option value="price-desc">Giá: Cao đến Thấp</option>
-                            <option value="popular">Độ phổ biến</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Grid Sản Phẩm -->
-                <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <!-- Render qua JS -->
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= VIEW: ADMIN DASHBOARD NÂNG CAO ================= -->
-        <div id="adminView" class="space-y-8 hidden">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cyan-500/20 pb-4">
-                <div>
-                    <h2 class="font-cyber text-3xl font-black text-white flex items-center gap-3">
-                        <i class="fa-solid fa-chart-line text-neonCyan"></i> DASHBOARD QUẢN TRỊ NÂNG CAO
-                    </h2>
-                    <p class="text-xs text-gray-400 mt-1">Quản lý doanh thu đối soát, lợi nhuận, tồn kho, hoa hồng nhà bán hàng & API giao hàng tự động</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="switchView('home')" class="glass-card px-4 py-2 rounded-xl text-sm font-semibold text-white hover:border-neonCyan transition">
-                        <i class="fa-solid fa-arrow-left"></i> Cửa hàng
-                    </button>
-                    <button onclick="exportAdvancedReport()" class="bg-neonCyan text-black px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 transition">
-                        <i class="fa-solid fa-file-excel"></i> Xuất Báo Cáo Tài Chính
-                    </button>
-                </div>
-            </div>
-
-            <!-- Thống kê tài chính nâng cao -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-neonCyan">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Doanh Thu Đã Đối Soát</div>
-                    <div class="text-2xl font-cyber font-black text-white mt-2">128,450,000 đ</div>
-                    <div class="text-xs text-green-400 mt-1"><i class="fa-solid fa-check-double"></i> Đã khớp ngân hàng 100%</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-brandBlue">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Lợi Nhuận Ròng Thực Tế</div>
-                    <div class="text-2xl font-cyber font-black text-white mt-2">42,100,000 đ</div>
-                    <div class="text-xs text-blue-400 mt-1">Sau khi trừ hoa hồng Vendor</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-electricPurple">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Tồn Kho & Khả Năng API</div>
-                    <div class="text-2xl font-cyber font-black text-white mt-2">99.8% API Ready</div>
-                    <div class="text-xs text-purple-400 mt-1">Tự động xử lý qua Webhook</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-yellow-400">
-                    <div class="text-xs text-gray-400 uppercase font-semibold">Hoa Hồng Multi-Vendor</div>
-                    <div class="text-2xl font-cyber font-black text-white mt-2">15,400,000 đ</div>
-                    <div class="text-xs text-yellow-400 mt-1">Chờ kỳ đối soát hàng tháng</div>
-                </div>
-            </div>
-
-            <!-- Bảng quản lý đơn hàng & API Giao hàng tự động -->
-            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/20 space-y-4">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-cyber text-xl font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-network-wired text-neonCyan"></i> Quản Lý Đơn Hàng & Giao Hàng Tự Động API
-                    </h3>
-                    <span class="text-xs bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-semibold">API Gateway Active</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-darkBg/80 text-gray-400 uppercase text-xs border-b border-cyan-500/20">
-                            <tr>
-                                <th class="p-3">Mã Đơn</th>
-                                <th class="p-3">Nhà Bán Hàng (Vendor)</th>
-                                <th class="p-3">Sản Phẩm Số</th>
-                                <th class="p-3">Trạng Thái API</th>
-                                <th class="p-3">Đối Soát Thanh Toán</th>
-                                <th class="p-3 text-center">Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminOrderTableBody" class="divide-y divide-cyan-500/10">
-                            <!-- Render bằng JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="glass-panel border-t border-cyan-500/20 mt-20 pt-12 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-cyan-500/10">
-            <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-neonCyan to-brandBlue flex items-center justify-center text-black font-bold">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <span class="font-cyber font-black text-lg text-white">HỒNG HẢI MMO</span>
-                </div>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    Hệ sinh thái Marketplace dịch vụ số và phần mềm MMO 2026. Tích hợp AI, giao hàng tự động API và thanh toán đối soát minh bạch.
-                </p>
-            </div>
-            <div>
-                <h4 class="font-cyber font-bold text-sm text-white mb-4 uppercase tracking-wider">Danh Mục</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#" onclick="filterCategory('facebook')" class="hover:text-neonCyan transition">Dịch vụ Facebook & Fanpage</a></li>
-                    <li><a href="#" onclick="filterCategory('tiktok')" class="hover:text-neonCyan transition">Phát triển Kênh TikTok</a></li>
-                    <li><a href="#" onclick="filterCategory('software')" class="hover:text-neonCyan transition">Phần mềm MMO & AI</a></li>
-                    <li><a href="#" onclick="filterCategory('webhosting')" class="hover:text-neonCyan transition">Website & Hosting cao cấp</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-cyber font-bold text-sm text-white mb-4 uppercase tracking-wider">Chính Sách</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#" class="hover:text-neonCyan transition">Chính sách bảo hành & Hoàn tiền</a></li>
-                    <li><a href="#" class="hover:text-neonCyan transition">Điều khoản Multi-Vendor Marketplace</a></li>
-                    <li><a href="#" class="hover:text-neonCyan transition">Cam kết bảo mật thông tin & API</a></li>
-                </ul>
-            </div>
-            <div class="space-y-3">
-                <h4 class="font-cyber font-bold text-sm text-white mb-4 uppercase tracking-wider">Cài Đặt PWA & Ứng Dụng</h4>
-                <button onclick="installPWA()" class="w-full bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-2.5 rounded-xl text-xs hover:opacity-90 transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-download"></i> Cài Đặt Ứng Dụng PWA
-                </button>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
-            <p>&copy; 2026 HỒNG HẢI MMO — DIGITAL SERVICES ECOSYSTEM. All rights reserved.</p>
-            <button onclick="scrollToTop()" class="mt-2 sm:mt-0 glass-card px-3 py-1.5 rounded-lg text-neonCyan hover:underline flex items-center gap-1">
-                <i class="fa-solid fa-arrow-up"></i> Lên đầu trang
-            </button>
-        </div>
-    </footer>
-
-    <!-- ================= MODALS ================= -->
-
-    <!-- Modal Yêu Thích (Wishlist) -->
-    <div id="wishlistModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-cyan-500/40 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleWishlistModal()" class="absolute top-6 right-6 text-gray-400 hover:text-neonCyan text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h3 class="font-cyber text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <i class="fa-solid fa-heart text-red-400"></i> Sản Phẩm Yêu Thích Của Bạn
-            </h3>
-            <div id="wishlistItemsList" class="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
-                <!-- Render qua JS -->
-            </div>
-        </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Đổi giao diện" title="Sáng/Tối">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="/cart" class="icon-btn" aria-label="Giỏ hàng">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="badge" id="cartBadge">0</span>
+      </a>
+      <a href="/login" class="btn btn-ghost login-btn">Đăng nhập</a>
+      <a href="/register" class="btn btn-primary">Đăng ký</a>
     </div>
+  </div>
+</header>
 
-    <!-- Modal Giỏ Hàng & Thanh Toán Thật -->
-    <div id="cartModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-cyan-500/40 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleCartModal()" class="absolute top-6 right-6 text-gray-400 hover:text-neonCyan text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h3 class="font-cyber text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <i class="fa-solid fa-cart-shopping text-neonCyan"></i> Giỏ Hàng & Thanh Toán
-            </h3>
-            <div id="cartItemsList" class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2"></div>
-            
-            <div class="flex gap-2 mb-6">
-                <input type="text" id="voucherInput" placeholder="Nhập mã voucher (vd: HONGHAI2026)" class="bg-darkBg border border-cyan-500/30 rounded-xl px-4 py-2.5 text-xs text-white flex-1 focus:outline-none focus:border-neonCyan">
-                <button onclick="applyVoucher()" class="bg-brandBlue text-white font-semibold px-5 py-2.5 rounded-xl text-xs hover:opacity-90 transition">Áp dụng</button>
-            </div>
-
-            <div class="glass-card p-4 rounded-2xl space-y-2 mb-6 text-sm">
-                <div class="flex justify-between text-gray-400"><span>Tạm tính:</span><span id="cartSubtotal">0 đ</span></div>
-                <div class="flex justify-between text-gray-400"><span>Giảm giá:</span><span id="cartDiscount" class="text-green-400">-0 đ</span></div>
-                <div class="flex justify-between text-white font-bold text-base pt-2 border-t border-cyan-500/10">
-                    <span>Tổng thanh toán đối soát:</span>
-                    <span id="cartTotal" class="text-neonCyan font-cyber text-lg">0 đ</span>
-                </div>
-            </div>
-
-            <!-- Thông tin chuyển khoản đối soát tự động -->
-            <div class="space-y-4 mb-6">
-                <h4 class="font-cyber font-bold text-sm text-white flex items-center gap-2">
-                    <i class="fa-solid fa-qrcode text-neonCyan"></i> Chuyển khoản ngân hàng đối soát tự động
-                </h4>
-                <div class="glass-card p-4 rounded-2xl text-xs space-y-2 border border-cyan-500/30">
-                    <div class="flex justify-between"><span class="text-gray-400">Ngân hàng:</span><span class="font-bold text-white">MB Bank (Quân Đội)</span></div>
-                    <div class="flex justify-between"><span class="text-gray-400">Số tài khoản:</span><span class="font-bold text-neonCyan select-all">888899992026</span></div>
-                    <div class="flex justify-between"><span class="text-gray-400">Nội dung chuyển khoản:</span><span class="font-bold text-yellow-400 select-all" id="bankMemoCode">HHMMO 8521</span></div>
-                </div>
-            </div>
-
-            <button onclick="checkoutOrder()" class="w-full bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-3.5 rounded-xl shadow-lg shadow-cyan-500/30 hover:opacity-90 transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-shield-check"></i> Xác Nhận Đặt Hàng & Kích Hoạt API Giao Hàng
-            </button>
-        </div>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge"><span class="dot"></span> Nền tảng MMO Enterprise 2026</div>
+      <h1>HỒNG HẢI MMO<br><span class="grad">Ultimate Enterprise</span></h1>
+      <p class="lead">Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam. 20 danh mục dịch vụ, thanh toán an toàn, xử lý đơn tự động, hỗ trợ 24/7.</p>
+      <div class="hero-actions">
+        <a href="/products" class="btn btn-primary">
+          Khám phá ngay
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/register" class="btn btn-ghost">Tạo tài khoản</a>
+      </div>
+      <div class="hero-stats">
+        <div><span class="stat-num">20+</span><span class="stat-label">Danh mục dịch vụ</span></div>
+        <div><span class="stat-num">24/7</span><span class="stat-label">Hỗ trợ khách hàng</span></div>
+        <div><span class="stat-num">100%</span><span class="stat-label">Bảo mật giao dịch</span></div>
+      </div>
     </div>
-
-    <!-- Modal Đăng Nhập / Tài Khoản Thật -->
-    <div id="authModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl max-w-md w-full p-8 border border-cyan-500/40 relative">
-            <button onclick="openAuthModal()" class="absolute top-6 right-6 text-gray-400 hover:text-neonCyan text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-neonCyan to-brandBlue mx-auto flex items-center justify-center text-black text-xl font-bold mb-3 shadow-lg shadow-cyan-500/30">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <h3 class="font-cyber text-2xl font-bold text-white">Xác Thực Tài Khoản Thật</h3>
-                <p class="text-xs text-gray-400 mt-1">Hệ thống phân quyền & Bảo mật phiên đăng nhập</p>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1 font-medium">Email hoặc Tên đăng nhập</label>
-                    <input type="text" id="loginEmail" placeholder="admin@honghaimmo.vn" class="w-full bg-darkBg border border-cyan-500/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-neonCyan">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1 font-medium">Mật khẩu (Băm an toàn)</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full bg-darkBg border border-cyan-500/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-neonCyan">
-                </div>
-                <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-3.5 rounded-xl shadow-lg shadow-cyan-500/30 hover:opacity-90 transition">
-                    Đăng Nhập An Toàn
-                </button>
-            </div>
-        </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="hero-card">
+        <div class="hero-card-icon">💎</div>
+        <h4>Gói Diamond Member</h4>
+        <p>Ưu đãi đặc quyền, hỗ trợ VIP, chiết khấu toàn hệ thống</p>
+        <div class="hero-card-price">Liên hệ báo giá</div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Nút Chatbot AI Thật & Cửa Sổ Chat -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button onclick="toggleChatbot()" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-neonCyan via-brandBlue to-electricPurple text-black shadow-2xl shadow-cyan-500/50 flex items-center justify-center text-2xl hover:scale-105 transition transform">
-            <i class="fa-solid fa-robot text-white"></i>
-        </button>
-        
-        <div id="chatbotWindow" class="absolute bottom-20 right-0 w-80 sm:w-96 glass-panel rounded-3xl border border-cyan-500/40 shadow-2xl hidden flex-col overflow-hidden transition-all">
-            <div class="bg-gradient-to-r from-blue-900 to-purple-900 p-4 border-b border-cyan-500/20 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-neonCyan/20 text-neonCyan flex items-center justify-center font-bold">
-                        <i class="fa-solid fa-robot"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-cyber font-bold text-sm text-white">Hồng Hải AI Assistant (Real API)</h4>
-                        <p class="text-[10px] text-green-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Sẵn sàng tư vấn ngữ nghĩa</p>
-                    </div>
-                </div>
-                <button onclick="toggleChatbot()" class="text-gray-300 hover:text-neonCyan"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div id="chatMessages" class="p-4 space-y-3 h-80 overflow-y-auto text-xs text-gray-300">
-                <div class="flex items-start gap-2">
-                    <div class="w-7 h-7 rounded-lg bg-neonCyan/20 text-neonCyan flex items-center justify-center shrink-0 font-bold"><i class="fa-solid fa-robot text-xs"></i></div>
-                    <div class="glass-card p-3 rounded-2xl rounded-tl-none max-w-[80%] text-white">
-                        Xin chào! Tôi là trợ lý AI thực tế của Hồng Hải MMO. Tôi hỗ trợ tìm kiếm ngữ nghĩa, tra cứu sản phẩm đa nhà bán hàng và thông báo đơn hàng trực tuyến.
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-3 border-t border-cyan-500/20 bg-darkBg/90 flex gap-2">
-                <input type="text" id="chatInput" placeholder="Nhập câu hỏi tìm kiếm ngữ nghĩa..." onkeypress="if(event.key==='Enter') sendAIQuery()" class="flex-1 bg-darkBg border border-cyan-500/30 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-neonCyan">
-                <button onclick="sendAIQuery()" class="bg-neonCyan text-black px-4 py-2 rounded-xl text-xs font-bold hover:opacity-90 transition"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
-        </div>
+<!-- ============ CATEGORIES ============ -->
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">20 <span class="accent">Danh mục</span> dịch vụ</h2>
+      <p class="section-sub">Đầy đủ giải pháp kỹ thuật số cho cá nhân và doanh nghiệp</p>
     </div>
+    <a href="/categories" class="section-link">Xem tất cả →</a>
+  </div>
+  <div class="categories" id="categoriesGrid"></div>
+</section>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer" class="fixed top-24 right-6 z-50 space-y-3 pointer-events-none"></div>
+<!-- ============ FEATURED PRODUCTS ============ -->
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">Sản phẩm <span class="accent">nổi bật</span></h2>
+      <p class="section-sub">Được khách hàng tin chọn nhiều nhất tháng này</p>
+    </div>
+    <a href="/products" class="section-link">Xem tất cả →</a>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
 
-    <!-- ================= JAVASCRIPT ================= -->
-    <script>
-        // Dữ liệu sản phẩm Multi-Vendor Marketplace
-        const products = [
-            {
-                id: 1,
-                name: "Gói Quản Lý & Phát Triển Fanpage Facebook Pro",
-                code: "FB-PRO-01",
-                category: "facebook",
-                vendor: "CyberMedia VN",
-                price: 1500000,
-                oldPrice: 2000000,
-                rating: 5.0,
-                reviewsCount: 142,
-                stock: "Sẵn sàng (API Connected)",
-                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
-                description: "Dịch vụ toàn diện giúp tối ưu hóa Fanpage Facebook, lên chiến lược nội dung chuẩn SEO từ nhà bán hàng CyberMedia."
-            },
-            {
-                id: 2,
-                name: "Phần Mềm Tự Động Hóa Nội Dung TikTok Automation",
-                code: "TT-AUTO-02",
-                category: "tiktok",
-                vendor: "MMO Software Group",
-                price: 890000,
-                oldPrice: 1200000,
-                rating: 4.9,
-                reviewsCount: 230,
-                stock: "Còn 85 license (Auto API Delivery)",
-                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
-                description: "Công cụ tự động hóa biên tập video ngắn TikTok bản quyền chính hãng."
-            },
-            {
-                id: 3,
-                name: "Bộ Công Cụ AI Content & SEO Marketing 2026",
-                code: "MMO-AI-04",
-                category: "software",
-                vendor: "AI Tech Global",
-                price: 2500000,
-                oldPrice: 3500000,
-                rating: 5.0,
-                reviewsCount: 310,
-                stock: "Sẵn kho 50 suất API",
-                image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80",
-                description: "Phần mềm tích hợp AI tiên tiến hỗ trợ viết content đa nền tảng và nghiên cứu từ khóa SEO."
-            },
-            {
-                id: 4,
-                name: "Thiết Kế Website Doanh Nghiệp & Landing Page Cyberpunk",
-                code: "WEB-PRO-06",
-                category: "webhosting",
-                vendor: "HongHai Web Studio",
-                price: 3200000,
-                oldPrice: 4500000,
-                rating: 5.0,
-                reviewsCount: 76,
-                stock: "Nhận 3 dự án / tuần",
-                image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
-                description: "Thiết kế website trọn gói chuẩn UI/UX hiện đại, tốc độ tải siêu nhanh tích hợp Chatbot AI."
-            }
-        ];
+<!-- ============ FEATURES ============ -->
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">Vì sao chọn <span class="accent">HỒNG HẢI MMO</span>?</h2>
+    </div>
+  </div>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <h4>Bảo mật đa lớp</h4>
+      <p>Xác thực 2 bước, mã hóa dữ liệu, phân quyền chặt chẽ theo tiêu chuẩn enterprise.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h4>Xử lý tự động</h4>
+      <p>Đơn hàng được xử lý tự động 24/7, rút ngắn thời gian chờ đợi của khách hàng.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💳</div>
+      <h4>Thanh toán an toàn</h4>
+      <p>Nạp ví qua cổng thanh toán uy tín, đối soát tự động, hoàn tiền minh bạch.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h4>Dịch vụ chất lượng</h4>
+      <p>Đội ngũ chuyên gia giàu kinh nghiệm, cam kết chất lượng và tiến độ.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🛡️</div>
+      <h4>Tuân thủ pháp lý</h4>
+      <p>Hoạt động theo quy định thương mại điện tử Việt Nam và điều khoản nền tảng.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎁</div>
+      <h4>Ưu đãi thành viên</h4>
+      <p>Hệ thống cấp bậc Bronze, Silver, Gold, Diamond với nhiều đặc quyền hấp dẫn.</p>
+    </div>
+  </div>
+</section>
 
-        let cart = [];
-        let wishlist = [];
-        let appliedDiscount = 0;
-        let currentFilter = 'all';
+<!-- ============ CTA ============ -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h2>Sẵn sàng khởi nghiệp cùng HỒNG HẢI MMO?</h2>
+    <p>Đăng ký tài khoản miễn phí, nạp tiền vào ví và bắt đầu sử dụng dịch vụ chỉ trong vài phút.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="/register" class="btn btn-primary">Đăng ký ngay</a>
+      <a href="/support" class="btn btn-ghost">Liên hệ tư vấn</a>
+    </div>
+  </div>
+</div>
 
-        let adminOrders = [
-            { id: "HHM-9821", vendor: "CyberMedia VN", product: "Gói Quản Lý Fanpage Facebook", apiStatus: "Đã giao qua API", payment: "Đã đối soát" },
-            { id: "HHM-9822", vendor: "MMO Software Group", product: "TikTok Automation Software", apiStatus: "Đang chờ webhook", payment: "Đã đối soát" }
-        ];
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">
+        <div class="logo-mark">H3</div>
+        <div class="logo-text">HỒNG HẢI <span>MMO ENTERPRISE 2026</span></div>
+      </a>
+      <p>Sàn dịch vụ kỹ thuật số và MMO hàng đầu Việt Nam. Cam kết chất lượng, bảo mật và minh bạch.</p>
+      <div class="socials" style="margin-top:18px">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="TikTok">♪</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="Telegram">✈</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Về chúng tôi</h5>
+      <a href="/about">Giới thiệu</a>
+      <a href="/news">Tin tức</a>
+      <a href="/contact">Liên hệ</a>
+      <a href="/faq">Câu hỏi thường gặp</a>
+    </div>
+    <div class="footer-col">
+      <h5>Chính sách</h5>
+      <a href="/terms">Điều khoản sử dụng</a>
+      <a href="/privacy">Chính sách bảo mật</a>
+      <a href="/refund-policy">Chính sách hoàn tiền</a>
+      <a href="/payment-policy">Chính sách giao dịch</a>
+    </div>
+    <div class="footer-col">
+      <h5>Hỗ trợ</h5>
+      <a href="/account/wallet">Ví tiền</a>
+      <a href="/account/orders">Đơn hàng</a>
+      <a href="/support">Trung tâm hỗ trợ</a>
+      <a href="/account">Tài khoản</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 HỒNG HẢI MMO. Bảo lưu mọi quyền. GPKD số: [đang cập nhật]</span>
+    <span>Made with 💙 in Vietnam</span>
+  </div>
+</footer>
 
-        window.onload = function() {
-            renderProducts(products);
-            renderAdminOrders();
-            loadDeviceTheme();
-            setupKeyboardShortcuts();
-        };
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-icon">ℹ️</div>
+    <h3 id="modalTitle">Thông báo</h3>
+    <p id="modalText">Nội dung thông báo.</p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal()">Đã hiểu</button>
+    </div>
+  </div>
+</div>
 
-        // Phím tắt tìm kiếm & đóng modal
-        function setupKeyboardShortcuts() {
-            document.addEventListener('keydown', function(e) {
-                if(e.key === '/' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
-                if(e.key === 'Escape') {
-                    closeAllModals();
-                }
-            });
-        }
+<script>
+/* ============ DỮ LIỆU MẪU (TĨNH) ============
+ * LƯU Ý: Đây chỉ là dữ liệu hiển thị giao diện.
+ * Khi có backend, thay thế bằng fetch() tới API thật.
+ */
+const CATEGORIES = [
+  {slug:'facebook', name:'Facebook', icon:'📘'},
+  {slug:'tiktok', name:'TikTok', icon:'🎵'},
+  {slug:'youtube', name:'YouTube', icon:'▶️'},
+  {slug:'instagram', name:'Instagram', icon:'📸'},
+  {slug:'telegram', name:'Telegram', icon:'✈️'},
+  {slug:'zalo', name:'Zalo', icon:'💬'},
+  {slug:'threads', name:'Threads', icon:'🧵'},
+  {slug:'x-twitter', name:'X / Twitter', icon:'🐦'},
+  {slug:'google', name:'Google', icon:'🔍'},
+  {slug:'quang-cao', name:'Quảng cáo', icon:'📢'},
+  {slug:'thiet-ke-website', name:'Thiết kế Web', icon:'🌐'},
+  {slug:'hosting', name:'Hosting', icon:'🖥️'},
+  {slug:'cong-cu-ai', name:'Công cụ AI', icon:'🤖'},
+  {slug:'thiet-ke-do-hoa', name:'Đồ họa', icon:'🎨'},
+  {slug:'san-xuat-video', name:'Sản xuất Video', icon:'🎬'},
+  {slug:'livestream', name:'Livestream', icon:'📡'},
+  {slug:'phan-mem', name:'Phần mềm', icon:'💿'},
+  {slug:'email-doanh-nghiep', name:'Email DN', icon:'📧'},
+  {slug:'thuong-hieu', name:'Thương hiệu', icon:'🏆'},
+  {slug:'goi-thanh-vien', name:'Gói thành viên', icon:'💎'}
+];
 
-        function closeAllModals() {
-            document.getElementById('cartModal').classList.add('hidden');
-            document.getElementById('cartModal').classList.remove('flex');
-            document.getElementById('wishlistModal').classList.add('hidden');
-            document.getElementById('wishlistModal').classList.remove('flex');
-            document.getElementById('authModal').classList.add('hidden');
-            document.getElementById('authModal').classList.remove('flex');
-        }
+const PRODUCTS = [
+  {id:'P001', slug:'thiet-ke-landing-page', name:'Thiết kế Landing Page chuyển đổi cao', cat:'Thiết kế Web', icon:'🌐', price:2500000, oldPrice:3500000, tag:'hot', rating:4.9, sold:342},
+  {id:'P002', slug:'quan-ly-fanpage', name:'Gói quản lý Fanpage 30 ngày', cat:'Facebook', icon:'📘', price:1500000, oldPrice:2000000, tag:'sale', rating:4.8, sold:521},
+  {id:'P003', slug:'dung-video-tiktok', name:'Dựng video TikTok viral 15s', cat:'TikTok', icon:'🎵', price:450000, oldPrice:600000, tag:'new', rating:4.9, sold:1288},
+  {id:'P004', slug:'hosting-business', name:'Hosting Business 1 năm - SSD NVMe', cat:'Hosting', icon:'🖥️', price:1200000, oldPrice:1800000, tag:'hot', rating:4.7, sold:203},
+  {id:'P005', slug:'chatbot-ai', name:'Chatbot AI đa kênh - Gói Pro', cat:'Công cụ AI', icon:'🤖', price:3500000, oldPrice:null, tag:'new', rating:5.0, sold:87},
+  {id:'P006', slug:'thiet-ke-logo', name:'Thiết kế Logo thương hiệu chuyên nghiệp', cat:'Đồ họa', icon:'🎨', price:800000, oldPrice:1200000, tag:'sale', rating:4.8, sold:456},
+  {id:'P007', slug:'email-doanh-nghiep', name:'Email doanh nghiệp 50 users', cat:'Email DN', icon:'📧', price:2000000, oldPrice:null, tag:null, rating:4.6, sold:142},
+  {id:'P008', slug:'goi-diamond', name:'Gói Diamond Member - 12 tháng', cat:'Gói thành viên', icon:'💎', price:9990000, oldPrice:15000000, tag:'hot', rating:5.0, sold:34}
+];
 
-        // Đổi giao diện Sáng / Tối và lưu thiết bị
-        function toggleTheme() {
-            const html = document.documentElement;
-            const icon = document.getElementById('themeIcon');
-            if(html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                icon.className = "fa-solid fa-sun text-yellow-500";
-                localStorage.setItem('honghai_theme', 'light');
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                icon.className = "fa-solid fa-moon";
-                localStorage.setItem('honghai_theme', 'dark');
-            }
-            showToast('Đã lưu lựa chọn giao diện trên thiết bị.');
-        }
+/* ============ HELPERS ============ */
+const fmt = n => new Intl.NumberFormat('vi-VN').format(n) + '₫';
 
-        function loadDeviceTheme() {
-            const saved = localStorage.getItem('honghai_theme');
-            if(saved === 'light') {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
-                document.getElementById('themeIcon').className = "fa-solid fa-sun text-yellow-500";
-            }
-        }
+function showModal(title, text){
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+}
+document.getElementById('modal').addEventListener('click', e => {
+  if(e.target.id === 'modal') closeModal();
+});
 
-        // Chế độ toàn màn hình
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    showToast("Trình duyệt không hỗ trợ chế độ toàn màn hình.");
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
+/* ============ RENDER CATEGORIES ============ */
+function renderCategories(){
+  const grid = document.getElementById('categoriesGrid');
+  grid.innerHTML = CATEGORIES.map(c => `
+    <a href="/categories/${c.slug}" class="cat-card">
+      <span class="cat-icon">${c.icon}</span>
+      <span class="cat-name">${c.name}</span>
+    </a>
+  `).join('');
+}
 
-        // Lên đầu trang
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
+/* ============ RENDER PRODUCTS ============ */
+function renderProducts(){
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = PRODUCTS.map(p => {
+    let tagHtml = '';
+    if(p.tag === 'hot') tagHtml = '<span class="product-tag tag-hot">🔥 Hot</span>';
+    else if(p.tag === 'new') tagHtml = '<span class="product-tag tag-new">✨ Mới</span>';
+    else if(p.tag === 'sale') tagHtml = '<span class="product-tag tag-sale">-Giảm giá</span>';
+    
+    return `
+      <div class="product-card">
+        <div class="product-thumb">
+          ${tagHtml}
+          <span>${p.icon}</span>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">${p.cat}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-meta">
+            <span class="stars">★★★★★</span>
+            <span>${p.rating} · Đã bán ${p.sold}</span>
+          </div>
+          <div class="product-price">
+            <span class="price-now">${fmt(p.price)}</span>
+            ${p.oldPrice ? `<span class="price-old">${fmt(p.oldPrice)}</span>` : ''}
+          </div>
+          <button class="product-btn" onclick="handleBuy('${p.id}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Thêm vào giỏ
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
 
-        // Yêu thích sản phẩm
-        function toggleWishlist(id) {
-            const item = products.find(p => p.id === id);
-            const index = wishlist.findIndex(w => w.id === id);
-            if(index > -1) {
-                wishlist.splice(index, 1);
-                showToast(`Đã xóa "${item.name}" khỏi danh sách yêu thích.`);
-            } else {
-                wishlist.push(item);
-                showToast(`Đã thêm "${item.name}" vào danh sách yêu thích!`);
-            }
-            document.getElementById('wishlistBadge').innerText = wishlist.length;
-            renderProducts(products);
-        }
+/* ============ ACTIONS ============ */
+function handleBuy(productId){
+  // KHÔNG tự cộng tiền, KHÔNG tự đặt hàng.
+  // Trong hệ thống thật: kiểm tra đăng nhập → gọi API /api/cart
+  showModal(
+    'Chưa kết nối Backend',
+    'Chức năng giỏ hàng cần máy chủ xác thực. Vui lòng đăng nhập và kết nối API /api/cart để sử dụng. Đây là bản giao diện frontend, không có giao dịch thật.'
+  );
+}
 
-        function toggleWishlistModal() {
-            const modal = document.getElementById('wishlistModal');
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
-            
-            const list = document.getElementById('wishlistItemsList');
-            list.innerHTML = '';
-            if(wishlist.length === 0) {
-                list.innerHTML = `<div class="text-center py-6 text-xs text-gray-400">Chưa có sản phẩm yêu thích nào.</div>`;
-                return;
-            }
-            wishlist.forEach(item => {
-                list.innerHTML += `
-                    <div class="flex items-center justify-between glass-card p-3 rounded-xl text-xs">
-                        <div class="flex items-center gap-3">
-                            <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
-                            <div>
-                                <h5 class="font-bold text-white">${item.name}</h5>
-                                <span class="text-neonCyan">${item.price.toLocaleString()} đ</span>
-                            </div>
-                        </div>
-                        <button onclick="addToCart(${item.id}); toggleWishlistModal();" class="bg-neonCyan text-black px-3 py-1.5 rounded-lg font-bold">Mua ngay</button>
-                    </div>
-                `;
-            });
-        }
+function handleSearch(){
+  const q = document.getElementById('searchInput').value.trim();
+  if(!q) return;
+  // Trong hệ thống thật: window.location.href = `/search?q=${encodeURIComponent(q)}`
+  showModal('Tìm kiếm', `Bạn đang tìm: "${q}". Trang tìm kiếm /search sẽ được triển khai ở file tiếp theo.`);
+}
 
-        // Render sản phẩm
-        function renderProducts(list) {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
-            if(list.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">Không tìm thấy sản phẩm phù hợp.</div>`;
-                return;
-            }
-            list.forEach(item => {
-                const isLiked = wishlist.some(w => w.id === item.id);
-                const card = document.createElement('div');
-                card.className = 'glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative';
-                card.innerHTML = `
-                    <div>
-                        <div class="relative overflow-hidden h-48">
-                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            <div class="absolute top-3 left-3 bg-darkBg/85 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-neonCyan border border-cyan-500/30 uppercase">
-                                ${item.category}
-                            </div>
-                            <button onclick="toggleWishlist(${item.id})" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-darkBg/80 flex items-center justify-center text-sm ${isLiked ? 'text-red-500' : 'text-gray-300'} hover:text-red-500 transition">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="p-5 space-y-2">
-                            <div class="flex items-center justify-between text-[11px] text-gray-400">
-                                <span>Vendor: <strong class="text-brandBlue">${item.vendor}</strong></span>
-                                <span class="text-yellow-400"><i class="fa-solid fa-star"></i> ${item.rating}</span>
-                            </div>
-                            <h4 class="font-cyber font-bold text-base text-white line-clamp-2">${item.name}</h4>
-                            <p class="text-xs text-gray-400 line-clamp-2">${item.description}</p>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0 space-y-3">
-                        <div class="flex items-baseline justify-between">
-                            <span class="font-cyber font-black text-lg text-neonCyan">${item.price.toLocaleString()} đ</span>
-                            <span class="text-xs text-gray-500 line-through">${item.oldPrice.toLocaleString()} đ</span>
-                        </div>
-                        <button onclick="addToCart(${item.id})" class="w-full bg-gradient-to-r from-neonCyan to-brandBlue text-black font-bold py-2.5 rounded-xl text-xs hover:opacity-90 transition text-center shadow-md shadow-cyan-500/20">
-                            <i class="fa-solid fa-cart-plus"></i> Chọn mua & API Giao Ngay
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
+/* Theme toggle */
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
 
-        // Lọc & Tìm kiếm
-        function filterCategory(cat) {
-            currentFilter = cat;
-            if(cat === 'all') renderProducts(products);
-            else renderProducts(products.filter(p => p.category === cat));
-        }
+/* Header scroll effect */
+window.addEventListener('scroll', () => {
+  const h = document.querySelector('.header');
+  if(window.scrollY > 20) h.style.boxShadow = '0 4px 24px rgba(0,0,0,0.3)';
+  else h.style.boxShadow = 'none';
+});
 
-        function handleSearch(keyword) {
-            const dropdown = document.getElementById('searchDropdown');
-            if(!keyword.trim()) { dropdown.classList.add('hidden'); return; }
-            const res = products.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()));
-            dropdown.innerHTML = res.length === 0 ? `<div class="p-3 text-xs text-gray-400 text-center">Không tìm thấy</div>` : '';
-            res.forEach(item => {
-                dropdown.innerHTML += `<div class="p-2 hover:bg-cyan-500/10 rounded-lg cursor-pointer flex justify-between text-xs text-white" onclick="addToCart(${item.id}); dropdown.classList.add('hidden');"><span>${item.name}</span><span class="text-neonCyan">${item.price.toLocaleString()} đ</span></div>`;
-            });
-            dropdown.classList.remove('hidden');
-        }
-
-        function sortProducts(type) {
-            let sorted = [...products];
-            if(type === 'price-asc') sorted.sort((a,b) => a.price - b.price);
-            else if(type === 'price-desc') sorted.sort((a,b) => b.price - a.price);
-            renderProducts(sorted);
-        }
-
-        function switchView(view) {
-            const home = document.getElementById('homeView');
-            const admin = document.getElementById('adminView');
-            if(view === 'home') { home.classList.remove('hidden'); admin.classList.add('hidden'); }
-            else if(view === 'admin') { home.classList.add('hidden'); admin.classList.remove('hidden'); }
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        // Giỏ hàng & Thanh toán
-        function addToCart(id) {
-            const item = products.find(p => p.id === id);
-            const found = cart.find(c => c.id === id);
-            if(found) found.qty++; else cart.push({...item, qty: 1});
-            updateCartUI();
-            showToast(`Đã thêm "${item.name}" vào giỏ hàng!`);
-        }
-
-        function updateCartUI() {
-            document.getElementById('cartBadge').innerText = cart.reduce((s, i) => s + i.qty, 0);
-            const list = document.getElementById('cartItemsList');
-            list.innerHTML = cart.length === 0 ? `<div class="text-center py-6 text-xs text-gray-400">Giỏ hàng trống</div>` : '';
-            let subtotal = 0;
-            cart.forEach(item => {
-                subtotal += item.price * item.qty;
-                list.innerHTML += `
-                    <div class="flex items-center justify-between glass-card p-3 rounded-xl text-xs">
-                        <div class="flex items-center gap-3">
-                            <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
-                            <div><h5 class="font-bold text-white">${item.name}</h5><span class="text-neonCyan">${item.price.toLocaleString()} đ x ${item.qty}</span></div>
-                        </div>
-                        <button onclick="cart = cart.filter(c => c.id !== ${item.id}); updateCartUI();" class="text-red-400"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-            document.getElementById('cartSubtotal').innerText = subtotal.toLocaleString() + ' đ';
-            document.getElementById('cartTotal').innerText = Math.max(0, subtotal - appliedDiscount).toLocaleString() + ' đ';
-            document.getElementById('bankMemoCode').innerText = 'HHMMO ' + Math.floor(1000 + Math.random() * 9000);
-        }
-
-        function toggleCartModal() {
-            const m = document.getElementById('cartModal');
-            m.classList.toggle('hidden'); m.classList.toggle('flex');
-            updateCartUI();
-        }
-
-        function applyVoucher() {
-            const code = document.getElementById('voucherInput').value.trim();
-            if(code === 'HONGHAI2026') {
-                appliedDiscount = 100000;
-                showToast('Áp dụng mã giảm giá thành công (-100,000 đ)!');
-                updateCartUI();
-            } else {
-                showToast('Mã voucher không hợp lệ.');
-            }
-        }
-
-        function checkoutOrder() {
-            if(cart.length === 0) return;
-            showToast('Đã ghi nhận đơn hàng! Hệ thống đang đối soát thanh toán & kích hoạt API giao hàng tự động.');
-            cart = []; appliedDiscount = 0;
-            toggleCartModal();
-            updateCartUI();
-        }
-
-        // Tài khoản thật
-        function openAuthModal() {
-            const m = document.getElementById('authModal');
-            m.classList.toggle('hidden'); m.classList.toggle('flex');
-        }
-
-        function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            if(!email) { showToast('Vui lòng nhập email đăng nhập.'); return; }
-            document.getElementById('accountBtnText').innerText = email.split('@')[0];
-            openAuthModal();
-            showToast('Đăng nhập thành công! Phiên bảo mật đã được thiết lập.');
-        }
-
-        // AI Thật (Semantic Search & Chatbot)
-        function toggleChatbot() {
-            const win = document.getElementById('chatbotWindow');
-            win.classList.toggle('hidden'); win.classList.toggle('flex');
-        }
-
-        function sendAIQuery() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if(!text) return;
-            const chatMessages = document.getElementById('chatMessages');
-            chatMessages.innerHTML += `<div class="flex justify-end"><div class="bg-brandBlue p-3 rounded-2xl text-white max-w-[80%]">${text}</div></div>`;
-            input.value = '';
-            setTimeout(() => {
-                chatMessages.innerHTML += `<div class="flex gap-2"><div class="w-7 h-7 rounded bg-neonCyan/20 text-neonCyan flex items-center justify-center"><i class="fa-solid fa-robot"></i></div><div class="glass-card p-3 rounded-2xl text-white max-w-[80%]">Hồng Hải AI đã phân tích ngữ nghĩa: Yêu cầu của bạn về "${text}" đã được định tuyến tự động đến nhà bán hàng tối ưu nhất.</div></div>`;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1000);
-        }
-
-        // PWA Cài đặt
-        function installPWA() {
-            showToast('PWA Ready: Bạn có thể cài đặt ứng dụng Hồng Hải MMO trực tiếp từ trình duyệt.');
-        }
-
-        function renderAdminOrders() {
-            const tbody = document.getElementById('adminOrderTableBody');
-            tbody.innerHTML = '';
-            adminOrders.forEach(ord => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-cyan-500/5 transition">
-                        <td class="p-3 font-bold text-neonCyan">${ord.id}</td>
-                        <td class="p-3 text-white">${ord.vendor}</td>
-                        <td class="p-3 text-gray-300">${ord.product}</td>
-                        <td class="p-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-500/20 text-green-400">${ord.apiStatus}</span></td>
-                        <td class="p-3 text-blue-400 font-semibold">${ord.payment}</td>
-                        <td class="p-3 text-center"><button onclick="showToast('Đã đồng bộ webhook API')" class="bg-neonCyan text-black px-3 py-1 rounded-lg text-xs font-bold">Kiểm tra API</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function exportAdvancedReport() {
-            showToast('Đang xuất báo cáo tài chính đối soát & hoa hồng CSV...');
-        }
-
-        function openCustomServiceModal() {
-            showToast('Mở biểu mẫu yêu cầu dịch vụ Multi-Vendor riêng.');
-        }
-
-        function scrollToProducts() {
-            document.getElementById('productSection').scrollIntoView({behavior: 'smooth'});
-        }
-
-        function showToast(msg) {
-            const c = document.getElementById('toastContainer');
-            const t = document.createElement('div');
-            t.className = 'glass-panel px-4 py-3 rounded-xl border border-cyan-500/40 text-xs text-white shadow-xl flex items-center gap-3 animate-fade-in pointer-events-auto';
-            t.innerHTML = `<i class="fa-solid fa-circle-check text-neonCyan text-base"></i><span>${msg}</span>`;
-            c.appendChild(t);
-            setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3500);
-        }
-    </script>
+/* ============ INIT ============ */
+renderCategories();
+renderProducts();
+document.getElementById('searchInput').addEventListener('keypress', e => {
+  if(e.key === 'Enter') handleSearch();
+});
+</script>
 </body>
 </html>
