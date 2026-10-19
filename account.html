@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tài khoản & Ví tiền — HỒNG HẢI MMO</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.acc-wrap{max-width:1000px;margin:0 auto;padding:40px 20px}
+.acc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px}
+.acc-card{background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--radius-lg);padding:30px;margin-bottom:20px;backdrop-filter:blur(12px)}
+.balance{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;color:var(--neon-cyan);margin-bottom:10px}
+.qr-box{background:white;padding:20px;border-radius:15px;display:inline-block;margin:20px 0}
+.qr-box img{width:250px;height:250px;object-fit:contain}
+.btn-deposit{background:var(--gradient-brand);color:#05060a;padding:15px 30px;border-radius:10px;font-weight:700;font-size:1.1rem;cursor:pointer;border:none;width:100%;margin-top:20px}
+.tabs-nav{display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--border-glass);padding-bottom:10px}
+.tabs-nav button{padding:10px 20px;background:none;border:none;color:var(--text-secondary);font-weight:600;cursor:pointer;font-size:1rem}
+.tabs-nav button.active{color:var(--neon-cyan);border-bottom:2px solid var(--neon-cyan)}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><div class="logo-mark">H3</div><div class="logo-text">HỒNG HẢI</div></a>
+    <div class="header-actions">
+      <a href="#" onclick="logout()" class="btn btn-ghost">Đăng xuất</a>
+    </div>
+  </div>
+</header>
+
+<div class="acc-wrap">
+  <div class="acc-header">
+    <div>
+      <h1 class="section-title">Xin chào, <span class="accent" id="userName">...</span></h1>
+      <p class="section-sub" id="userEmail">...</p>
+    </div>
+  </div>
+
+  <div class="acc-card">
+    <h3 style="margin-bottom:20px">💰 Ví tiền của bạn</h3>
+    <div class="balance" id="balanceText">0 ₫</div>
+    
+    <div class="tabs-nav">
+      <button class="active" onclick="switchTab('deposit')">Nạp tiền (Demo)</button>
+      <button onclick="switchTab('history')">Lịch sử</button>
+    </div>
+
+    <div id="tab-deposit">
+      <p style="margin-bottom:15px;color:var(--text-secondary)">Quét mã QR bên dưới để nạp tiền (Demo)</p>
+      <div class="qr-box">
+        <!-- BẠN THAY LINK ẢNH QR CỦA BẠN VÀO ĐÂY -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Demo_HongHaiMMO" alt="QR Chuyển khoản">
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:15px">(Đây là mã QR minh họa, bạn có thể thay bằng ảnh QR ngân hàng thật của bạn)</p>
+      
+      <button class="btn-deposit" onclick="fakeDeposit()">Tôi đã chuyển khoản (Cộng 100.000đ)</button>
+    </div>
+
+    <div id="tab-history" style="display:none">
+      <ul id="historyList" style="list-style:none;padding:0">
+        <li style="padding:15px 0;border-bottom:1px solid var(--border-glass);color:var(--text-muted)">Chưa có giao dịch nào.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// 1. Kiểm tra đăng nhập
+const currentUser = JSON.parse(localStorage.getItem('hhm_user'));
+if(!currentUser) {
+  alert('Vui lòng đăng nhập trước!');
+  window.location.href = 'login.html';
+}
+
+// 2. Hiển thị thông tin
+document.getElementById('userName').textContent = currentUser.fullname;
+document.getElementById('userEmail').textContent = currentUser.email;
+
+// 3. Cập nhật số dư
+function updateUI() {
+  let users = JSON.parse(localStorage.getItem('hhm_all_users')) || [];
+  let me = users.find(u => u.email === currentUser.email);
+  if(me) {
+    document.getElementById('balanceText').textContent = new Intl.NumberFormat('vi-VN').format(me.balance) + ' ₫';
+    localStorage.setItem('hhm_user', JSON.stringify(me)); // Cập nhật lại user
+  }
+}
+updateUI();
+
+// 4. Chức năng nạp tiền demo
+function fakeDeposit() {
+  let users = JSON.parse(localStorage.getItem('hhm_all_users')) || [];
+  let index = users.findIndex(u => u.email === currentUser.email);
+  
+  if(index !== -1) {
+    // Cộng 100.000đ
+    users[index].balance += 100000;
+    localStorage.setItem('hhm_all_users', JSON.stringify(users));
+    
+    // Lưu lịch sử
+    let history = JSON.parse(localStorage.getItem('hhm_history')) || [];
+    history.unshift({ date: new Date().toLocaleString('vi-VN'), amount: 100000, type: 'Nạp tiền QR' });
+    localStorage.setItem('hhm_history', JSON.stringify(history));
+    
+    updateUI();
+    renderHistory();
+    alert('Đã cộng 100.000đ vào ví demo của bạn!');
+  }
+}
+
+// 5. Chức năng chuyển tab
+function switchTab(tab) {
+  document.querySelectorAll('.tabs-nav button').forEach((b, i) => {
+    b.classList.toggle('active', (tab === 'deposit' && i === 0) || (tab === 'history' && i === 1));
+  });
+  document.getElementById('tab-deposit').style.display = tab === 'deposit' ? 'block' : 'none';
+  document.getElementById('tab-history').style.display = tab === 'history' ? 'block' : 'none';
+}
+
+// 6. Hiểnassets thị lịch/app sử
+function renderHistory() {
+  let history = JSON.parse(localStorage.getItem('hhm_history')) || [];
+  const list = document.getElementById('historyList');
+  if(history.length === 0) {
+    list.innerHTML = '<li style="padding:15px 0;border-bottom:1px solid var(--border-glass);color:var(--text-muted)">Chưa có giao dịch nào.</li>';
+    return;
+  }
+  list.innerHTML = history.map(h => `
+    <li style="padding:15px 0;border-bottom:1px solid var(--border-glass);display:flex;justify-content:space-between">
+      <div>
+        <div style="font-weight:600;color:var(--text-primary)">${h.type}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">${h.date}</div>
+      </div>
+      <div style="color:var(--neon-cyan);font-weight:700">+${new Intl.NumberFormat('vi-VN').format(h.amount)} ₫</div>
+    </li>
+  `).join('');
+}
+renderHistory();
+
+function logout() {
+  localStorage.removeItem('hhm_user');
+  window.location.href = 'login.html';
+}
+</script>
+</body>
+</html>
