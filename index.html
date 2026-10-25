@@ -1701,13 +1701,40 @@ if(nav&&!document.getElementById('hhNoticeButton')){
 }
 
 /* Thay sản phẩm cũ bằng 6 mục mới gồm 4 loại tài khoản và 2 dịch vụ */
-try{
- localStorage.setItem(HH_PRODUCTS_KEY,JSON.stringify(hhProducts));
-}catch(e){}
-if(typeof products!=='undefined'){
- products=hhProducts.map(p=>({...p}));
- if(typeof renderProducts==='function')renderProducts();
- if(typeof updateCategoryCounts==='function')updateCategoryCounts();
+/* BỔ SUNG 6 SẢN PHẨM, GIỮ NGUYÊN SẢN PHẨM CŨ */
+try {
+    const existingProducts = typeof products !== 'undefined'
+        && Array.isArray(products)
+        ? products.slice()
+        : [];
+
+    const existingIds = new Set(
+        existingProducts.map(p => Number(p.id))
+    );
+
+    hhProducts.forEach(product => {
+        if (!existingIds.has(Number(product.id))) {
+            existingProducts.push({ ...product });
+            existingIds.add(Number(product.id));
+        }
+    });
+
+    products = existingProducts;
+
+    localStorage.setItem(
+        HH_PRODUCTS_KEY,
+        JSON.stringify(products)
+    );
+
+    if (typeof renderProducts === 'function') {
+        renderProducts();
+    }
+
+    if (typeof updateCategoryCounts === 'function') {
+        updateCategoryCounts();
+    }
+} catch (error) {
+    console.error('Lỗi bổ sung sản phẩm:', error);
 }
 
 /* Hiển thị nút hành động riêng cho hai dịch vụ */
