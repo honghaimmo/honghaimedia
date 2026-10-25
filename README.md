@@ -1,1 +1,0 @@
-HỒNG HẢI MEDIA LUÔN ĐỒNG HÀNH CÙNG BẠN 
