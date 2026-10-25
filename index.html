@@ -1751,7 +1751,16 @@ function hhAddServiceButtons(){
   }
  });
 }
-const oldRender=window.renderProducts;
+const oldRender = window.renderProducts;
+
+if (typeof oldRender === 'function') {
+    window.renderProducts = function () {
+        oldRender();
+        hhAddServiceButtons();
+    };
+
+    setTimeout(hhAddServiceButtons, 100);
+}
 if(typeof oldRender==='function'){
  window.renderProducts=function(){oldRender();hhAddServiceButtons()};
  setTimeout(hhAddServiceButtons,0);
