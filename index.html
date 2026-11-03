@@ -347,193 +347,6 @@ footer a{display:block;margin:7px 0}
  .footer-grid{grid-template-columns:1fr 1fr}
  .footer-grid>div:first-child{grid-column:1/-1}
 }
-  
-/* ACCOUNT CENTER */
-.account-modal{width:min(650px,100%)}
-.account-tabs{
- display:flex;gap:7px;overflow-x:auto;
- padding:13px 0;margin-bottom:12px;
-}
-.account-tabs button{
- flex-shrink:0;border:1px solid #e5eee8;
- background:#f3faf6;color:#087b59;
- padding:9px 12px;border-radius:10px;
- font-size:10px;font-weight:800;
-}
-.account-tabs button:hover{
- background:#00bd83;color:white;
-}
-.account-form{display:grid;gap:12px}
-.account-form input{
- width:100%;padding:13px;border:1px solid #dce9e1;
- border-radius:11px;outline:none;font-size:12px;
-}
-.account-form input:focus{border-color:#00bd83}
-.account-info{
- background:#f0faf4;border-radius:13px;
- padding:15px;margin:10px 0;font-size:12px;
-}
-.account-row{
- padding:13px 0;border-bottom:1px solid #e8f0eb;
- display:flex;justify-content:space-between;gap:10px;
- font-size:12px;
-}
-.account-muted{font-size:11px;color:#78877f}
-.account-action{
- border:0;border-radius:10px;padding:12px;
- background:#00bd83;color:white;font-weight:800;
- font-size:12px;
-}
-.theme-tools{
- position:fixed;right:13px;bottom:18px;z-index:90;
- display:flex;flex-direction:column;gap:8px;
-}
-.theme-tools button{
- width:43px;height:43px;border:1px solid #dcebe2;
- border-radius:14px;background:white;
- box-shadow:0 5px 20px #0001;font-size:19px;
-}
-body.dark-mode{
- --bg:#101a18;--white:#172522;--ink:#ecfff5;
- --line:#2a4037;--muted:#a3b9ad;
- background:#101a18;color:#ecfff5;
-}
-body.dark-mode .product,
-body.dark-mode .category,
-body.dark-mode .stat,
-body.dark-mode .benefit,
-body.dark-mode .searchbox,
-body.dark-mode .sort{
- background:#172522;color:#ecfff5;border-color:#2a4037;
-}
-body.dark-mode .header,
-body.dark-mode header{background:#14221fee;border-color:#2a4037}
-body.dark-mode .modal,
-body.dark-mode .drawer{background:#172522;color:#ecfff5}
-body.dark-mode .account-form input{background:#101a18;color:white}
-body.compact-layout .grid{grid-template-columns:repeat(5,1fr);gap:10px}
-body.compact-layout .product-image{height:115px}
-@media(max-width:850px){
- body.compact-layout .grid{grid-template-columns:repeat(2,1fr)}
-}
-  /* PRODUCT EYE BUTTON */
-.product-image{position:relative}
-
-.eye-view{
- position:absolute;
- right:12px;
- bottom:12px;
- width:45px;
- height:45px;
- border:1px solid #ffffffaa;
- border-radius:50%;
- background:linear-gradient(135deg,#00e6a0,#397cff);
- color:white;
- font-size:21px;
- display:flex;
- align-items:center;
- justify-content:center;
- box-shadow:0 0 12px #00e6a0,0 0 25px #397cff88;
- animation:eyePulse 1.8s infinite;
- z-index:5;
-}
-
-@keyframes eyePulse{
- 0%,100%{transform:scale(1);box-shadow:0 0 10px #00e6a0}
- 50%{transform:scale(1.12);box-shadow:0 0 25px #00e6a0,0 0 35px #397cff}
-}
-
-.product-detail-modal{
- width:min(760px,100%);
- animation:detailAppear .35s ease;
-}
-
-@keyframes detailAppear{
- from{opacity:0;transform:translateY(25px) scale(.96)}
- to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-.product-gallery{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:10px;
- margin:15px 0;
-}
-
-.product-gallery img{
- width:100%;
- height:145px;
- object-fit:cover;
- border-radius:13px;
- border:1px solid #e5eee8;
-}
-
-.gallery-placeholder{
- min-height:110px;
- display:flex;
- align-items:center;
- justify-content:center;
- background:linear-gradient(135deg,#e5fff1,#e8edff);
- border-radius:13px;
- font-size:35px;
-}
-
-.detail-description{
- background:#f1faf5;
- padding:15px;
- border-radius:14px;
- font-size:12px;
- margin:12px 0;
-}
-
-.detail-quantity{
- display:flex;
- align-items:center;
- gap:12px;
- margin:17px 0;
-}
-
-.detail-quantity button{
- width:38px;
- height:38px;
- border:0;
- border-radius:10px;
- background:#e9faf2;
- color:#07865f;
- font-size:20px;
- font-weight:900;
-}
-
-.detail-quantity strong{
- min-width:30px;
- text-align:center;
-}
-
-.ai-assistant{
- padding:15px;
- border:1px solid #b8f1d5;
- border-radius:16px;
- background:linear-gradient(135deg,#effff7,#f0f4ff);
- margin:15px 0;
-}
-
-.ai-assistant button{
- border:0;
- border-radius:10px;
- padding:10px 13px;
- margin:5px 5px 0 0;
- background:#087f5b;
- color:white;
- font-weight:800;
- font-size:11px;
-}
-
-.ai-assistant .stop-voice{background:#455b54}
-
-@media(max-width:520px){
- .product-gallery img{height:95px}
- .product-detail-modal{padding:17px}
-}
 </style>
 </head>
 
@@ -560,9 +373,7 @@ body.compact-layout .product-image{height:115px}
    <button class="iconbtn" onclick="openCart()" aria-label="Giỏ hàng" style="position:relative">
     🛒 <span id="cartCount" class="cart-count">0</span>
    </button>
-   <button class="btn btn-light" onclick="openAccount('login')">Đăng nhập</button>
-<button class="btn btn-green" onclick="openAccount('register')">Đăng ký</button>
-<button class="iconbtn" onclick="openAccount('profile')" title="Tài khoản">👤</button>
+   <a class="btn btn-green" href="./login.html">Đăng nhập</a>
    <button class="iconbtn mobilemenu" onclick="document.getElementById('categories').scrollIntoView()">☰</button>
   </div>
  </div>
@@ -667,35 +478,6 @@ body.compact-layout .product-image{height:115px}
 </main>
 
 <footer>
-  <!-- ACCOUNT CENTER -->
-<div class="modal-wrap" id="accountWrap">
- <div class="modal account-modal">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-   <div>
-    <div class="kicker">HONG HAI ACCOUNT CENTER</div>
-    <h2 id="accountTitle">Trung tâm tài khoản</h2>
-   </div>
-   <button class="close" onclick="closeAccount()">×</button>
-  </div>
-
-  <div class="account-tabs">
-   <button onclick="accountTab('login')">Đăng nhập</button>
-   <button onclick="accountTab('register')">Đăng ký</button>
-   <button onclick="accountTab('profile')">Hồ sơ</button>
-   <button onclick="accountTab('wallet')">Ví tiền</button>
-   <button onclick="accountTab('history')">Lịch sử nạp</button>
-   <button onclick="accountTab('verify')">Kiểm tra tài khoản</button>
-  </div>
-
-  <div id="accountContent"></div>
- </div>
-</div>
-
-<!-- THEME CONTROLS -->
-<div class="theme-tools">
- <button onclick="toggleTheme()" title="Đổi giao diện">🎨</button>
- <button onclick="toggleLayout()" title="Đổi bố cục">▦</button>
-</div>
  <div class="container">
   <div class="footer-grid">
    <div><h3>HỒNG HẢI MARKETPLACE</h3><p>Không gian mua sắm sản phẩm số, tài nguyên kỹ thuật số và dịch vụ công nghệ.</p><p style="margin-top:12px">Chỉ cung cấp sản phẩm/dịch vụ có quyền kinh doanh hợp pháp.</p></div>
@@ -804,12 +586,7 @@ function renderProducts(){
     <p class="product-desc">${escapeHTML(p.description)}</p>
     <div class="product-bottom">
      <div class="price">${Number(p.price)>0?money(p.price):"Liên hệ"}<small>Giá theo thông tin niêm yết</small></div>
-   <button class="eye-view"
- onclick="showProduct('${escapeHTML(p.id)}')"
- title="Xem chi tiết sản phẩm"
- aria-label="Xem chi tiết sản phẩm">
- 👁
-</button>
+     <button class="add" onclick="showProduct('${escapeHTML(p.id)}')">Chi tiết ↗</button>
     </div>
    </div>
   </article>`).join("");
@@ -827,150 +604,28 @@ document.querySelectorAll(".category").forEach(button=>{
 document.getElementById("searchInput").addEventListener("input",renderProducts);
 document.getElementById("sortSelect").addEventListener("change",renderProducts);
 
-let detailQuantity = 1;
-
 function showProduct(id){
  selectedProduct=products.find(p=>String(p.id)===String(id));
  if(!selectedProduct)return;
-
- detailQuantity=1;
-
- const p=selectedProduct;
- const images=Array.isArray(p.images)?p.images.slice(0,3):[];
-
- const gallery=images.length
- ? images.map(src=>`
-    <img src="${escapeHTML(src)}"
-         alt="${escapeHTML(p.name)}"
-         onerror="this.style.display='none'">
-   `).join("")
- : `
-   <div class="gallery-placeholder">${escapeHTML(p.emoji||"📦")}</div>
-   <div class="gallery-placeholder">🖼️</div>
-   <div class="gallery-placeholder">✨</div>
- `;
-
- document.getElementById("modalTitle").textContent=p.name;
-
- const modal=document.querySelector("#modalWrap .modal");
- modal.classList.add("product-detail-modal");
-
+ document.getElementById("modalTitle").textContent=selectedProduct.name;
  document.getElementById("modalContent").innerHTML=`
-  <div class="product-gallery">
-   ${gallery}
-  </div>
-
-  <div class="kicker">${escapeHTML(p.label||"SẢN PHẨM")}</div>
-  <h2>${escapeHTML(p.name)}</h2>
-
-  <div class="detail-description">
-   ${escapeHTML(p.description||"Thông tin sản phẩm đang được cập nhật.")}
-  </div>
-
-  <p><b>Mã sản phẩm:</b> ${escapeHTML(p.id)}</p>
-  <p><b>Danh mục:</b> ${escapeHTML(p.category||"Khác")}</p>
-
-  <h2 style="color:#078c65;margin-top:12px">
-   ${Number(p.price)>0?money(p.price):"Liên hệ báo giá"}
-  </h2>
-
-  <div class="ai-assistant">
-   <b>🤖 Trợ lý giới thiệu sản phẩm Hồng Hải</b>
-   <p id="voiceStatus">Tôi có thể đọc giới thiệu sản phẩm này cho bạn nghe.</p>
-   <button onclick="speakProduct()">🔊 Nghe giới thiệu</button>
-   <button class="stop-voice" onclick="stopProductVoice()">⏹ Dừng đọc</button>
-  </div>
-
-  <b>Chọn số lượng:</b>
-  <div class="detail-quantity">
-   <button onclick="changeDetailQuantity(-1)">−</button>
-   <strong id="detailQuantity">1</strong>
-   <button onclick="changeDetailQuantity(1)">+</button>
-  </div>
-
-  <p class="account-muted">
-   Số lượng và tồn kho thực tế cần được máy chủ xác nhận khi đặt hàng.
-  </p>
- `;
-
- document.getElementById("modalAdd").textContent="🛒 Thêm vào giỏ hàng";
-
+  <p><b>Danh mục:</b> ${escapeHTML(selectedProduct.label)}</p>
+  <p><b>Mã sản phẩm:</b> ${escapeHTML(selectedProduct.id)}</p>
+  <p>${escapeHTML(selectedProduct.description)}</p>
+  <p><b>Giá:</b> ${Number(selectedProduct.price)>0?money(selectedProduct.price):"Vui lòng liên hệ để nhận báo giá"}</p>
+  <p style="background:#effaf4;padding:12px;border-radius:10px">
+   Thông tin minh họa hiện tại. Sản phẩm chỉ được bán sau khi quản trị viên xác minh nguồn gốc, tồn kho và giá.
+  </p>`;
  document.getElementById("modalAdd").onclick=()=>{
-  addToCart(p.id,detailQuantity);
-  stopProductVoice();
+  addToCart(selectedProduct.id);
   closeModal();
  };
-
  document.getElementById("modalWrap").classList.add("show");
-}
-
-function changeDetailQuantity(amount){
- detailQuantity=Math.max(1,detailQuantity+amount);
- document.getElementById("detailQuantity").textContent=detailQuantity;
-}
-
-function speakProduct(){
- if(!("speechSynthesis" in window)){
-  alert("Trình duyệt của bạn chưa hỗ trợ đọc giọng nói.");
-  return;
- }
-
- stopProductVoice();
-
- const p=selectedProduct;
- if(!p)return;
-
- const textToSpeak=
-  "Xin chào quý khách. Chào mừng đến với Hồng Hải Marketplace. "+
-  "Sau đây là phần giới thiệu sản phẩm "+p.name+". "+
-  (p.description||"Thông tin sản phẩm đang được cập nhật.")+
-  ". Giá sản phẩm là "+
-  (Number(p.price)>0?money(p.price):"vui lòng liên hệ để báo giá")+
-  ". Quý khách có thể chọn số lượng và thêm sản phẩm vào giỏ hàng. "+
-  "Cảm ơn quý khách đã tin tưởng Hồng Hải Marketplace.";
-
- const speech=new SpeechSynthesisUtterance(textToSpeak);
- speech.lang="vi-VN";
- speech.rate=0.92;
- speech.pitch=1.05;
- speech.volume=1;
-
- speech.onstart=()=>{
-  const status=document.getElementById("voiceStatus");
-  if(status)status.textContent="🔊 Trợ lý đang giới thiệu sản phẩm...";
- };
-
- speech.onend=()=>{
-  const status=document.getElementById("voiceStatus");
-  if(status)status.textContent="Đã giới thiệu xong sản phẩm.";
- };
-
- window.speechSynthesis.speak(speech);
-}
-
-function stopProductVoice(){
- if("speechSynthesis" in window){
-  window.speechSynthesis.cancel();
- }
 }
 function closeModal(){
  document.getElementById("modalWrap").classList.remove("show");
 }
-function addToCart(id,quantity=1){
- const p=products.find(x=>String(x.id)===String(id));
- if(!p)return;
-
- quantity=Math.max(1,Math.floor(Number(quantity)||1));
-
- const existing=cart.find(x=>String(x.id)===String(id));
-
- if(existing)existing.qty+=quantity;
- else cart.push({id:p.id,qty:quantity});
-
- saveCart();
- renderCart();
- openCart();
-}
+function addToCart(id){
  const p=products.find(x=>String(x.id)===String(id));
  if(!p)return;
  const existing=cart.find(x=>String(x.id)===String(id));
@@ -1037,107 +692,6 @@ async function loadProducts(){
   renderProducts();
   console.warn("Không kết nối được API sản phẩm:",error);
  }
-}
-  
-/* HONG HAI ACCOUNT CENTER - TEMPORARY UI */
-function openAccount(tab){
- document.getElementById("accountWrap").classList.add("show");
- accountTab(tab);
-}
-function closeAccount(){
- document.getElementById("accountWrap").classList.remove("show");
-}
-function accountTab(tab){
- const content=document.getElementById("accountContent");
- const title=document.getElementById("accountTitle");
-
- const views={
- login:`
-  <form class="account-form" onsubmit="temporaryAccountNotice(event)">
-   <input type="email" placeholder="Email của bạn" required>
-   <input type="password" placeholder="Mật khẩu" required>
-   <button class="account-action">Đăng nhập</button>
-   <p class="account-muted">Đăng nhập sẽ được kích hoạt khi kết nối API xác thực.</p>
-  </form>`,
- register:`
-  <form class="account-form" onsubmit="temporaryAccountNotice(event)">
-   <input placeholder="Họ và tên" required>
-   <input type="email" placeholder="Địa chỉ email" required>
-   <input type="password" placeholder="Tạo mật khẩu" minlength="8" required>
-   <input type="password" placeholder="Nhập lại mật khẩu" minlength="8" required>
-   <button class="account-action">Tạo tài khoản</button>
-   <p class="account-muted">Biểu mẫu tạm thời, chưa tạo tài khoản trên máy chủ.</p>
-  </form>`,
- profile:`
-  <div class="account-info">
-   <h3>👤 Hồ sơ khách hàng</h3>
-   <p>Trạng thái: Chưa đăng nhập</p>
-   <p>Email: Chưa có dữ liệu</p>
-   <p>Số điện thoại: Chưa có dữ liệu</p>
-  </div>
-  <p class="account-muted">Đăng nhập để xem hồ sơ thật của bạn sau khi API được kết nối.</p>`,
- wallet:`
-  <div class="account-info">
-   <h3>💳 Ví Hồng Hải</h3>
-   <h2>Chưa có dữ liệu số dư</h2>
-   <p>Không thể kiểm tra số dư khi chưa đăng nhập.</p>
-  </div>
-  <p class="account-muted">Nạp tiền và thanh toán cần xác minh từ máy chủ.</p>`,
- history:`
-  <h3>📜 Lịch sử nạp tiền</h3>
-  <div class="account-row"><b>Mã giao dịch</b><b>Trạng thái</b></div>
-  <div class="account-info">Chưa có dữ liệu lịch sử nạp tiền. Hãy đăng nhập và kết nối API để xem giao dịch thật.</div>`,
- verify:`
-  <h3>🔎 Kiểm tra tài khoản</h3>
-  <div class="account-form">
-   <input id="checkEmail" type="email" placeholder="Nhập email tài khoản">
-   <button class="account-action" onclick="checkAccount()">Kiểm tra</button>
-   <div id="checkResult" class="account-info">
-    Chức năng cần API xác thực tài khoản.
-   </div>
-  </div>`
- };
-
- const names={
- login:"Đăng nhập",
- register:"Đăng ký tài khoản",
- profile:"Hồ sơ cá nhân",
- wallet:"Ví tiền",
- history:"Lịch sử nạp tiền",
- verify:"Kiểm tra tài khoản"
- };
-
- title.textContent=names[tab]||"Tài khoản";
- content.innerHTML=views[tab]||views.profile;
-}
-function temporaryAccountNotice(event){
- event.preventDefault();
- alert("Giao diện tài khoản đang ở chế độ tạm. Chưa gửi dữ liệu và chưa tạo tài khoản. Cần kết nối API xác thực để sử dụng.");
-}
-function checkAccount(){
- const email=document.getElementById("checkEmail").value.trim();
- const result=document.getElementById("checkResult");
- if(!email){
-  result.textContent="Vui lòng nhập email.";
-  return;
- }
- result.textContent="Chưa thể kiểm tra tài khoản: hệ thống chưa kết nối API xác thực.";
-}
-function toggleTheme(){
- document.body.classList.toggle("dark-mode");
- localStorage.setItem("hh_theme",
-  document.body.classList.contains("dark-mode")?"dark":"light");
-}
-function toggleLayout(){
- document.body.classList.toggle("compact-layout");
- localStorage.setItem("hh_layout",
-  document.body.classList.contains("compact-layout")?"compact":"normal");
-}
-if(localStorage.getItem("hh_theme")==="dark"){
- document.body.classList.add("dark-mode");
-}
-if(localStorage.getItem("hh_layout")==="compact"){
- document.body.classList.add("compact-layout");
 }
 renderCart();
 loadProducts();
