@@ -1275,11 +1275,11 @@ function generateDepositQR() {
 
  const user = getCurrentUser();
  const memo = `${user.name} ${amount}`;
- const bankId = "MB";
+ const bankId = "ZALOPAY";
  const accountNo = "0866057398";
- const accountName = "BUIDUCLONG";
+ const accountName = "ZALOPAY_DANGHONGHAI";
 
- const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(memo)}&accountName=${encodeURIComponent(accountName)}`;
+  const qrUrl = "https://raw.githubusercontent.com/honghaimmo/honghaimedia/main/IMG_2303.jpeg";
 
  document.getElementById("depositQrImg").src = qrUrl;
  document.getElementById("depositQrAmount").textContent = money(amount);
