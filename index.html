@@ -442,7 +442,9 @@ body.compact-layout .product-image{height:115px}
    <button class="iconbtn" onclick="openCart()" aria-label="Giỏ hàng" style="position:relative">
     🛒 <span id="cartCount" class="cart-count">0</span>
    </button>
-   <a class="btn btn-green" href="./login.html">Đăng nhập</a>
+   <button class="btn btn-light" onclick="openAccount('login')">Đăng nhập</button>
+<button class="btn btn-green" onclick="openAccount('register')">Đăng ký</button>
+<button class="iconbtn" onclick="openAccount('profile')" title="Tài khoản">👤</button>
    <button class="iconbtn mobilemenu" onclick="document.getElementById('categories').scrollIntoView()">☰</button>
   </div>
  </div>
