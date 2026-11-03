@@ -162,20 +162,20 @@ body.theme-dark .hero-wrap{
 }
 .dot{width:7px;height:7px;background:#64ffc1;border-radius:50%;box-shadow:0 0 12px #64ffc1}
 .hero h1{
- font-size:clamp(32px,5.5vw,60px);
- line-height:1.08;letter-spacing:-2.5px;
- margin:20px 0 14px;font-weight:900;
+ font-size:clamp(28px,4.5vw,48px);
+ line-height:1.15;letter-spacing:-1.5px;
+ margin:16px 0 12px;font-weight:900;
 }
 .hero h1 span{
  background:linear-gradient(90deg,#8affc9,#c8e3ff);
  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.hero p{max-width:530px;color:#e2fff2;font-size:14px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.hero-actions .btn{padding:13px 20px}
+.hero p{max-width:530px;color:#e2fff2;font-size:13px;line-height:1.5}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.hero-actions .btn{padding:11px 16px}
 .btn-white{background:white;color:#087a58}
 .btn-outline{background:#ffffff13;color:white;border:1px solid #ffffff60}
-.hero-note{font-size:11px;color:#c8f4df;margin-top:20px;display:flex;align-items:center;gap:6px}
+.hero-note{font-size:11px;color:#c8f4df;margin-top:16px;display:flex;align-items:center;gap:6px}
 
 /* STATS */
 .stats-bar{
@@ -588,17 +588,18 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
 </header>
 
 <main>
-<!-- HERO -->
+<!-- HERO (ĐÃ CẬP NHẬT THEO YÊU CẦU) -->
 <section class="hero-wrap">
  <div class="container">
   <div class="hero">
    <div class="hero-content">
     <div class="eyebrow"><span class="dot"></span> DIGITAL GOODS • GAME • INTERNET SERVICES</div>
-    <h1 data-i18n="hero_title">Một điểm đến cho<br><span>thế giới số.</span></h1>
-    <p data-i18n="hero_sub">Khám phá tài khoản game có nguồn gốc rõ ràng, sản phẩm kỹ thuật số và dịch vụ công nghệ minh bạch tại Hồng Hải Marketplace.</p>
+    <h1 style="font-size:clamp(24px,4vw,40px)">HỒNG HẢI MMO MEDIA TOÀN QUỐC</h1>
+    <p>bán tài khoản đa nền tảng , buôn bán tất cả các game dịch vụ công nghệ minh bạch tại Hồng Hải Marketplace.</p>
     <div class="hero-actions">
-     <a class="btn btn-white" href="#catalog" data-i18n="hero_btn1">Khám phá sản phẩm ↗</a>
-     <a class="btn btn-outline" href="#services" data-i18n="hero_btn2">Khám phá dịch vụ</a>
+     <a class="btn btn-white" href="#catalog">Khám phá sản phẩm ↗</a>
+     <a class="btn btn-outline" href="#services">Khám phá dịch vụ</a>
+     <a class="btn btn-blue" href="https://zalo.me/0866057398" target="_blank" rel="noopener">💬 Liên hệ admin chính chủ ↗</a>
     </div>
     <div class="hero-note">🔒 Giao dịch tự động & xác nhận tức thì qua hệ thống Ví Hồng Hải.</div>
    </div>
@@ -726,7 +727,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </footer>
 
-<!-- CART DRAWER (THANH TOÁN TRỰC TIẾP BẰNG SỐ DƯ) -->
+<!-- CART DRAWER -->
 <div class="overlay" id="overlay" onclick="closeAllDrawers()"></div>
 <aside class="drawer" id="cartDrawer" aria-label="Giỏ hàng">
  <div class="drawer-head"><h2>🛒 Giỏ hàng</h2><button class="close" onclick="closeCart()">×</button></div>
@@ -740,7 +741,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </aside>
 
-<!-- DEPOSIT MODAL (NẠP TIỀN TÀI KHOẢN) -->
+<!-- DEPOSIT MODAL -->
 <div class="modal-wrap" id="depositModalWrap" onclick="if(event.target===this)closeDepositModal()">
  <div class="modal" style="max-width:450px">
   <button class="close" onclick="closeDepositModal()" style="position:absolute;right:20px;top:20px">×</button>
@@ -822,7 +823,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </div>
 
-<!-- PROFILE SETTINGS / TÀI KHOẢN MODAL -->
+<!-- PROFILE SETTINGS MODAL -->
 <div class="modal-wrap" id="profileModalWrap" onclick="if(event.target===this)closeProfileModal()">
  <div class="modal" style="max-width:480px">
   <button class="close" onclick="closeProfileModal()" style="position:absolute;right:20px;top:20px">×</button>
@@ -877,7 +878,6 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
    </div>
   </div>
 
-  <!-- AI VOICE ASSISTANT BOX -->
   <div class="ai-speech-box">
    <button class="ai-speech-btn" id="mProVoiceBtn" onclick="toggleProductSpeech()">🔊</button>
    <div style="flex:1">
@@ -886,7 +886,6 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
    </div>
   </div>
 
-  <!-- SPEC GRID -->
   <div class="spec-grid">
    <div class="spec-item"><span>Mã sản phẩm</span><strong id="mProId">G001</strong></div>
    <div class="spec-item"><span>Loại sản phẩm</span><strong id="mProCat">ACCOUNT</strong></div>
@@ -901,7 +900,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
 
   <div style="margin:12px 0;background:var(--bg);padding:10px;border-radius:10px;border:1px solid var(--line)">
    <h4 style="font-size:12px;font-weight:800;margin-bottom:4px">📌 Hướng dẫn sử dụng:</h4>
-   <p style="font-size:10px;color:var(--muted)" id="mProGuide">Sau khi thanh toán, thông tin tài khoản/mã kích hoạt sẽ hiển thị trực tiếp và gửi về email của bạn. Tiến hành đăng nhập và đổi mật khẩu ngay để bảo mật.</p>
+   <p style="font-size:10px;color:var(--muted)" id="mProGuide">Sau khi thanh toán, thông tin tài khoản/mã kích hoạt sẽ hiển thị trực tiếp và gửi về email của bạn.</p>
   </div>
 
   <div class="modal-actions">
@@ -959,14 +958,10 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </div>
 
-<!-- TOAST CONTAINER & DYNAMIC NOTIFICATIONS -->
+<!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-/*
- * HỒNG HẢI MARKETPLACE - All-in-One Super App JavaScript
- */
-
 const sampleProducts = [
  {id:"G001",name:"Tài khoản Free Fire VIP Rank Huyền Thoại",category:"game",label:"FREE FIRE",emoji:"🔥",price:180000,oldPrice:250000,description:"Acc Free Fire có nhiều trang phục súng VIP, full nhân vật, bảo hành chính chủ 100%.",tone:"orange",rating:5.0,guide:"Đăng nhập qua Facebook/Garena. Tiến hành đổi thông tin bảo mật ngay sau khi nhận acc."},
  {id:"G002",name:"Tài khoản Liên Quân Mobile Full Tướng Full Ngọc",category:"game",label:"LIÊN QUÂN",emoji:"⚔️",price:220000,oldPrice:300000,description:"Tài khoản Liên Quân Rank Cao Thủ, hơn 110 tướng, nhiều trang phục SS tuyệt đẹp.",tone:"purple",rating:4.9,guide:"Đăng nhập tài khoản Garena, kích hoạt mã OTP đổi SĐT ngay."},
@@ -997,23 +992,19 @@ let isRegisterMode = false;
 let isVoiceListening = false;
 let speechRecognitionInstance = null;
 
-// DICTIONARY FOR I18N
 const i18n = {
  vi: {
   nav_products:"Sản phẩm", nav_categories:"Danh mục", nav_services:"Dịch vụ", nav_about:"Giới thiệu", nav_track:"Tra cứu đơn",
-  btn_login:"Đăng nhập", hero_title:"Một điểm đến cho<br><span>thế giới số.</span>",
-  cat_title:"Khám phá danh mục", cat_sub:"Tìm đúng sản phẩm và dịch vụ bạn cần.", cat_all:"Tất cả",
+  btn_login:"Đăng nhập", cat_title:"Khám phá danh mục", cat_sub:"Tìm đúng sản phẩm và dịch vụ bạn cần.", cat_all:"Tất cả",
   prod_title:"Sản phẩm nổi bật", prod_sub:"Kho tài khoản game, dịch vụ kỹ thuật số đầy đủ nhất."
  },
  en: {
   nav_products:"Products", nav_categories:"Categories", nav_services:"Services", nav_about:"About Us", nav_track:"Track Order",
-  btn_login:"Login", hero_title:"One destination for<br><span>digital world.</span>",
-  cat_title:"Explore Categories", cat_sub:"Find the exact digital goods & services you need.", cat_all:"All",
+  btn_login:"Login", cat_title:"Explore Categories", cat_sub:"Find the exact digital goods & services you need.", cat_all:"All",
   prod_title:"Featured Products", prod_sub:"Complete digital accounts & service marketplace."
  }
 };
 
-// AUDIO SYNTHESIZER
 function playSound(type) {
  if (!soundEnabled) return;
  try {
@@ -1052,7 +1043,6 @@ function showToast(msg, type = 'success') {
 function speakText(text) {
  if (!('speechSynthesis' in window)) return;
  window.speechSynthesis.cancel();
- 
  const utterance = new SpeechSynthesisUtterance(text);
  utterance.lang = 'vi-VN';
  utterance.rate = 1.05;
@@ -1075,7 +1065,6 @@ function saveWishlist(){ localStorage.setItem("hh_market_wishlist",JSON.stringif
 function money(val){ return new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND"}).format(Number(val)||0); }
 function escapeHTML(str){ return String(str??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
-// ================= USER ACCOUNT & AUTH SYSTEM =================
 function getCurrentUser() {
  try { return JSON.parse(localStorage.getItem("hh_current_user")); } catch(e) { return null; }
 }
@@ -1183,7 +1172,6 @@ function handleAuthSubmit() {
    showToast("Email này đã được đăng ký trước đó!", "error");
    return;
   }
-  // Mọi tài khoản mới tạo đều có số dư chính xác là 0 ₫
   const newUser = { name, email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫", rawBalance: 0 };
   users.push(newUser);
   localStorage.setItem("hh_all_users", JSON.stringify(users));
@@ -1212,7 +1200,6 @@ function logoutUser() {
  showToast("Đã đăng xuất tài khoản");
 }
 
-// ================= THANH TOÁN BẰNG SỐ DƯ VÍ =================
 function checkoutWithBalance() {
  const user = getCurrentUser();
  if (!user) {
@@ -1239,7 +1226,6 @@ function checkoutWithBalance() {
   return;
  }
 
- // Trừ tiền trong ví
  user.rawBalance = currentRawBalance - total;
  user.balance = money(user.rawBalance);
  updateCurrentUser(user);
@@ -1263,7 +1249,6 @@ function saveOrderState(orderId, amount) {
  localStorage.setItem("hh_orders", JSON.stringify(orders));
 }
 
-// ================= NẠP TIỀN TÀI KHOẢN (DEPOSIT FEATURE) =================
 function openDepositModal() {
  const user = getCurrentUser();
  if (!user) {
@@ -1321,89 +1306,6 @@ function confirmDepositPayment() {
  }, 5000);
 }
 
-// ================= CSKH VOICE BOT (NÓI CHUYỆN TRỰC TIẾP) =================
-function openVoiceBotModal() {
- document.getElementById("voiceBotModalWrap").classList.add("show");
- speakText("Dạ, em là trợ lý robot CSKH đây ạ. Em nghe bạn nói đây, bạn cần em giúp gì nào?");
-}
-
-function closeVoiceBotModal() {
- if (speechRecognitionInstance) {
-  try { speechRecognitionInstance.stop(); } catch(e){}
- }
- isVoiceListening = false;
- document.getElementById("robotAvatar").classList.remove("listening");
- document.getElementById("voiceStatus").textContent = "Bấm vào micro để nói chuyện trực tiếp với bot nhé!";
- document.getElementById("voiceBotModalWrap").classList.remove("show");
-}
-
-function toggleVoiceBotListening() {
- if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-  showToast("Trình duyệt không hỗ trợ nhận diện giọng nói.", "error");
-  return;
- }
-
- const avatar = document.getElementById("robotAvatar");
- const status = document.getElementById("voiceStatus");
-
- if (isVoiceListening) {
-  if (speechRecognitionInstance) speechRecognitionInstance.stop();
-  isVoiceListening = false;
-  avatar.classList.remove("listening");
-  status.textContent = "Đã dừng nghe.";
-  return;
- }
-
- const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
- speechRecognitionInstance = new SpeechRecognition();
- speechRecognitionInstance.lang = 'vi-VN';
- speechRecognitionInstance.interimResults = false;
-
- speechRecognitionInstance.onstart = function() {
-  isVoiceListening = true;
-  avatar.classList.add("listening");
-  status.textContent = "🎙️ Đang lắng nghe bạn nói... Hãy nói nhé!";
-  speakText("Em đang nghe đây ạ!");
- };
-
- speechRecognitionInstance.onresult = function(event) {
-  const text = event.results[0][0].transcript.toLowerCase();
-  status.textContent = `Bạn vừa nói: "${text}"`;
-  
-  // Xử lý phản hồi của Bot bằng giọng nói
-  let botReply = "Dạ, em đã ghi nhận thông tin của bạn rồi ạ.";
-  const lower = text;
-  if (lower.includes("free fire") || lower.includes("game")) {
-   botReply = "Dạ, kho game Free Fire và Liên Quân bên em luôn sẵn sàng acc VIP, bảo hành uy tín anh nhé!";
-  } else if (lower.includes("nạp tiền") || lower.includes("số dư")) {
-   botReply = "Dạ để nạp tiền, bạn bấm vào nút nạp tiền màu xanh ở góc màn hình rồi quét mã QR chuyển khoản nha!";
-  } else if (lower.includes("mua") || lower.includes("thanh toán")) {
-   botReply = "Dạ bạn chọn sản phẩm thêm vào giỏ hàng rồi bấm thanh toán bằng số dư ví là xong ạ!";
-  } else if (lower.includes("admin") || lower.includes("lỗi")) {
-   botReply = "Dạ nếu có lỗi gì, bạn vui lòng liên hệ trực tiếp qua Zalo CSKH để được admin hỗ trợ liền nha!";
-  }
-
-  setTimeout(() => {
-   speakText(botReply);
-   status.textContent = `Robot: "${botReply}"`;
-  }, 600);
- };
-
- speechRecognitionInstance.onerror = function() {
-  isVoiceListening = false;
-  avatar.classList.remove("listening");
-  status.textContent = "Không nghe rõ. Bạn bấm lại micro nhé!";
- };
-
- speechRecognitionInstance.onend = function() {
-  isVoiceListening = false;
-  avatar.classList.remove("listening");
- };
-
- speechRecognitionInstance.start();
-}
-
-// PROFILE MODAL & AVATAR UPLOAD
 function openProfileModal() {
  const user = getCurrentUser();
  if (!user) { openAuthModal(); return; }
@@ -1443,7 +1345,6 @@ function saveProfileChanges() {
  showToast("Đã cập nhật thông tin thành công!");
 }
 
-// ================= RENDER PRODUCTS =================
 function renderProducts(){
  const query = document.getElementById("searchInput").value.trim().toLowerCase();
  const sort = document.getElementById("sortSelect").value;
@@ -1455,7 +1356,7 @@ function renderProducts(){
 
  if(sort === "low") list.sort((a,b) => a.price - b.price);
  if(sort === "high") list.sort((a,b) => b.price - a.price);
- if(sort === "name") list.sort((a,b) => a.name.localeCompare(b.name,"vi"));
+ if(sort === "name") list.sort((a,b) => b.name.localeCompare(b.name,"vi"));
 
  const grid = document.getElementById("productGrid");
  if(!list.length){
@@ -1524,7 +1425,6 @@ document.querySelectorAll(".category").forEach(button => {
 document.getElementById("searchInput").addEventListener("input", renderProducts);
 document.getElementById("sortSelect").addEventListener("change", renderProducts);
 
-// VOICE SEARCH
 function startVoiceSearch() {
  const micBtn = document.getElementById("micBtn");
  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -1552,7 +1452,6 @@ function startVoiceSearch() {
  recognition.onend = () => micBtn.classList.remove("recording");
 }
 
-// ================= AI VOICE ASSISTANT (CUTE & 100% TIẾNG VIỆT CHUẨN) =================
 function speakProductDetails(p) {
  if (!('speechSynthesis' in window)) return;
  window.speechSynthesis.cancel();
@@ -1588,7 +1487,6 @@ function toggleProductSpeech() {
  }
 }
 
-// PRO MODAL DETAIL
 function showProduct(id){
  playSound('click');
  const p = products.find(x => String(x.id) === String(id));
@@ -1619,7 +1517,6 @@ function closeModal(){
  document.getElementById("modalWrap").classList.remove("show");
 }
 
-// ================= CART & CHECKOUT =================
 function addToCart(id){
  playSound('cart');
  const p = products.find(x => String(x.id) === String(id));
@@ -1676,7 +1573,6 @@ function closeCart(){
 }
 function closeAllDrawers(){ closeCart(); }
 
-// ORDER TRACKING
 function openOrderTrackModal() { document.getElementById("trackModalWrap").classList.add("show"); }
 function closeOrderTrackModal() { document.getElementById("trackModalWrap").classList.remove("show"); }
 function trackOrder() {
@@ -1695,7 +1591,6 @@ function trackOrder() {
  }
 }
 
-// WHEEL OF FORTUNE
 function openWheel() { document.getElementById("wheelModalWrap").classList.add("show"); }
 function closeWheel() { document.getElementById("wheelModalWrap").classList.remove("show"); }
 function spinWheel() {
@@ -1710,7 +1605,6 @@ function spinWheel() {
  }, 3200);
 }
 
-// THEMES & MULTI-LANGUAGE
 function setTheme(theme) {
  document.body.className = "";
  if(theme !== 'default') document.body.classList.add(`theme-${theme}`);
@@ -1733,7 +1627,6 @@ function toggleLang() {
  showToast(currentLang === 'vi' ? "Đã chuyển sang Tiếng Việt" : "Switched to English");
 }
 
-// ADMIN PANEL
 function openAdminModal() { document.getElementById("adminModalWrap").classList.add("show"); }
 function closeAdminModal() { document.getElementById("adminModalWrap").classList.remove("show"); }
 function authAdmin() {
@@ -1769,7 +1662,86 @@ function adminAddProduct() {
  showToast("Đã thêm sản phẩm mới thành công!");
 }
 
-// INIT ON PAGE LOAD
+function openVoiceBotModal() {
+ document.getElementById("voiceBotModalWrap").classList.add("show");
+ speakText("Dạ, em là trợ lý robot CSKH đây ạ. Em nghe bạn nói đây, bạn cần em giúp gì nào?");
+}
+
+function closeVoiceBotModal() {
+ if (speechRecognitionInstance) {
+  try { speechRecognitionInstance.stop(); } catch(e){}
+ }
+ isVoiceListening = false;
+ document.getElementById("robotAvatar").classList.remove("listening");
+ document.getElementById("voiceStatus").textContent = "Bấm vào micro để nói chuyện trực tiếp với bot nhé!";
+ document.getElementById("voiceBotModalWrap").classList.remove("show");
+}
+
+function toggleVoiceBotListening() {
+ if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+  showToast("Trình duyệt không hỗ trợ nhận diện giọng nói.", "error");
+  return;
+ }
+
+ const avatar = document.getElementById("robotAvatar");
+ const status = document.getElementById("voiceStatus");
+
+ if (isVoiceListening) {
+  if (speechRecognitionInstance) speechRecognitionInstance.stop();
+  isVoiceListening = false;
+  avatar.classList.remove("listening");
+  status.textContent = "Đã dừng nghe.";
+  return;
+ }
+
+ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+ speechRecognitionInstance = new SpeechRecognition();
+ speechRecognitionInstance.lang = 'vi-VN';
+ speechRecognitionInstance.interimResults = false;
+
+ speechRecognitionInstance.onstart = function() {
+  isVoiceListening = true;
+  avatar.classList.add("listening");
+  status.textContent = "🎙️ Đang lắng nghe bạn nói... Hãy nói nhé!";
+  speakText("Em đang nghe đây ạ!");
+ };
+
+ speechRecognitionInstance.onresult = function(event) {
+  const text = event.results[0][0].transcript.toLowerCase();
+  status.textContent = `Bạn vừa nói: "${text}"`;
+  
+  let botReply = "Dạ, em đã ghi nhận thông tin của bạn rồi ạ.";
+  const lower = text;
+  if (lower.includes("free fire") || lower.includes("game")) {
+   botReply = "Dạ, kho game Free Fire và Liên Quân bên em luôn sẵn sàng acc VIP, bảo hành uy tín anh nhé!";
+  } else if (lower.includes("nạp tiền") || lower.includes("số dư")) {
+   botReply = "Dạ để nạp tiền, bạn bấm vào nút nạp tiền màu xanh ở góc màn hình rồi quét mã QR chuyển khoản nha!";
+  } else if (lower.includes("mua") || lower.includes("thanh toán")) {
+   botReply = "Dạ bạn chọn sản phẩm thêm vào giỏ hàng rồi bấm thanh toán bằng số dư ví là xong ạ!";
+  } else if (lower.includes("admin") || lower.includes("lỗi")) {
+   botReply = "Dạ nếu có lỗi gì, bạn vui lòng liên hệ trực tiếp qua Zalo CSKH để được admin hỗ trợ liền nha!";
+  }
+
+  setTimeout(() => {
+   speakText(botReply);
+   status.textContent = `Robot: "${botReply}"`;
+  }, 600);
+ };
+
+ speechRecognitionInstance.onerror = function() {
+  isVoiceListening = false;
+  avatar.classList.remove("listening");
+  status.textContent = "Không nghe rõ. Bạn bấm lại micro nhé!";
+ };
+
+ speechRecognitionInstance.onend = function() {
+  isVoiceListening = false;
+  avatar.classList.remove("listening");
+ };
+
+ speechRecognitionInstance.start();
+}
+
 const savedTheme = localStorage.getItem("hh_theme");
 if(savedTheme) setTheme(savedTheme);
 
