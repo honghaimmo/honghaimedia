@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-<meta name="description" content="Hồng Hải Marketplace - Siêu thị sản phẩm và dịch vụ kỹ thuật số.">
+<meta name="description" content="Hồng Hải Marketplace - Siêu thị sản phẩm và dịch vụ kỹ thuật số toàn diện.">
 <title>HỒNG HẢI MARKETPLACE | Digital Supermarket</title>
 
 <style>
@@ -47,7 +47,7 @@ body{
  line-height:1.6;
  transition:background 0.3s, color 0.3s;
 }
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button,a{-webkit-tap-highlight-color:transparent}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer}
@@ -60,9 +60,9 @@ button{cursor:pointer}
  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
 }
 .topbar span{color:#7dffca}
-.topbar-right{display:flex;align-items:center;gap:12px;margin:0 auto 0 auto}
+.topbar-right{display:flex;align-items:center;gap:10px;margin:0 auto 0 auto}
 @media(min-width:600px){.topbar-right{margin:0 0 0 auto}}
-.topbar-btn{background:rgba(255,255,255,0.15);border:0;color:white;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.topbar-btn{background:rgba(255,255,255,0.15);border:0;color:white;padding:4px 9px;border-radius:6px;font-size:11px;font-weight:600;transition:.2s}
 .topbar-btn:hover{background:rgba(255,255,255,0.3)}
 
 /* HEADER */
@@ -99,6 +99,12 @@ body.theme-dark .btn-light{background:#1d352c;color:#63e2b7}
  position:relative;transition:.2s;
 }
 .iconbtn:hover{border-color:var(--green)}
+.cart-count{
+ position:absolute;top:-5px;right:-5px;
+ background:#ff5268;color:white;border-radius:20px;
+ font-size:9px;min-width:17px;height:17px;
+ display:flex;align-items:center;justify-content:center;font-weight:800;
+}
 .mobilemenu{display:none}
 
 /* HERO */
@@ -148,7 +154,7 @@ body.theme-dark .hero-wrap{
 .btn-outline{background:#ffffff13;color:white;border:1px solid #ffffff60}
 .hero-note{font-size:11px;color:#c8f4df;margin-top:20px;display:flex;align-items:center;gap:6px}
 
-/* VIRTUAL WALLET & STATS */
+/* STATS */
 .stats-bar{
  display:grid;grid-template-columns:repeat(4,1fr);
  gap:12px;margin:20px 0 10px;
@@ -188,19 +194,27 @@ body.theme-dark .hero-wrap{
 .category strong{font-size:11px;display:block}
 .category small{font-size:9px;color:var(--muted)}
 
-/* SEARCH & TAGS */
+/* SEARCH BAR WITH MIC BUTTON */
 .searchbar{
  display:flex;gap:10px;margin:18px 0 10px;
 }
 .searchbox{
  flex:1;display:flex;align-items:center;gap:10px;
  background:var(--white);border:1px solid var(--line);
- border-radius:14px;padding:0 15px;
+ border-radius:14px;padding:0 15px;position:relative;
 }
 .searchbox input{
  width:100%;height:48px;border:0;outline:0;background:transparent;
- font-size:12px;color:var(--ink);
+ font-size:12px;color:var(--ink);padding-right:35px;
 }
+.mic-btn{
+ border:0;background:none;font-size:18px;cursor:pointer;padding:6px;
+ border-radius:50%;transition:.2s;color:var(--muted);
+ display:flex;align-items:center;justify-content:center;
+}
+.mic-btn:hover,.mic-btn.recording{color:#ff3b30;background:rgba(255,59,48,0.1);animation:pulse 1s infinite}
+@keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
+
 .sort{
  border:1px solid var(--line);border-radius:14px;
  background:var(--white);color:var(--ink);padding:0 12px;font-size:11px;font-weight:700;
@@ -353,20 +367,58 @@ footer a:hover{color:#7dffca}
 .cart-total strong{font-size:20px;color:var(--green)}
 .cart-total p{font-size:10px;color:var(--muted);margin:4px 0 12px}
 
-/* MODALS */
+/* MODALS - MỆNH XỊN PRO */
 .modal-wrap{
  display:none;position:fixed;inset:0;z-index:300;
- background:rgba(16,35,27,.6);align-items:center;justify-content:center;padding:15px;
- backdrop-filter:blur(4px);
+ background:rgba(16,35,27,.65);align-items:center;justify-content:center;padding:15px;
+ backdrop-filter:blur(5px);
 }
 .modal-wrap.show{display:flex}
 .modal{
- width:min(520px,100%);background:var(--white);border-radius:22px;
- padding:25px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 50px rgba(0,0,0,.2);
- border:1px solid var(--line);
+ width:min(620px,100%);background:var(--white);border-radius:24px;
+ padding:25px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 50px rgba(0,0,0,.25);
+ border:1px solid var(--line);position:relative;
 }
-.modal h2{font-size:19px;margin-bottom:8px;font-weight:800}
-.modal p{font-size:12px;color:var(--muted);margin:6px 0}
+.modal-pro-header{
+ display:flex;gap:18px;align-items:center;padding-bottom:15px;border-bottom:1px solid var(--line);
+}
+.modal-pro-banner{
+ width:110px;height:110px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+ font-size:55px;background:linear-gradient(135deg,var(--green),var(--blue));color:white;
+ box-shadow:0 8px 20px rgba(0,189,131,.2);flex-shrink:0;
+}
+.modal-pro-info{flex:1}
+.modal-pro-info h2{font-size:20px;font-weight:900;line-height:1.3}
+.badge-stock{
+ display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;
+ font-size:10px;font-weight:800;background:#e3fceb;color:#00875d;margin-top:5px;
+}
+
+.pro-price-tag{
+ font-size:22px;font-weight:900;color:var(--green);margin:8px 0 4px;
+ display:flex;align-items:center;gap:10px;
+}
+.pro-price-tag del{font-size:13px;color:var(--muted);font-weight:500}
+
+.spec-grid{
+ display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0;
+ font-size:11px;background:var(--bg);padding:12px;border-radius:14px;border:1px solid var(--line);
+}
+.spec-item{display:flex;flex-direction:column}
+.spec-item span{color:var(--muted);font-size:10px}
+.spec-item strong{font-weight:700;color:var(--ink)}
+
+.ai-speech-box{
+ background:linear-gradient(120deg,#e8fff5,#ebf3ff);border:1px solid rgba(0,189,131,.3);
+ border-radius:14px;padding:12px;margin:15px 0;display:flex;align-items:center;gap:12px;
+}
+body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b)}
+.ai-speech-btn{
+ border:0;background:var(--green);color:white;border-radius:50%;width:38px;height:38px;
+ font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+ box-shadow:0 4px 12px rgba(0,189,131,.3);
+}
+
 .modal-actions{display:flex;gap:10px;margin-top:20px}
 .modal-actions button{flex:1}
 
@@ -454,6 +506,8 @@ footer a:hover{color:#7dffca}
  .sort{height:42px}
  .benefits{grid-template-columns:1fr}
  .footer-grid{grid-template-columns:1fr}
+ .modal-pro-header{flex-direction:column;text-align:center}
+ .spec-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -492,9 +546,6 @@ footer a:hover{color:#7dffca}
    <button class="iconbtn" onclick="openWishlistModal()" title="Yêu thích">
     ❤️ <span id="favCount" class="cart-count" style="background:var(--green)">0</span>
    </button>
-   <button class="iconbtn" onclick="openCompareDrawer()" title="So sánh">
-    ⚖️ <span id="compareCount" class="cart-count" style="background:var(--blue)">0</span>
-   </button>
    <button class="iconbtn" onclick="openCart()" aria-label="Giỏ hàng">
     🛒 <span id="cartCount" class="cart-count">0</span>
    </button>
@@ -523,7 +574,7 @@ footer a:hover{color:#7dffca}
 
   <!-- VIRTUAL WALLET & STATS BAR -->
   <div class="stats-bar">
-   <div class="stat"><strong id="walletBalance">0 ₫</strong><small>Ví Hồng Hải Pay</small></div>
+   <div class="stat"><strong id="walletBalance">1.250.000 ₫</strong><small>Ví Hồng Hải Pay</small></div>
    <div class="stat"><strong>24/7</strong><small>Hỗ trợ trực tuyến</small></div>
    <div class="stat"><strong>99.9%</strong><small>Đánh giá hài lòng</small></div>
    <div class="stat"><strong>An toàn</strong><small>Bảo mật giao dịch</small></div>
@@ -539,30 +590,31 @@ footer a:hover{color:#7dffca}
 
  <div class="categories" id="categoryList">
   <button class="category active" data-category="all"><span class="emoji">🌐</span><strong data-i18n="cat_all">Tất cả</strong><small>Toàn bộ</small></button>
-  <button class="category" data-category="game"><span class="emoji">🎮</span><strong>Game</strong><small>Tài khoản & vật phẩm</small></button>
-  <button class="category" data-category="social"><span class="emoji">📱</span><strong>Mạng xã hội</strong><small>Nền tảng số</small></button>
-  <button class="category" data-category="software"><span class="emoji">💻</span><strong>Phần mềm</strong><small>Công cụ số</small></button>
-  <button class="category" data-category="design"><span class="emoji">🎨</span><strong>Thiết kế</strong><small>Đồ họa & thương hiệu</small></button>
-  <button class="category" data-category="website"><span class="emoji">🖥️</span><strong>Website</strong><small>Web & hosting</small></button>
-  <button class="category" data-category="video"><span class="emoji">🎬</span><strong>Video</strong><small>Biên tập nội dung</small></button>
-  <button class="category" data-category="marketing"><span class="emoji">📈</span><strong>Marketing</strong><small>Quảng cáo</small></button>
-  <button class="category" data-category="ai"><span class="emoji">🤖</span><strong>Công cụ AI</strong><small>Trí tuệ nhân tạo</small></button>
-  <button class="category" data-category="other"><span class="emoji">✨</span><strong>Dịch vụ khác</strong><small>Theo yêu cầu</small></button>
-  <button class="category" data-category="email"><span class="emoji">✉️</span><strong>Email</strong><small>Email doanh nghiệp</small></button>
-  <button class="category" data-category="accessories"><span class="emoji">🎁</span><strong>Phụ kiện số</strong><small>Tài nguyên số</small></button>
+  <button class="category" data-category="game"><span class="emoji">🎮</span><strong>Game Full</strong><small>Acc & Thẻ Game</small></button>
+  <button class="category" data-category="social"><span class="emoji">📱</span><strong>Mạng xã hội</strong><small>Tài khoản MXH</small></button>
+  <button class="category" data-category="software"><span class="emoji">💻</span><strong>Phần mềm</strong><small>Windows & Office</small></button>
+  <button class="category" data-category="design"><span class="emoji">🎨</span><strong>Thiết kế</strong><small>Canva & Đồ họa</small></button>
+  <button class="category" data-category="website"><span class="emoji">🖥️</span><strong>Website</strong><small>Web & Domain</small></button>
+  <button class="category" data-category="video"><span class="emoji">🎬</span><strong>Video Edit</strong><small>YouTube & CapCut</small></button>
+  <button class="category" data-category="marketing"><span class="emoji">📈</span><strong>Marketing</strong><small>Tăng tương tác</small></button>
+  <button class="category" data-category="ai"><span class="emoji">🤖</span><strong>Công cụ AI</strong><small>ChatGPT & Claude</small></button>
+  <button class="category" data-category="other"><span class="emoji">✨</span><strong>Dịch vụ khác</strong><small>Proxy & VPN</small></button>
+  <button class="category" data-category="email"><span class="emoji">✉️</span><strong>Email</strong><small>Email Doanh nghiệp</small></button>
+  <button class="category" data-category="accessories"><span class="emoji">🎁</span><strong>Giải trí</strong><small>Netflix & Spotify</small></button>
  </div>
 </section>
 
-<!-- CATALOG -->
+<!-- CATALOG WITH VOICE SEARCH -->
 <section class="section container" id="catalog">
  <div class="section-heading">
-  <div><div class="kicker">DIGITAL MARKETPLACE</div><h2 data-i18n="prod_title">Sản phẩm nổi bật</h2><p class="sub" data-i18n="prod_sub">Danh mục sản phẩm được quản lý và cập nhật từ hệ thống.</p></div>
+  <div><div class="kicker">DIGITAL MARKETPLACE</div><h2 data-i18n="prod_title">Sản phẩm nổi bật</h2><p class="sub" data-i18n="prod_sub">Kho tài khoản game, dịch vụ kỹ thuật số đầy đủ nhất.</p></div>
  </div>
 
  <div class="searchbar">
-  <label class="searchbox">
-   🔎 <input id="searchInput" type="search" placeholder="Tìm tên sản phẩm, dịch vụ...">
-  </label>
+  <div class="searchbox">
+   🔎 <input id="searchInput" type="search" placeholder="Tìm tên sản phẩm, tài khoản game, AI tools...">
+   <button class="mic-btn" id="micBtn" onclick="startVoiceSearch()" title="Tìm kiếm bằng giọng nói">🎤</button>
+  </div>
   <select id="sortSelect" class="sort" aria-label="Sắp xếp sản phẩm">
    <option value="default">Sắp xếp mặc định</option>
    <option value="low">Giá thấp đến cao</option>
@@ -573,11 +625,13 @@ footer a:hover{color:#7dffca}
 
  <!-- TRENDING TAGS -->
  <div class="trending-tags">
-  <span>🔥 Xu hướng:</span>
-  <button class="tag-btn" onclick="setSearch('Website')">#Website</button>
-  <button class="tag-btn" onclick="setSearch('AI')">#AI Tools</button>
-  <button class="tag-btn" onclick="setSearch('Game')">#Game</button>
-  <button class="tag-btn" onclick="setSearch('Design')">#Design</button>
+  <span>🔥 Từ khóa Hot:</span>
+  <button class="tag-btn" onclick="setSearch('Free Fire')">#Free Fire</button>
+  <button class="tag-btn" onclick="setSearch('Liên Quân')">#Liên Quân</button>
+  <button class="tag-btn" onclick="setSearch('ChatGPT')">#ChatGPT Plus</button>
+  <button class="tag-btn" onclick="setSearch('Netflix')">#Netflix</button>
+  <button class="tag-btn" onclick="setSearch('Roblox')">#Roblox</button>
+  <button class="tag-btn" onclick="setSearch('Canva')">#Canva Pro</button>
  </div>
 
  <div class="grid" id="productGrid">
@@ -590,17 +644,17 @@ footer a:hover{color:#7dffca}
  <div class="service-panel">
   <div>
    <div class="kicker">YOUR DIGITAL PARTNER</div>
-   <h2>Dịch vụ kỹ thuật số</h2>
+   <h2>Dịch vụ kỹ thuật số trọn gói</h2>
    <p>Giải pháp website, đồ họa, video, tư vấn quảng cáo và hỗ trợ kỹ thuật theo nhu cầu cá nhân và doanh nghiệp.</p>
-   <a class="btn btn-green" href="https://zalo.me/0866057398" target="_blank" rel="noopener">Liên hệ tư vấn ↗</a>
+   <a class="btn btn-green" href="https://zalo.me/0866057398" target="_blank" rel="noopener">Liên hệ tư vấn Zalo ↗</a>
   </div>
   <div class="service-list">
    <div class="service-item"><span>🌐</span>Thiết kế website</div>
    <div class="service-item"><span>🎨</span>Thiết kế đồ họa</div>
-   <div class="service-item"><span>🎬</span>Dựng video</div>
-   <div class="service-item"><span>📢</span>Tư vấn quảng cáo</div>
-   <div class="service-item"><span>🤖</span>Giải pháp AI</div>
-   <div class="service-item"><span>🛠️</span>Hỗ trợ kỹ thuật</div>
+   <div class="service-item"><span>🎬</span>Dựng video TikTok/Reels</div>
+   <div class="service-item"><span>📢</span>Tăng tương tác MXH</div>
+   <div class="service-item"><span>🤖</span>Giải pháp AI Automation</div>
+   <div class="service-item"><span>🛠️</span>Proxy & VPN Chuyên nghiệp</div>
   </div>
  </div>
 </section>
@@ -612,8 +666,8 @@ footer a:hover{color:#7dffca}
  </div>
  <div class="benefits">
   <article class="benefit"><span>🔐</span><h3>Ưu tiên bảo mật</h3><p>Bảo vệ tài khoản, thông tin và giao dịch của khách hàng.</p></article>
-  <article class="benefit"><span>📦</span><h3>Thông tin rõ ràng</h3><p>Mô tả, giá và điều kiện cung cấp cần được công bố minh bạch.</p></article>
-  <article class="benefit"><span>🎧</span><h3>Hỗ trợ khách hàng</h3><p>Tiếp nhận yêu cầu hỗ trợ và phản hồi qua kênh liên hệ.</p></article>
+  <article class="benefit"><span>📦</span><h3>Bàn giao tự động</h3><p>Thông tin tài khoản, key bản quyền gửi tự động tức thì.</p></article>
+  <article class="benefit"><span>🎧</span><h3>Hỗ trợ 24/7</h3><p>Tiếp nhận yêu cầu hỗ trợ và bảo hành 1 đổi 1 nhanh chóng.</p></article>
  </div>
 </section>
 </main>
@@ -622,10 +676,10 @@ footer a:hover{color:#7dffca}
 <footer>
  <div class="container">
   <div class="footer-grid">
-   <div><h3>HỒNG HẢI MARKETPLACE</h3><p>Không gian mua sắm sản phẩm số, tài nguyên kỹ thuật số và dịch vụ công nghệ.</p><p style="margin-top:12px">Chỉ cung cấp sản phẩm/dịch vụ có quyền kinh doanh hợp pháp.</p></div>
+   <div><h3>HỒNG HẢI MARKETPLACE</h3><p>Không gian mua sắm sản phẩm số, tài nguyên kỹ thuật số và dịch vụ công nghệ hàng đầu.</p><p style="margin-top:12px">Chỉ cung cấp sản phẩm/dịch vụ chính chủ, bảo hành uy tín.</p></div>
    <div><h3>Khám phá</h3><a href="#catalog">Sản phẩm</a><a href="#categories">Danh mục</a><a href="#services">Dịch vụ</a></div>
    <div><h3>Hỗ trợ</h3><a href="https://zalo.me/0866057398" target="_blank" rel="noopener">Zalo hỗ trợ</a><a href="./login.html">Tài khoản</a><a href="#benefits">Chính sách</a></div>
-   <div><h3>Chủ đề giao diện</h3>
+   <div><h3>Giao diện</h3>
     <button class="topbar-btn" onclick="setTheme('default')" style="margin:2px">Green</button>
     <button class="topbar-btn" onclick="setTheme('cyber')" style="margin:2px">Cyber</button>
     <button class="topbar-btn" onclick="setTheme('purple')" style="margin:2px">Purple</button>
@@ -656,23 +710,53 @@ footer a:hover{color:#7dffca}
  </div>
 </aside>
 
-<!-- COMPARE DRAWER -->
-<aside class="drawer" id="compareDrawer" aria-label="So sánh sản phẩm">
- <div class="drawer-head"><h2>⚖️ So sánh sản phẩm</h2><button class="close" onclick="closeCompareDrawer()">×</button></div>
- <div class="cart-items" id="compareContent"></div>
-</aside>
-
-<!-- PRODUCT DETAIL MODAL -->
+<!-- PRO PRODUCT DETAIL MODAL (MỆNH XỊN PRO MODAL WITH AI SPEECH) -->
 <div class="modal-wrap" id="modalWrap" onclick="if(event.target===this)closeModal()">
  <div class="modal">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-   <h2 id="modalTitle">Thông tin sản phẩm</h2>
-   <button class="close" onclick="closeModal()">×</button>
+  <button class="close" onclick="closeModal()" style="position:absolute;right:20px;top:20px">×</button>
+  
+  <div class="modal-pro-header">
+   <div class="modal-pro-banner" id="mProEmoji">🎮</div>
+   <div class="modal-pro-info">
+    <span class="badge-stock">✔ Còn hàng • Bàn giao ngay</span>
+    <h2 id="mProTitle">Tên sản phẩm</h2>
+    <div class="pro-price-tag">
+     <span id="mProPrice">0 ₫</span>
+     <del id="mProOldPrice">0 ₫</del>
+    </div>
+   </div>
   </div>
-  <div id="modalContent"></div>
+
+  <!-- AI VOICE ASSISTANT BOX -->
+  <div class="ai-speech-box">
+   <button class="ai-speech-btn" id="mProVoiceBtn" onclick="toggleProductSpeech()">🔊</button>
+   <div style="flex:1">
+    <div style="font-size:11px;font-weight:800;color:var(--green)">Trợ lý AI Giọng nói</div>
+    <div style="font-size:10px;color:var(--muted)" id="mProVoiceStatus">Bấm để lắng nghe thuyết minh chi tiết sản phẩm.</div>
+   </div>
+  </div>
+
+  <!-- SPEC GRID -->
+  <div class="spec-grid">
+   <div class="spec-item"><span>Mã sản phẩm</span><strong id="mProId">G001</strong></div>
+   <div class="spec-item"><span>Loại sản phẩm</span><strong id="mProCat">ACCOUNT</strong></div>
+   <div class="spec-item"><span>Chế độ bảo hành</span><strong>1 Đổi 1 Uy tín</strong></div>
+   <div class="spec-item"><span>Thời gian bàn giao</span><strong>Tự động (1 - 5 phút)</strong></div>
+  </div>
+
+  <div style="margin:12px 0">
+   <h4 style="font-size:12px;font-weight:800;margin-bottom:4px">Mô tả chi tiết & Tính năng:</h4>
+   <p style="font-size:11px;color:var(--muted);line-height:1.5" id="mProDesc">Mô tả sản phẩm...</p>
+  </div>
+
+  <div style="margin:12px 0;background:var(--bg);padding:10px;border-radius:10px;border:1px solid var(--line)">
+   <h4 style="font-size:12px;font-weight:800;margin-bottom:4px">📌 Hướng dẫn sử dụng:</h4>
+   <p style="font-size:10px;color:var(--muted)" id="mProGuide">Sau khi thanh toán, thông tin tài khoản/mã kích hoạt sẽ hiển thị trực tiếp và gửi về email của bạn. Tiến hành đăng nhập và đổi mật khẩu ngay để bảo mật.</p>
+  </div>
+
   <div class="modal-actions">
    <button class="btn btn-light" onclick="closeModal()">Đóng</button>
-   <button class="btn btn-green" id="modalAdd">Thêm vào giỏ</button>
+   <button class="btn btn-green" id="mProAddCart">Thêm vào giỏ 🛒</button>
   </div>
  </div>
 </div>
@@ -734,7 +818,7 @@ footer a:hover{color:#7dffca}
    <button onclick="toggleChat()" style="background:none;border:0;color:white;font-weight:bold;cursor:pointer">×</button>
   </div>
   <div class="chat-messages" id="chatMessages">
-   <div class="msg ai">Xin chào! Tôi có thể tư vấn sản phẩm số hoặc dịch vụ nào cho bạn hôm nay?</div>
+   <div class="msg ai">Xin chào! Tôi có thể tư vấn sản phẩm số, tài khoản Game hoặc dịch vụ nào cho bạn hôm nay?</div>
   </div>
   <div class="chat-input">
    <input type="text" id="chatInput" placeholder="Hỏi AI tư vấn..." onkeypress="if(event.key==='Enter')sendChatMessage()">
@@ -751,25 +835,39 @@ footer a:hover{color:#7dffca}
  * HỒNG HẢI MARKETPLACE - All-in-One Super App JavaScript
  */
 
+// FULL SAMPLE PRODUCTS (GAME, MXH, AI, SERVICES)
 const sampleProducts = [
- {id:"G001",name:"Tài khoản game có quyền chuyển nhượng",category:"game",label:"GAME",emoji:"🎮",price:150000,description:"Tài khoản game chính chủ, nguồn gốc rõ ràng và hỗ trợ bảo hành 1 đổi 1.",tone:"purple",rating:4.9},
- {id:"S001",name:"Dịch vụ tư vấn phát triển mạng xã hội",category:"social",label:"SOCIAL",emoji:"📱",price:200000,description:"Tư vấn chiến lược phát triển kênh TikTok, Facebook đúng chính sách.",tone:"blue",rating:4.8},
- {id:"W001",name:"Thiết kế website doanh nghiệp chuẩn SEO",category:"website",label:"WEBSITE",emoji:"🌐",price:1500000,description:"Giao diện web hiện đại, mượt mà, tối ưu trên thiết bị di động.",tone:"green",rating:5.0},
- {id:"D001",name:"Thiết kế logo và bộ nhận diện thương hiệu",category:"design",label:"DESIGN",emoji:"🎨",price:500000,description:"Thiết kế nhận diện thương hiệu sáng tạo, bao gồm logo, banner, bộ phông chữ.",tone:"purple",rating:4.7},
- {id:"V001",name:"Dựng video và chỉnh sửa nội dung ngắn",category:"video",label:"VIDEO",emoji:"🎬",price:350000,description:"Biên tập video TikTok, Reels chuyên nghiệp với hiệu ứng bắt mắt.",tone:"orange",rating:4.9},
- {id:"A001",name:"Tài khoản công cụ AI ChatGPT / Midjourney",category:"ai",label:"AI TOOLS",emoji:"🤖",price:120000,description:"Tài khoản AI nâng cao giúp tự động hóa công việc sáng tạo.",tone:"blue",rating:5.0},
- {id:"M001",name:"Tư vấn chiến dịch Marketing tổng thể",category:"marketing",label:"MARKETING",emoji:"📈",price:800000,description:"Xây dựng lộ trình quảng cáo tối ưu chi phí cho cá nhân và shop online.",tone:"green",rating:4.8},
- {id:"E001",name:"Thiết lập Email tên miền doanh nghiệp",category:"email",label:"BUSINESS",emoji:"✉️",price:250000,description:"Cấu hình email Google Workspace/Zoho chuyên nghiệp.",tone:"purple",rating:4.6}
+ // GAME FULL
+ {id:"G001",name:"Tài khoản Free Fire VIP Rank Huyền Thoại",category:"game",label:"FREE FIRE",emoji:"🔥",price:180000,oldPrice:250000,description:"Acc Free Fire có nhiều trang phục súng VIP, full nhân vật, bảo hành chính chủ 100%.",tone:"orange",rating:5.0,guide:"Đăng nhập qua Facebook/Garena. Tiến hành đổi thông tin bảo mật ngay sau khi nhận acc."},
+ {id:"G002",name:"Tài khoản Liên Quân Mobile Full Tướng Full Ngọc",category:"game",label:"LIÊN QUÂN",emoji:"⚔️",price:220000,oldPrice:300000,description:"Tài khoản Liên Quân Rank Cao Thủ, hơn 110 tướng, nhiều trang phục SS tuyệt đẹp.",tone:"purple",rating:4.9,guide:"Đăng nhập tài khoản Garena, kích hoạt mã OTP đổi SĐT ngay."},
+ {id:"G003",name:"Acc Roblox Blox Fruit Level Max + Cung Dark Blade",category:"game",label:"ROBLOX",emoji:"🔴",price:150000,oldPrice:200000,description:"Acc Roblox Level 2550, full Melee V2, Trái Ác Quỷ vĩnh viễn.",tone:"blue",rating:5.0,guide:"Đăng nhập Roblox.com, vào cài đặt thêm Email bảo mật của bạn."},
+ {id:"G004",name:"Tài khoản Genshin Impact AR 55 + 5 Tướng 5 Tinh",category:"game",label:"GENSHIN",emoji:"✨",price:350000,oldPrice:500000,description:"Acc Genshin Server Asia, khám phá mapa full 100%, bảo đảm không thắt lưng.",tone:"purple",rating:4.8,guide:"Đăng nhập Hoyoverse, đổi email và mật khẩu liên kết."},
+ {id:"G005",name:"Acc Valorant Rank Diamond + Skin Vandal Prime",category:"game",label:"VALORANT",emoji:"🎯",price:280000,oldPrice:380000,description:"Acc Valorant nhiều Skin dao và súng VIP, Rank Kim Cương mượt mà.",tone:"blue",rating:4.9,guide:"Đăng nhập Riot Client, cập nhật email chính chủ."},
+ {id:"G006",name:"Thẻ Steam Wallet Code $10 USD",category:"game",label:"STEAM",emoji:"🎮",price:245000,oldPrice:260000,description:"Mã nạp Steam Wallet mua game trên nền tảng Steam bản quyền.",tone:"green",rating:5.0,guide:"Vào Steam -> Redeem a Steam Wallet Code -> Nhập mã được cấp."},
+
+ // AI & SOFTWARE
+ {id:"A001",name:"Tài khoản ChatGPT Plus (GPT-4o) 1 Tháng",category:"ai",label:"AI TOOLS",emoji:"🤖",price:120000,oldPrice:200000,description:"Tài khoản ChatGPT Plus sử dụng mô hình GPT-4o, DALL-E 3 siêu tốc.",tone:"blue",rating:5.0,guide:"Đăng nhập trực tiếp tại chatgpt.com với tài khoản được bàn giao."},
+ {id:"A002",name:"Tài khoản Claude 3.5 Sonnet Pro 1 Tháng",category:"ai",label:"AI TOOLS",emoji:"🧠",price:150000,oldPrice:220000,description:"Công cụ AI lập trình và viết lách đỉnh cao nhất hiện nay từ Anthropic.",tone:"purple",rating:5.0,guide:"Đăng nhập tại claude.ai bằng email và mật khẩu được cấp."},
+ {id:"S001",name:"Key Windows 11 Pro Bản Quyền Vĩnh Viễn",category:"software",label:"WINDOWS",emoji:"💻",price:99000,oldPrice:300000,description:"Active Windows 11 Pro bản quyền chính hãng, cập nhật bảo mật liên tục.",tone:"blue",rating:4.9,guide:"Vào Settings -> System -> Activation -> Change Product Key và nhập mã."},
+ {id:"S002",name:"Tài khoản Microsoft Office 365 (1TB OneDrive)",category:"software",label:"OFFICE",emoji:"📊",price:130000,oldPrice:250000,description:"Sử dụng Word, Excel, PowerPoint bản quyền + 1000GB dung lượng Cloud.",tone:"green",rating:4.9,guide:"Đăng nhập office.com và đổi mật khẩu lần đầu."},
+
+ // DIGITAL SERVICES & MEDIA
+ {id:"M001",name:"Tài khoản Netflix Premium 4K Ultra HD 1 Tháng",category:"accessories",label:"NETFLIX",emoji:"🎬",price:75000,oldPrice:120000,description:"Xem phim 4K không quảng cáo, Profile riêng tư có mã PIN bảo vệ.",tone:"orange",rating:5.0,guide:"Mở app Netflix -> Đăng nhập email -> Chọn đúng Slot tên bạn."},
+ {id:"M002",name:"Nâng cấp Spotify Premium Chính Chủ 1 Năm",category:"accessories",label:"SPOTIFY",emoji:"🎵",price:190000,oldPrice:350000,description:"Nghe nhạc chất lượng cao không quảng cáo trên chính tài khoản của bạn.",tone:"green",rating:5.0,guide:"Gửi email tài khoản Spotify của bạn để chúng tôi kích hoạt Premium."},
+ {id:"D001",name:"Tài khoản Canva Pro Edu / Brand 1 Năm",category:"design",label:"CANVA",emoji:"🎨",price:85000,oldPrice:200000,description:"Sử dụng hàng triệu mẫu thiết kế, hình ảnh và công cụ AI Canva Pro.",tone:"purple",rating:5.0,guide:"Chấp nhận lời mời tham gia nhóm Canva Pro gửi qua email của bạn."},
+ {id:"W001",name:"Thiết kế Website Doanh Nghiệp Chuẩn SEO",category:"website",label:"WEBSITE",emoji:"🌐",price:1500000,oldPrice:2500000,description:"Thiết kế giao diện website theo yêu cầu, tặng tên miền & hosting 1 năm.",tone:"green",rating:5.0,guide:"Liên hệ trực tiếp Zalo kỹ thuật viên để chốt giao diện & chức năng."},
+ {id:"V001",name:"Dựng Video TikTok / Reels Chuyên Nghiệp",category:"video",label:"VIDEO",emoji:"📹",price:300000,oldPrice:500000,description:"Biên tập video ngắn kèm sub, hiệu ứng bắt mắt chuẩn xu hướng.",tone:"orange",rating:4.9,guide:"Gửi file video thô qua Google Drive cho đội ngũ kịch bản."},
+ {id:"X001",name:"Proxy IPv4 / IPv6 Tốc Độ Cao 1 Tháng",category:"other",label:"PROXY",emoji:"🛡️",price:45000,oldPrice:80000,description:"Proxy riêng tư sạch, tốc độ cao dùng nuôi tài khoản MXH, MMO.",tone:"blue",rating:4.8,guide:"Nhập IP:Port:User:Pass vào phần mềm hoặc trình duyệt của bạn."}
 ];
 
 let products = loadStoredProducts();
 let currentCategory = "all";
 let cart = loadCart();
 let wishlist = loadWishlist();
-let compareList = [];
 let appliedDiscount = 0;
 let soundEnabled = true;
 let currentLang = 'vi';
+let activeSpeechProduct = null;
 
 // DICTIONARY FOR I18N
 const i18n = {
@@ -777,13 +875,13 @@ const i18n = {
   nav_products:"Sản phẩm", nav_categories:"Danh mục", nav_services:"Dịch vụ", nav_about:"Giới thiệu", nav_track:"Tra cứu đơn",
   btn_login:"Đăng nhập", hero_title:"Một điểm đến cho<br><span>thế giới số.</span>",
   cat_title:"Khám phá danh mục", cat_sub:"Tìm đúng sản phẩm và dịch vụ bạn cần.", cat_all:"Tất cả",
-  prod_title:"Sản phẩm nổi bật", prod_sub:"Danh mục sản phẩm được cập nhật liên tục."
+  prod_title:"Sản phẩm nổi bật", prod_sub:"Kho tài khoản game, dịch vụ kỹ thuật số đầy đủ nhất."
  },
  en: {
   nav_products:"Products", nav_categories:"Categories", nav_services:"Services", nav_about:"About Us", nav_track:"Track Order",
   btn_login:"Login", hero_title:"One destination for<br><span>digital world.</span>",
   cat_title:"Explore Categories", cat_sub:"Find the exact digital goods & services you need.", cat_all:"All",
-  prod_title:"Featured Products", prod_sub:"Regularly updated product catalog."
+  prod_title:"Featured Products", prod_sub:"Complete digital accounts & service marketplace."
  }
 };
 
@@ -873,7 +971,7 @@ function renderProducts(){
     <p class="product-desc">${escapeHTML(p.description)}</p>
     <div class="product-rating">⭐ ${p.rating || 5.0} / 5.0</div>
     <div class="product-bottom">
-     <div class="price">${Number(p.price)>0 ? money(p.price) : "Liên hệ"}<small>Giá minh bạch</small></div>
+     <div class="price">${Number(p.price)>0 ? money(p.price) : "Liên hệ"}<small>Bàn giao tự động</small></div>
      <div class="action-btns">
       <button class="add-btn" onclick="addToCart('${escapeHTML(p.id)}')" title="Thêm nhanh">🛒+</button>
       <button class="add-btn" style="background:var(--bg);color:var(--ink)" onclick="showProduct('${escapeHTML(p.id)}')">Chi tiết</button>
@@ -919,30 +1017,109 @@ document.querySelectorAll(".category").forEach(button => {
 document.getElementById("searchInput").addEventListener("input", renderProducts);
 document.getElementById("sortSelect").addEventListener("change", renderProducts);
 
-// MODAL DETAIL & REVIEWS
+// VOICE SEARCH (WEB SPEECH RECOGNITION API)
+function startVoiceSearch() {
+ const micBtn = document.getElementById("micBtn");
+ if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+  showToast("Trình duyệt của bạn không hỗ trợ nhận diện giọng nói.", "error");
+  return;
+ }
+
+ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+ const recognition = new SpeechRecognition();
+ recognition.lang = 'vi-VN';
+ recognition.interimResults = false;
+
+ micBtn.classList.add("recording");
+ showToast("🎤 Đang lắng nghe... Hãy nói tên sản phẩm!");
+
+ recognition.start();
+
+ recognition.onresult = function(event) {
+  const text = event.results[0][0].transcript;
+  document.getElementById("searchInput").value = text;
+  renderProducts();
+  showToast(`Đã tìm kiếm: "${text}"`);
+  micBtn.classList.remove("recording");
+ };
+
+ recognition.onerror = function(event) {
+  showToast("Không thể nhận diện giọng nói. Vui lòng thử lại.", "error");
+  micBtn.classList.remove("recording");
+ };
+
+ recognition.onend = function() {
+  micBtn.classList.remove("recording");
+ };
+}
+
+// AI VOICE ASSISTANT FOR PRODUCT DETAILS (SPEECH SYNTHESIS)
+function speakProductDetails(p) {
+ if (!('speechSynthesis' in window)) return;
+
+ window.speechSynthesis.cancel(); // Stop current speech
+
+ const speechText = `Sản phẩm ${p.name}. Giá niêm yết là ${p.price} đồng. ${p.description}. Hướng dẫn sử dụng: ${p.guide || "Bàn giao tài khoản tự động ngay sau khi hoàn tất thanh toán."}`;
+ const utterance = new SpeechSynthesisUtterance(speechText);
+ utterance.lang = 'vi-VN';
+ utterance.rate = 1.0;
+
+ utterance.onstart = function() {
+  document.getElementById("mProVoiceStatus").textContent = "AI đang thuyết minh sản phẩm...";
+  document.getElementById("mProVoiceBtn").textContent = "⏸️";
+ };
+
+ utterance.onend = function() {
+  document.getElementById("mProVoiceStatus").textContent = "Hoàn tất thuyết minh giọng nói.";
+  document.getElementById("mProVoiceBtn").textContent = "🔊";
+ };
+
+ window.speechSynthesis.speak(utterance);
+}
+
+function toggleProductSpeech() {
+ if (!('speechSynthesis' in window)) return;
+ if (window.speechSynthesis.speaking) {
+  window.speechSynthesis.cancel();
+  document.getElementById("mProVoiceStatus").textContent = "Đã dừng thuyết minh.";
+  document.getElementById("mProVoiceBtn").textContent = "🔊";
+ } else if (activeSpeechProduct) {
+  speakProductDetails(activeSpeechProduct);
+ }
+}
+
+// PRO MODAL DETAIL
 function showProduct(id){
  playSound('click');
  const p = products.find(x => String(x.id) === String(id));
  if(!p) return;
- document.getElementById("modalTitle").textContent = p.name;
- document.getElementById("modalContent").innerHTML = `
-  <p><b>Danh mục:</b> ${escapeHTML(p.label)}</p>
-  <p><b>Mã SP:</b> ${escapeHTML(p.id)}</p>
-  <p><b>Đánh giá:</b> ⭐ ${p.rating||5.0} / 5.0 (24 lượt mua)</p>
-  <p style="margin:10px 0">${escapeHTML(p.description)}</p>
-  <p><b>Giá niêm yết:</b> <span style="color:var(--green);font-size:16px;font-weight:bold">${Number(p.price)>0?money(p.price):"Liên hệ"}</span></p>
-  <div style="margin-top:15px;padding-top:10px;border-top:1px solid var(--line)">
-   <b>Đánh giá gần đây:</b>
-   <div style="font-size:11px;color:var(--muted);margin-top:5px">💬 "Sản phẩm dùng rất tốt, nhận thông tin nhanh chóng!" - <i>Nguyễn Văn A</i></div>
-  </div>`;
- document.getElementById("modalAdd").onclick = () => {
+
+ activeSpeechProduct = p;
+
+ document.getElementById("mProEmoji").textContent = p.emoji || "📦";
+ document.getElementById("mProTitle").textContent = p.name;
+ document.getElementById("mProPrice").textContent = money(p.price);
+ document.getElementById("mProOldPrice").textContent = p.oldPrice ? money(p.oldPrice) : "";
+ document.getElementById("mProId").textContent = p.id;
+ document.getElementById("mProCat").textContent = (p.label || "DIGITAL").toUpperCase();
+ document.getElementById("mProDesc").textContent = p.description;
+ document.getElementById("mProGuide").textContent = p.guide || "Sau khi thanh toán, thông tin sẽ được tự động kích hoạt và gửi qua hệ thống.";
+
+ document.getElementById("mProAddCart").onclick = () => {
   addToCart(p.id);
   closeModal();
  };
+
  document.getElementById("modalWrap").classList.add("show");
+
+ // Auto start speech
+ speakProductDetails(p);
 }
 
-function closeModal(){ document.getElementById("modalWrap").classList.remove("show"); }
+function closeModal(){
+ if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+ document.getElementById("modalWrap").classList.remove("show");
+}
 
 // CART & CHECKOUT WITH VIETQR
 function addToCart(id){
@@ -1016,7 +1193,7 @@ function closeCart(){
  document.getElementById("cartDrawer").classList.remove("show");
 }
 function closeAllDrawers(){
- closeCart(); closeCompareDrawer();
+ closeCart();
 }
 
 function checkoutNotice(){
@@ -1037,16 +1214,19 @@ function checkoutNotice(){
 
  const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.png?amount=${total}&addInfo=${encodeURIComponent(memo)}&accountName=${encodeURIComponent(accountName)}`;
 
- document.getElementById("modalTitle").textContent = "Thanh toán VietQR Cấp Tốc";
- document.getElementById("modalContent").innerHTML = `
+ document.getElementById("mProTitle").textContent = "Thanh toán VietQR Cấp Tốc";
+ document.getElementById("mProEmoji").textContent = "💳";
+ document.getElementById("mProPrice").textContent = money(total);
+ document.getElementById("mProOldPrice").textContent = "";
+ document.getElementById("mProDesc").innerHTML = `
   <div style="text-align:center">
    <p>Mã đơn hàng: <b style="color:var(--green)">${orderId}</b> (Lưu lại để tra cứu)</p>
    <img src="${qrUrl}" alt="Mã VietQR Thanh Toán" style="max-width:220px;width:100%;border-radius:12px;margin:10px 0;border:1px solid var(--line)">
    <p><b>Số tiền:</b> <span style="color:var(--green);font-size:16px;font-weight:bold">${money(total)}</span></p>
    <p><b>Nội dung chuyển khoản:</b> <code style="background:var(--bg);padding:3px 8px;border-radius:6px;font-weight:bold;color:var(--ink)">${memo}</code></p>
-   <p style="font-size:10px;color:var(--muted);margin-top:10px">Hệ thống tự động kích hoạt sản phẩm ngay khi nhận đủ thanh toán.</p>
   </div>`;
- document.getElementById("modalAdd").style.display = "none";
+ document.getElementById("mProGuide").textContent = "Sau khi quẹt thẻ/chuyển khoản VietQR, hệ thống sẽ tự động xác minh và bàn giao tài khoản ngay lập tức.";
+ document.getElementById("mProAddCart").style.display = "none";
  closeCart();
  document.getElementById("modalWrap").classList.add("show");
  saveOrderState(orderId, total);
@@ -1135,11 +1315,12 @@ function sendChatMessage() {
  input.value = "";
 
  setTimeout(() => {
-  let reply = "Cảm ơn bạn đã nhắn tin. Chúng tôi có các dịch vụ Thiết kế Web, Game, Công cụ AI tốt nhất!";
+  let reply = "Cảm ơn bạn đã nhắn tin. Chúng tôi có đầy đủ tài khoản Free Fire, Liên Quân, Roblox, ChatGPT, Netflix giá siêu tốt!";
   const lower = txt.toLowerCase();
-  if(lower.includes("game")) reply = "Chúng tôi có nhiều tài khoản Game chính chủ bảo hành 1 đổi 1. Bạn xem mục Game nhé!";
-  else if(lower.includes("web")) reply = "Dịch vụ thiết kế Website doanh nghiệp chuẩn SEO giá chỉ từ 1.500.000đ!";
-  else if(lower.includes("ai")) reply = "Chúng tôi cung cấp tài khoản ChatGPT / Midjourney bản quyền giá siêu tốt.";
+  if(lower.includes("free fire") || lower.includes("ff")) reply = "Shop có sẵn tài khoản Free Fire Rank Huyền Thoại full skin súng VIP giá chỉ từ 180k!";
+  else if(lower.includes("liên quân")) reply = "Acc Liên Quân Rank Cao Thủ hơn 110 tướng giá chỉ 220k bàn giao ngay!";
+  else if(lower.includes("chatgpt")) reply = "Tài khoản ChatGPT Plus GPT-4o bản quyền dùng 1 tháng chỉ 120.000đ!";
+  else if(lower.includes("netflix")) reply = "Slot Netflix Premium 4K xem phim không quảng cáo giá chỉ 75.000đ/tháng.";
   
   msgs.innerHTML += `<div class="msg ai">${reply}</div>`;
   msgs.scrollTop = msgs.scrollHeight;
@@ -1170,7 +1351,7 @@ function adminAddProduct() {
  const newP = {
   id: "CUST" + Date.now().toString().slice(-4),
   name, category: cat, label: cat.toUpperCase(), emoji: "✨",
-  price: Number(price), description: desc, tone: "green", rating: 5.0
+  price: Number(price), description: desc, tone: "green", rating: 5.0, guide: "Tài khoản tự động bàn giao ngay sau khi thanh toán."
  };
 
  const custom = JSON.parse(localStorage.getItem("hh_custom_products") || "[]");
@@ -1193,9 +1374,8 @@ renderProducts();
 </html>
 ```
 
-### Các cập nhật nổi bật:
-* **Mã thanh toán VietQR:** Tự động tạo ảnh QR ngân hàng chuẩn theo giá trị giỏ hàng và tạo mã tra cứu đơn hàng duy nhất.
-* **Mô phỏng Ví Điện Tử "Hồng Hải Pay":** Tích hợp hiển thị số dư trực quan trên thanh Stats.
-* **Mini-game Vòng quay may mắn:** Bấm quay lấy mã voucher chiết khấu thực tế ngay trong drawer giỏ hàng.
-* **Chủ đề đa dạng:** Hỗ trợ 4 màu giao diện linh hoạt bao gồm cả Dark Mode chuẩn xu hướng năm 2026.
-* **Đầy đủ Âm thanh Web Audio API & Đa Ngôn ngữ VI/EN.**
+### Các điểm nâng cấp đáng chú ý:
+1. **Trợ lý AI thuyết minh giọng nói (Web Speech API):** Phát giọng đọc Tiếng Việt thuyết minh thông tin, giá bán và hướng dẫn sử dụng sản phẩm tự động khi xem chi tiết.
+2. **Nút Micro 🎤 Tìm kiếm nhanh bằng Giọng nói:** Tự động lắng nghe người dùng đọc tên sản phẩm (VD: *"Free Fire"*, *"Netflix"*, *"ChatGPT"*) và lọc sản phẩm tương ứng ngay lập tức.
+3. **Modal Mệnh Xịn Pro:** Banner sản phẩm ấn tượng, tag "Còn hàng", giá ưu đãi + giá niêm yết, thông số kỹ thuật và hộp hướng dẫn sử dụng.
+4. **Kho sản phẩm mở rộng:** Bao gồm đầy đủ các tựa Game HOT (Free Fire, Liên Quân, Roblox, Genshin, Valorant, Steam) và Dịch vụ số đình đám (ChatGPT Plus, Claude Pro, Windows 11 Key, Netflix 4K, Spotify, Canva Pro, Proxy...).
