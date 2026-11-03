@@ -90,6 +90,7 @@ header{
 }
 .btn:hover{transform:translateY(-2px)}
 .btn-green{background:linear-gradient(120deg,var(--green),var(--green2));color:white;box-shadow:0 7px 18px rgba(0,189,131,.25)}
+.btn-blue{background:linear-gradient(120deg,#397cff,#5ac8fa);color:white;box-shadow:0 7px 18px rgba(57,124,255,.25)}
 .btn-light{background:#edfaf4;color:#07865f}
 body.theme-dark .btn-light{background:#1d352c;color:#63e2b7}
 .iconbtn{
@@ -478,6 +479,17 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:11px;background:var(--bg);color:var(--ink);
 }
 
+/* PROCESSING NOTIFICATION WITH GEAR (NẠP TIỀN) */
+.process-toast{
+ position:fixed;bottom:20px;left:20px;z-index:999;
+ background:var(--white);color:var(--ink);padding:14px 18px;border-radius:16px;
+ font-size:12px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.2);
+ display:flex;align-items:center;gap:12px;border:1px solid var(--line);
+ animation:slideUp 0.3s forwards;
+}
+.gear-spin{animation:spin 1s linear infinite;font-size:20px}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
 /* TOAST NOTIFICATION */
 .toast-container{
  position:fixed;bottom:20px;left:20px;z-index:999;display:flex;flex-direction:column;gap:8px;
@@ -601,7 +613,11 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
 
   <!-- VIRTUAL WALLET & STATS BAR -->
   <div class="stats-bar">
-   <div class="stat"><strong id="walletBalance">1.250.000 ₫</strong><small>Ví Hồng Hải Pay</small></div>
+   <div class="stat">
+    <strong id="walletBalance">0 ₫</strong>
+    <small>Ví Hồng Hải Pay</small>
+    <button class="btn btn-blue" style="margin-top:8px;padding:5px 10px;font-size:10px;width:100%" onclick="openDepositModal()">💳 Nạp tiền</button>
+   </div>
    <div class="stat"><strong>24/7</strong><small>Hỗ trợ trực tuyến</small></div>
    <div class="stat"><strong>99.9%</strong><small>Đánh giá hài lòng</small></div>
    <div class="stat"><strong>An toàn</strong><small>Bảo mật giao dịch</small></div>
@@ -737,6 +753,35 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </aside>
 
+<!-- DEPOSIT MODAL (NẠP TIỀN TÀI KHOẢN) -->
+<div class="modal-wrap" id="depositModalWrap" onclick="if(event.target===this)closeDepositModal()">
+ <div class="modal" style="max-width:450px">
+  <button class="close" onclick="closeDepositModal()" style="position:absolute;right:20px;top:20px">×</button>
+  <h2 style="color:var(--blue);font-size:20px;font-weight:900;margin-bottom:5px">💳 Nạp Tiền Tài Khoản</h2>
+  <p style="font-size:11px;color:var(--muted);margin-bottom:15px">Nạp tiền vào ví Hồng Hải Pay qua hệ thống VietQR tự động.</p>
+
+  <div id="depositStep1">
+   <label style="font-size:11px;font-weight:700">Nhập mệnh giá cần nạp (VND):</label>
+   <input type="number" id="depositAmountInput" placeholder="VD: 100000" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0 8px;background:var(--bg);color:var(--ink)">
+   <div style="font-size:10px;color:var(--muted);margin-bottom:15px">
+    💡 <i>Nạp ít nhất <b>50.000 ₫</b>, nhiều nhất <b>10.000.000 ₫</b>.</i>
+   </div>
+   <button class="btn btn-blue" style="width:100%;padding:12px" onclick="generateDepositQR()">Lấy mã thanh toán ➔</button>
+  </div>
+
+  <div id="depositStep2" style="display:none;text-align:center">
+   <p style="font-size:11px;margin-bottom:8px">Quét mã QR để thanh toán tự động:</p>
+   <img id="depositQrImg" src="" alt="Mã QR Nạp Tiền" style="max-width:210px;width:100%;border-radius:12px;border:1px solid var(--line);margin-bottom:10px">
+   <div style="font-size:11px;background:var(--bg);padding:10px;border-radius:10px;border:1px solid var(--line);text-align:left;margin-bottom:15px">
+    <p><b>Chủ tài khoản:</b> BUIDUCLONG</p>
+    <p><b>Số tiền:</b> <span id="depositQrAmount" style="color:var(--green);font-weight:bold">0 ₫</span></p>
+    <p><b>Nội dung CK:</b> <code id="depositQrMemo" style="background:var(--white);padding:2px 6px;border-radius:4px;color:var(--blue);font-weight:bold"></code></p>
+   </div>
+   <button class="btn btn-green" style="width:100%;padding:12px" onclick="confirmDepositPayment()">✓ Xác nhận tôi đã thanh toán</button>
+  </div>
+ </div>
+</div>
+
 <!-- AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) -->
 <div class="modal-wrap" id="authModalWrap" onclick="if(event.target===this)closeAuthModal()">
  <div class="modal" style="max-width:420px">
@@ -795,7 +840,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
    </div>
    <div>
     <label style="color:var(--muted);font-size:10px">Số dư ví Hồng Hải Pay:</label>
-    <input type="text" id="pfBalance" disabled value="1.250.000 ₫" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--green);font-weight:bold;cursor:not-allowed">
+    <input type="text" id="pfBalance" disabled value="0 ₫" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--green);font-weight:bold;cursor:not-allowed">
    </div>
   </div>
 
@@ -827,7 +872,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
   <div class="ai-speech-box">
    <button class="ai-speech-btn" id="mProVoiceBtn" onclick="toggleProductSpeech()">🔊</button>
    <div style="flex:1">
-    <div style="font-size:11px;font-weight:800;color:var(--green)">Trợ lý AI Giọng nói (Cute & Chuẩn ngôn ngữ)</div>
+    <div style="font-size:11px;font-weight:800;color:var(--green)">Trợ lý AI Giọng nói (Cute & Tiếng Việt chuẩn)</div>
     <div style="font-size:10px;color:var(--muted)" id="mProVoiceStatus">Bấm để lắng nghe thuyết minh chi tiết sản phẩm.</div>
    </div>
   </div>
@@ -923,7 +968,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </div>
 
-<!-- TOAST CONTAINER -->
+<!-- TOAST CONTAINER & DYNAMIC NOTIFICATIONS -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
@@ -959,6 +1004,7 @@ let soundEnabled = true;
 let currentLang = 'vi';
 let activeSpeechProduct = null;
 let isRegisterMode = false;
+let currentDepositAmount = 0;
 
 // DICTIONARY FOR I18N
 const i18n = {
@@ -1012,6 +1058,17 @@ function showToast(msg, type = 'success') {
  setTimeout(() => toast.remove(), 3000);
 }
 
+function speakText(text) {
+ if (!('speechSynthesis' in window)) return;
+ window.speechSynthesis.cancel();
+ 
+ const utterance = new SpeechSynthesisUtterance(text);
+ utterance.lang = 'vi-VN'; // Ép buộc 100% Tiếng Việt chuẩn
+ utterance.rate = 1.05;
+ utterance.pitch = 1.2; // Giọng cute
+ window.speechSynthesis.speak(utterance);
+}
+
 function loadStoredProducts() {
  try {
   const custom = JSON.parse(localStorage.getItem("hh_custom_products") || "[]");
@@ -1051,12 +1108,15 @@ function renderAuthUI() {
       <small>${escapeHTML(user.email)}</small>
      </div>
      <button onclick="openProfileModal()">⚙️ Tài khoản & Avatar</button>
+     <button onclick="openDepositModal()">💳 Nạp tiền vào ví</button>
      <button onclick="openOrderTrackModal()">📦 Tra cứu đơn hàng</button>
      <button onclick="logoutUser()" style="color:#ff3b30">🚪 Đăng xuất</button>
     </div>
    </div>`;
+   document.getElementById("walletBalance").textContent = user.balance || "0 ₫";
  } else {
   container.innerHTML = `<button class="btn btn-green" onclick="openAuthModal()" data-i18n="btn_login">Đăng nhập</button>`;
+  document.getElementById("walletBalance").textContent = "0 ₫";
  }
 }
 
@@ -1125,7 +1185,8 @@ function handleAuthSubmit() {
    showToast("Email này đã được đăng ký trước đó!", "error");
    return;
   }
-  const newUser = { name, email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "1.250.000 ₫" };
+  // YÊU CẦU: Số dư tài khoản mới đăng ký đều là 0đ
+  const newUser = { name, email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫" };
   users.push(newUser);
   localStorage.setItem("hh_all_users", JSON.stringify(users));
   localStorage.setItem("hh_current_user", JSON.stringify(newUser));
@@ -1136,8 +1197,7 @@ function handleAuthSubmit() {
    localStorage.setItem("hh_current_user", JSON.stringify(found));
    showToast("Đăng nhập thành công! Chào mừng " + found.name);
   } else {
-   // Cho phép tài khoản mẫu đăng nhập nhanh nếu chưa có trong DB
-   const defaultUser = { name: email.split('@')[0], email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "1.250.000 ₫" };
+   const defaultUser = { name: email.split('@')[0], email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫" };
    localStorage.setItem("hh_current_user", JSON.stringify(defaultUser));
    showToast("Đăng nhập thành công!");
   }
@@ -1153,12 +1213,76 @@ function logoutUser() {
  showToast("Đã đăng xuất tài khoản");
 }
 
+// ================= NẠP TIỀN TÀI KHOẢN (DEPOSIT FEATURE) =================
+function openDepositModal() {
+ const user = getCurrentUser();
+ if (!user) {
+  showToast("Vui lòng đăng nhập trước khi nạp tiền!", "error");
+  openAuthModal();
+  return;
+ }
+ document.getElementById("depositAmountInput").value = "";
+ document.getElementById("depositStep1").style.display = "block";
+ document.getElementById("depositStep2").style.display = "none";
+ document.getElementById("depositModalWrap").classList.add("show");
+}
+
+function closeDepositModal() {
+ document.getElementById("depositModalWrap").classList.remove("show");
+}
+
+function generateDepositQR() {
+ const amount = Number(document.getElementById("depositAmountInput").value);
+ if (isNaN(amount) || amount < 50000 || amount > 10000000) {
+  showToast("Vui lòng nhập số tiền từ 50.000 ₫ đến 10.000.000 ₫", "error");
+  return;
+ }
+
+ currentDepositAmount = amount;
+ const user = getCurrentUser();
+ const memo = `${user.name} ${amount}`;
+ const bankId = "MB";
+ const accountNo = "0866057398";
+ const accountName = "BUIDUCLONG";
+
+ const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(memo)}&accountName=${encodeURIComponent(accountName)}`;
+
+ document.getElementById("depositQrImg").src = qrUrl;
+ document.getElementById("depositQrAmount").textContent = money(amount);
+ document.getElementById("depositQrMemo").textContent = memo;
+
+ document.getElementById("depositStep1").style.display = "none";
+ document.getElementById("depositStep2").style.display = "block";
+}
+
+function confirmDepositPayment() {
+ closeDepositModal();
+
+ // Tạo thông báo có bánh răng quay ở dưới góc màn hình
+ const toastEl = document.createElement("div");
+ toastEl.className = "process-toast";
+ toastEl.innerHTML = `<span class="gear-spin">⚙️</span> Hệ thống đang kiểm tra giao dịch nạp tiền...`;
+ document.body.appendChild(toastEl);
+
+ // Giọng đọc AI thông báo đang chờ xử lý
+ speakText("Hệ thống đang kiểm tra giao dịch, bạn vui lòng chờ trong giây lát nha.");
+
+ setTimeout(() => {
+  toastEl.remove();
+  
+  // Thông báo kết quả nạp tiền thất bại / hệ thống chưa nhận được tiền
+  showToast("Nạp tiền không thành công! Hệ thống chưa nhận được tiền. Liên hệ admin để được hỗ trợ.", "error");
+  speakText("Nạp tiền không thành công ạ. Hệ thống chưa nhận được tiền. Nếu có trường hợp gì, bạn hãy liên hệ admin để được xử lý ngay nhé!");
+ }, 5000);
+}
+
 // PROFILE MODAL & AVATAR UPLOAD
 function openProfileModal() {
  const user = getCurrentUser();
  if (!user) { openAuthModal(); return; }
  document.getElementById("pfName").value = user.name || "";
  document.getElementById("pfEmail").value = user.email || "";
+ document.getElementById("pfBalance").value = user.balance || "0 ₫";
  document.getElementById("profilePreviewImg").src = user.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
  document.getElementById("profileModalWrap").classList.add("show");
 }
@@ -1173,7 +1297,6 @@ function uploadAvatar(input) {
    if(user) {
     user.avatar = e.target.result;
     localStorage.setItem("hh_current_user", JSON.stringify(user));
-    // Cập nhật luôn trong danh sách users
     let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
     users = users.map(u => u.email === user.email ? user : u);
     localStorage.setItem("hh_all_users", JSON.stringify(users));
@@ -1212,7 +1335,7 @@ function renderProducts(){
 
  if(sort === "low") list.sort((a,b) => a.price - b.price);
  if(sort === "high") list.sort((a,b) => b.price - a.price);
- if(sort === "name") list.sort((a,b) => a.name.localeCompare(b.name,"vi"));
+ if(sort === "name") list.sort((a,b) => b.name.localeCompare(b.name,"vi"));
 
  const grid = document.getElementById("productGrid");
  if(!list.length){
@@ -1309,23 +1432,18 @@ function startVoiceSearch() {
  recognition.onend = () => micBtn.classList.remove("recording");
 }
 
-// ================= AI VOICE ASSISTANT (CUTE & ĐÚNG NGÔN NGỮ) =================
+// ================= AI VOICE ASSISTANT (CUTE & 100% TIẾNG VIỆT CHUẨN) =================
 function speakProductDetails(p) {
  if (!('speechSynthesis' in window)) return;
  window.speechSynthesis.cancel();
 
- // Kiểm tra xem tên sản phẩm hoặc mô tả có chứa tiếng Anh hay không để chọn giọng đọc chuẩn xác
- const hasEnglish = /[a-zA-Z]{4,}/.test(p.name);
- const langCode = hasEnglish ? 'en-US' : 'vi-VN';
-
- const cuteIntro = langCode === 'en-US' 
-  ? `Hey there! Let me introduce you to this super awesome product: ${p.name}. Price is ${p.price} VND. ${p.description}. Grab it right now!`
-  : `Dạ, xin chào bạn nha! Em xin phép giới thiệu sản phẩm siêu hot: ${p.name}. Giá yêu thương là ${p.price} đồng. ${p.description}. Hướng dẫn sử dụng nè: ${p.guide || "Hệ thống bàn giao tự động ngay sau khi thanh toán ạ!"}`;
+ // Ép buộc sử dụng giọng Tiếng Việt chuẩn để tránh tình trạng đọc nhầm sang tiếng nước ngoài
+ const cuteIntro = `Dạ, xin chào bạn nha! Em xin phép giới thiệu sản phẩm siêu hot là: ${p.name}. Giá yêu thương là ${p.price} đồng. ${p.description}. Hướng dẫn sử dụng nè: ${p.guide || "Hệ thống bàn giao tự động ngay sau khi thanh toán ạ!"}`;
 
  const utterance = new SpeechSynthesisUtterance(cuteIntro);
- utterance.lang = langCode;
- utterance.rate = 1.05; // Tốc độ hơi nhanh một chút cho có năng lượng & cute
- utterance.pitch = 1.2; // Tăng độ cao giọng nói để tạo cảm giác cute, dễ thương
+ utterance.lang = 'vi-VN';
+ utterance.rate = 1.05; 
+ utterance.pitch = 1.2; // Giọng cute dễ thương
 
  utterance.onstart = function() {
   document.getElementById("mProVoiceStatus").textContent = "✨ Trợ lý AI đang thuyết minh cực kỳ dễ thương...";
