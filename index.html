@@ -1750,5 +1750,183 @@ renderAuthUI();
 renderCart();
 renderProducts();
 </script>
+  <!-- ADMIN MODAL (Ẩn pass sẵn 123456, hỗ trợ thêm/sửa/xóa sản phẩm) -->
+<div class="modal-wrap" id="adminModalWrap" onclick="if(event.target===this)closeAdminModal()">
+ <div class="modal" style="max-width:550px;">
+  <button class="close" onclick="closeAdminModal()" style="position:absolute;right:20px;top:20px">×</button>
+  <h2>⚙️ Admin Quản Lý Sản Phẩm</h2>
+  
+  <div id="adminAuth" style="text-align:center; padding:20px 0;">
+   <p style="font-size:12px; margin-bottom:15px;">Nhấn vào nút bên dưới để truy cập hệ thống quản trị:</p>
+   <button class="btn btn-green" style="width:100%; padding:12px;" onclick="authAdminDirect()">Truy Cập Quản Trị (Mật khẩu mặc định)</button>
+  </div>
+
+  <div id="adminPanel" style="display:none; max-height:70vh; overflow-y:auto; padding-right:5px;">
+   <h3 style="margin-top:10px; font-size:14px; color:var(--green);" id="adminFormTitle">➕ Thêm Sản Phẩm Mới</h3>
+   <input type="hidden" id="editProductId">
+   
+   <label style="font-size:10px; font-weight:bold;">Tên sản phẩm:</label>
+   <input type="text" id="pName" placeholder="Tên sản phẩm" style="width:100%;padding:8px;margin:4px 0 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)">
+   
+   <label style="font-size:10px; font-weight:bold;">Giá tiền (VND):</label>
+   <input type="number" id="pPrice" placeholder="Giá" style="width:100%;padding:8px;margin:4px 0 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)">
+   
+   <label style="font-size:10px; font-weight:bold;">Danh mục:</label>
+   <select id="pCat" style="width:100%;padding:8px;margin:4px 0 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)">
+    <option value="game">Game</option>
+    <option value="website">Website</option>
+    <option value="social">Mạng xã hội</option>
+    <option value="ai">AI Tools</option>
+   </select>
+
+   <label style="font-size:10px; font-weight:bold;">Ảnh sản phẩm (Tải ảnh lên hoặc dán link):</label>
+   <input type="file" id="pImageFile" accept="image/*" style="width:100%;padding:6px;margin:4px 0 10px;background:var(--bg);border:1px solid var(--line);border-radius:8px;" onchange="previewAdminImage(this)">
+   <input type="text" id="pEmojiOrImg" placeholder="Hoặc dùng emoji (VD: 🔥)" style="width:100%;padding:8px;margin:4px 0 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)">
+
+   <label style="font-size:10px; font-weight:bold;">Mô tả chi tiết:</label>
+   <textarea id="pDesc" placeholder="Mô tả sản phẩm" style="width:100%;padding:8px;margin:4px 0 15px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></textarea>
+   
+   <div style="display:flex; gap:10px;">
+    <button class="btn btn-green" style="flex:1" onclick="saveAdminProduct()">💾 Lưu sản phẩm</button>
+    <button class="btn btn-light" id="cancelEditBtn" style="display:none;" onclick="resetAdminForm()">Hủy sửa</button>
+   </div>
+
+   <h3 style="margin-top:20px; font-size:14px; border-top:1px solid var(--line); padding-top:15px;">📋 Danh sách sản phẩm hiện có</h3>
+   <div id="adminProductList" style="margin-top:10px; display:flex; flex-direction:column; gap:8px;"></div>
+  </div>
+ </div>
+</div>
+  <!-- SYSTEM ANNOUNCEMENT MODAL -->
+<div class="modal-wrap show" id="systemNoticeModalWrap" onclick="if(event.target===this)closeSystemNotice()">
+ <div class="modal" style="max-width:450px; text-align:center;">
+  <h2 style="color:var(--green); font-size:18px; font-weight:900; margin-bottom:10px;">📢 Thông Báo Hệ Thống</h2>
+  <p style="font-size:12px; line-height:1.6; color:var(--ink); text-align:left; background:var(--bg); padding:12px; border-radius:10px; border:1px solid var(--line); margin-bottom:15px;">
+   Từ ngày 4/11 admin mở bán tất cả các dịch vụ trên cộng đồng mạng đồng thời là tất cả các game , giao dịch tự động , có AI hướng dẫn sử dụng và rất nhiều các khuyến mãi.<br><br>
+   <b>Zalo chính chủ:</b> 0866057398
+  </p>
+  <button class="btn btn-green" style="width:100%; padding:10px;" onclick="closeSystemNotice()">Đã hiểu & Đóng</button>
+ </div>
+</div>
+
+<script>
+function closeSystemNotice() {
+    document.getElementById("systemNoticeModalWrap").classList.remove("show");
+}
+</script>
+  let uploadedImageBase64 = "";
+
+function authAdminDirect() {
+    // Tự động vượt qua mật khẩu 123456 theo yêu cầu
+    document.getElementById("adminAuth").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    renderAdminProductList();
+    showToast("Đăng nhập Admin thành công!");
+}
+
+function previewAdminImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImageBase64 = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function renderAdminProductList() {
+    const listEl = document.getElementById("adminProductList");
+    listEl.innerHTML = products.map(p => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg); padding:8px 12px; border-radius:8px; border:1px solid var(--line); font-size:11px;">
+            <div><b>${escapeHTML(p.name)}</b> - <span style="color:var(--green);">${money(p.price)}</span></div>
+            <div style="display:flex; gap:5px;">
+                <button class="topbar-btn" style="background:var(--blue);" onclick="editProduct('${p.id}')">Sửa</button>
+                <button class="topbar-btn" style="background:#ff3b30;" onclick="deleteProduct('${p.id}')">Xóa</button>
+            </div>
+        </div>
+    `).join("");
+}
+
+function saveAdminProduct() {
+    const editId = document.getElementById("editProductId").value;
+    const name = document.getElementById("pName").value.trim();
+    const price = Number(document.getElementById("pPrice").value);
+    const cat = document.getElementById("pCat").value;
+    const desc = document.getElementById("pDesc").value.trim();
+    const emojiInput = document.getElementById("pEmojiOrImg").value.trim() || "✨";
+
+    if(!name || isNaN(price)) {
+        showToast("Vui lòng điền tên và giá sản phẩm hợp lệ!", "error");
+        return;
+    }
+
+    let custom = JSON.parse(localStorage.getItem("hh_custom_products") || "[]");
+
+    if (editId) {
+        // Sửa sản phẩm
+        products = products.map(p => {
+            if(String(p.id) === String(editId)) {
+                return { ...p, name, price, category: cat, description: desc, emoji: uploadedImageBase64 || p.emoji };
+            }
+            return p;
+        });
+        // Cập nhật custom storage nếu có
+        custom = custom.map(p => {
+            if(String(p.id) === String(editId)) {
+                return { ...p, name, price, category: cat, description: desc, emoji: uploadedImageBase64 || p.emoji };
+            }
+            return p;
+        });
+        showToast("Đã cập nhật sản phẩm thành công!");
+    } else {
+        // Thêm mới sản phẩm
+        const newP = {
+            id: "PROD" + Date.now().toString().slice(-4),
+            name, category: cat, label: cat.toUpperCase(), emoji: uploadedImageBase64 || emojiInput,
+            price, description: desc, tone: "green", rating: 5.0, guide: "Tự động bàn giao sau khi thanh toán."
+        };
+        products.push(newP);
+        custom.push(newP);
+        showToast("Đã thêm sản phẩm mới thành công!");
+    }
+
+    localStorage.setItem("hh_custom_products", JSON.stringify(custom));
+    renderProducts();
+    resetAdminForm();
+    renderAdminProductList();
+}
+
+function editProduct(id) {
+    const p = products.find(x => String(x.id) === String(id));
+    if(!p) return;
+    document.getElementById("editProductId").value = p.id;
+    document.getElementById("pName").value = p.name;
+    document.getElementById("pPrice").value = p.price;
+    document.getElementById("pCat").value = p.category;
+    document.getElementById("pDesc").value = p.description;
+    document.getElementById("adminFormTitle").textContent = "✏️ Sửa Sản Phẩm: " + p.id;
+    document.getElementById("cancelEditBtn").style.display = "inline-block";
+}
+
+function resetAdminForm() {
+    document.getElementById("editProductId").value = "";
+    document.getElementById("pName").value = "";
+    document.getElementById("pPrice").value = "";
+    document.getElementById("pDesc").value = "";
+    document.getElementById("pEmojiOrImg").value = "";
+    uploadedImageBase64 = "";
+    document.getElementById("adminFormTitle").textContent = "➕ Thêm Sản Phẩm Mới";
+    document.getElementById("cancelEditBtn").style.display = "none";
+}
+
+function deleteProduct(id) {
+    if(!confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) return;
+    products = products.filter(x => String(x.id) !== String(id));
+    let custom = JSON.parse(localStorage.getItem("hh_custom_products") || "[]");
+    custom = custom.filter(x => String(x.id) !== String(id));
+    localStorage.setItem("hh_custom_products", JSON.stringify(custom));
+    renderProducts();
+    renderAdminProductList();
+    showToast("Đã xóa sản phẩm thành công!");
+}
 </body>
 </html>
