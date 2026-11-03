@@ -588,7 +588,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
 </header>
 
 <main>
-<!-- HERO (ĐÃ CẬP NHẬT THEO YÊU CẦU) -->
+<!-- HERO (ĐÃ CẬP NHẬT THEO YÊU CẦU + NÚT NẠP TIỀN Ở ĐẦU TRANG) -->
 <section class="hero-wrap">
  <div class="container">
   <div class="hero">
@@ -599,7 +599,9 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
     <div class="hero-actions">
      <a class="btn btn-white" href="#catalog">Khám phá sản phẩm ↗</a>
      <a class="btn btn-outline" href="#services">Khám phá dịch vụ</a>
-     <a class="btn btn-blue" href="https://zalo.me/0866057398" target="_blank" rel="noopener">💬 Liên hệ admin chính chủ ↗</a>
+     <!-- Nút Nạp Tiền Nhanh ở ngay đầu trang -->
+     <button class="btn btn-blue" onclick="openDepositModal()">💳 Nạp Tiền Ngay</button>
+     <a class="btn btn-outline" href="https://zalo.me/0866057398" target="_blank" rel="noopener">💬 Liên hệ admin chính chủ ↗</a>
     </div>
     <div class="hero-note">🔒 Giao dịch tự động & xác nhận tức thì qua hệ thống Ví Hồng Hải.</div>
    </div>
@@ -741,7 +743,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </aside>
 
-<!-- DEPOSIT MODAL -->
+<!-- DEPOSIT MODAL (ĐÃ CẬP NHẬT ẢNH QR TỪ GITHUB) -->
 <div class="modal-wrap" id="depositModalWrap" onclick="if(event.target===this)closeDepositModal()">
  <div class="modal" style="max-width:450px">
   <button class="close" onclick="closeDepositModal()" style="position:absolute;right:20px;top:20px">×</button>
@@ -759,9 +761,10 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
 
   <div id="depositStep2" style="display:none;text-align:center">
    <p style="font-size:11px;margin-bottom:8px">Quét mã QR để thanh toán tự động:</p>
-   <img id="depositQrImg" src="" alt="Mã QR Nạp Tiền" style="max-width:210px;width:100%;border-radius:12px;border:1px solid var(--line);margin-bottom:10px">
+   <!-- ẢNH QR LẤY TRỰC TIẾP TỪ GITHUB CỦA BẠN -->
+   <img id="depositQrImg" src="https://raw.githubusercontent.com/honghaimmo/honghaimedia/main/IMG_2303.jpeg" alt="Mã QR Nạp Tiền" style="max-width:210px;width:100%;border-radius:12px;border:1px solid var(--line);margin-bottom:10px">
    <div style="font-size:11px;background:var(--bg);padding:10px;border-radius:10px;border:1px solid var(--line);text-align:left;margin-bottom:15px">
-    <p><b>Chủ tài khoản:</b> BUIDUCLONG</p>
+    <p><b>Chủ tài khoản:</b> ZALOPAY_DANGHONGHAI</p>
     <p><b>Số tiền:</b> <span id="depositQrAmount" style="color:var(--green);font-weight:bold">0 ₫</span></p>
     <p><b>Nội dung CK:</b> <code id="depositQrMemo" style="background:var(--white);padding:2px 6px;border-radius:4px;color:var(--blue);font-weight:bold"></code></p>
    </div>
@@ -1275,11 +1278,9 @@ function generateDepositQR() {
 
  const user = getCurrentUser();
  const memo = `${user.name} ${amount}`;
- const bankId = "ZALOPAY";
- const accountNo = "0866057398";
- const accountName = "ZALOPAY_DANGHONGHAI";
 
-  const qrUrl = "https://raw.githubusercontent.com/honghaimmo/honghaimedia/main/IMG_2303.jpeg";
+ // ĐÃ CẬP NHẬT ẢNH QR TRỰC TIẾP TỪ GITHUB
+ const qrUrl = "https://raw.githubusercontent.com/honghaimmo/honghaimedia/main/IMG_2303.jpeg";
 
  document.getElementById("depositQrImg").src = qrUrl;
  document.getElementById("depositQrAmount").textContent = money(amount);
@@ -1356,7 +1357,7 @@ function renderProducts(){
 
  if(sort === "low") list.sort((a,b) => a.price - b.price);
  if(sort === "high") list.sort((a,b) => b.price - a.price);
- if(sort === "name") list.sort((a,b) => b.name.localeCompare(b.name,"vi"));
+ if(sort === "name") list.sort((a,b) => a.name.localeCompare(b.name,"vi"));
 
  const grid = document.getElementById("productGrid");
  if(!list.length){
