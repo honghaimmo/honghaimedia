@@ -82,7 +82,7 @@ header{
 .logo small{display:block;font-size:9px;letter-spacing:2px;color:var(--muted)}
 .navlinks{display:flex;gap:20px;align-items:center;font-size:13px;font-weight:700}
 .navlinks a:hover{color:var(--green)}
-.navright{display:flex;align-items:center;gap:8px}
+.navright{display:flex;align-items:center;gap:8px;position:relative}
 .btn{
  border:0;border-radius:12px;padding:11px 17px;
  font-weight:800;font-size:12px;transition:.2s;
@@ -106,6 +106,28 @@ body.theme-dark .btn-light{background:#1d352c;color:#63e2b7}
  display:flex;align-items:center;justify-content:center;font-weight:800;
 }
 .mobilemenu{display:none}
+
+/* USER ACCOUNT DROPDOWN MENU */
+.user-menu-wrap {position:relative}
+.user-avatar-btn{
+ display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--line);
+ padding:6px 12px;border-radius:14px;cursor:pointer;font-size:12px;font-weight:800;color:var(--ink);
+}
+.user-avatar-btn img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.user-dropdown{
+ display:none;position:absolute;right:0;top:48px;width:240px;
+ background:var(--white);border:1px solid var(--line);border-radius:16px;
+ box-shadow:0 15px 40px rgba(0,0,0,.15);padding:15px;z-index:250;
+}
+.user-dropdown.show{display:block}
+.user-dropdown-info{border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:10px}
+.user-dropdown-info strong{display:block;font-size:13px}
+.user-dropdown-info small{color:var(--muted);font-size:10px}
+.user-dropdown a, .user-dropdown button{
+ display:block;width:100%;text-align:left;background:none;border:0;padding:8px 0;
+ font-size:12px;font-weight:700;color:var(--ink);cursor:pointer;
+}
+.user-dropdown a:hover, .user-dropdown button:hover{color:var(--green)}
 
 /* HERO */
 .hero-wrap{
@@ -367,7 +389,7 @@ footer a:hover{color:#7dffca}
 .cart-total strong{font-size:20px;color:var(--green)}
 .cart-total p{font-size:10px;color:var(--muted);margin:4px 0 12px}
 
-/* MODALS - MỆNH XỊN PRO */
+/* MODALS */
 .modal-wrap{
  display:none;position:fixed;inset:0;z-index:300;
  background:rgba(16,35,27,.65);align-items:center;justify-content:center;padding:15px;
@@ -549,7 +571,12 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
    <button class="iconbtn" onclick="openCart()" aria-label="Giỏ hàng">
     🛒 <span id="cartCount" class="cart-count">0</span>
    </button>
-   <a class="btn btn-green" href="./login.html" data-i18n="btn_login">Đăng nhập</a>
+
+   <!-- KHU VỰC XỬ LÝ ĐĂNG NHẬP / TÀI KHOẢN -->
+   <div id="authContainer">
+     <button class="btn btn-green" onclick="openAuthModal()" data-i18n="btn_login">Đăng nhập</button>
+   </div>
+
    <button class="iconbtn mobilemenu" onclick="document.getElementById('categories').scrollIntoView()">☰</button>
   </div>
  </div>
@@ -678,7 +705,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
   <div class="footer-grid">
    <div><h3>HỒNG HẢI MARKETPLACE</h3><p>Không gian mua sắm sản phẩm số, tài nguyên kỹ thuật số và dịch vụ công nghệ hàng đầu.</p><p style="margin-top:12px">Chỉ cung cấp sản phẩm/dịch vụ chính chủ, bảo hành uy tín.</p></div>
    <div><h3>Khám phá</h3><a href="#catalog">Sản phẩm</a><a href="#categories">Danh mục</a><a href="#services">Dịch vụ</a></div>
-   <div><h3>Hỗ trợ</h3><a href="https://zalo.me/0866057398" target="_blank" rel="noopener">Zalo hỗ trợ</a><a href="./login.html">Tài khoản</a><a href="#benefits">Chính sách</a></div>
+   <div><h3>Hỗ trợ</h3><a href="https://zalo.me/0866057398" target="_blank" rel="noopener">Zalo hỗ trợ</a><a href="javascript:void(0)" onclick="openAuthModal()">Tài khoản</a><a href="#benefits">Chính sách</a></div>
    <div><h3>Giao diện</h3>
     <button class="topbar-btn" onclick="setTheme('default')" style="margin:2px">Green</button>
     <button class="topbar-btn" onclick="setTheme('cyber')" style="margin:2px">Cyber</button>
@@ -710,7 +737,76 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </aside>
 
-<!-- PRO PRODUCT DETAIL MODAL (MỆNH XỊN PRO MODAL WITH AI SPEECH) -->
+<!-- AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) -->
+<div class="modal-wrap" id="authModalWrap" onclick="if(event.target===this)closeAuthModal()">
+ <div class="modal" style="max-width:420px">
+  <button class="close" onclick="closeAuthModal()" style="position:absolute;right:20px;top:20px">×</button>
+  <div style="text-align:center;margin-bottom:15px">
+   <h2 id="authTitle" style="font-size:20px;font-weight:900">✨ Đăng nhập tài khoản</h2>
+   <p style="font-size:11px;color:var(--muted)" id="authSub">Truy cập hệ thống Hồng Hải Marketplace</p>
+  </div>
+
+  <div id="authFormBody">
+   <div id="registerFields" style="display:none">
+    <label style="font-size:11px;font-weight:700">Họ và tên:</label>
+    <input type="text" id="regName" placeholder="Ví dụ: Nguyễn Văn A" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:5px 0 12px;background:var(--bg);color:var(--ink)">
+   </div>
+
+   <label style="font-size:11px;font-weight:700">Email đăng nhập:</label>
+   <input type="email" id="authEmail" placeholder="name@example.com" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:5px 0 12px;background:var(--bg);color:var(--ink)">
+
+   <label style="font-size:11px;font-weight:700">Mật khẩu:</label>
+   <input type="password" id="authPass" placeholder="••••••••" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:5px 0 15px;background:var(--bg);color:var(--ink)">
+
+   <button class="btn btn-green" style="width:100%;padding:12px" id="authSubmitBtn" onclick="handleAuthSubmit()">Đăng Nhập Ngay</button>
+
+   <div style="text-align:center;margin-top:15px;font-size:11px">
+    <span id="authToggleText">Chưa có tài khoản?</span> 
+    <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color:var(--green);font-weight:bold" id="authToggleLink">Đăng ký ngay</a>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- PROFILE SETTINGS / TÀI KHOẢN MODAL -->
+<div class="modal-wrap" id="profileModalWrap" onclick="if(event.target===this)closeProfileModal()">
+ <div class="modal" style="max-width:480px">
+  <button class="close" onclick="closeProfileModal()" style="position:absolute;right:20px;top:20px">×</button>
+  <h2>👤 Quản lý Tài khoản</h2>
+  <p style="font-size:11px;color:var(--muted);margin-bottom:15px">Cập nhật thông tin và hình ảnh cá nhân của bạn.</p>
+
+  <div style="text-align:center;margin-bottom:15px">
+   <img id="profilePreviewImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--green);margin-bottom:8px">
+   <div>
+    <label class="btn btn-light" style="font-size:10px;cursor:pointer">
+     📷 Tải ảnh lên <input type="file" id="avatarUploadInput" accept="image/*" style="display:none" onchange="uploadAvatar(this)">
+    </label>
+   </div>
+  </div>
+
+  <div style="font-size:12px;display:flex;flex-direction:column;gap:10px">
+   <div>
+    <label style="color:var(--muted);font-size:10px">Tên hiển thị:</label>
+    <input type="text" id="pfName" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)">
+   </div>
+   <div>
+    <label style="color:var(--muted);font-size:10px">Email liên kết:</label>
+    <input type="email" id="pfEmail" disabled style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--muted);cursor:not-allowed">
+   </div>
+   <div>
+    <label style="color:var(--muted);font-size:10px">Số dư ví Hồng Hải Pay:</label>
+    <input type="text" id="pfBalance" disabled value="1.250.000 ₫" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--green);font-weight:bold;cursor:not-allowed">
+   </div>
+  </div>
+
+  <div class="modal-actions" style="margin-top:20px">
+   <button class="btn btn-light" onclick="closeProfileModal()">Đóng</button>
+   <button class="btn btn-green" onclick="saveProfileChanges()">Lưu thay đổi</button>
+  </div>
+ </div>
+</div>
+
+<!-- PRO PRODUCT DETAIL MODAL -->
 <div class="modal-wrap" id="modalWrap" onclick="if(event.target===this)closeModal()">
  <div class="modal">
   <button class="close" onclick="closeModal()" style="position:absolute;right:20px;top:20px">×</button>
@@ -731,7 +827,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
   <div class="ai-speech-box">
    <button class="ai-speech-btn" id="mProVoiceBtn" onclick="toggleProductSpeech()">🔊</button>
    <div style="flex:1">
-    <div style="font-size:11px;font-weight:800;color:var(--green)">Trợ lý AI Giọng nói</div>
+    <div style="font-size:11px;font-weight:800;color:var(--green)">Trợ lý AI Giọng nói (Cute & Chuẩn ngôn ngữ)</div>
     <div style="font-size:10px;color:var(--muted)" id="mProVoiceStatus">Bấm để lắng nghe thuyết minh chi tiết sản phẩm.</div>
    </div>
   </div>
@@ -818,7 +914,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
    <button onclick="toggleChat()" style="background:none;border:0;color:white;font-weight:bold;cursor:pointer">×</button>
   </div>
   <div class="chat-messages" id="chatMessages">
-   <div class="msg ai">Xin chào! Tôi có thể tư vấn sản phẩm số, tài khoản Game hoặc dịch vụ nào cho bạn hôm nay?</div>
+   <div class="msg ai">Dạ, em chào bạn nha! Hôm nay bạn cần em tư vấn tài khoản game hay dịch vụ số nào ạ? ✨</div>
   </div>
   <div class="chat-input">
    <input type="text" id="chatInput" placeholder="Hỏi AI tư vấn..." onkeypress="if(event.key==='Enter')sendChatMessage()">
@@ -835,23 +931,17 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  * HỒNG HẢI MARKETPLACE - All-in-One Super App JavaScript
  */
 
-// FULL SAMPLE PRODUCTS (GAME, MXH, AI, SERVICES)
 const sampleProducts = [
- // GAME FULL
  {id:"G001",name:"Tài khoản Free Fire VIP Rank Huyền Thoại",category:"game",label:"FREE FIRE",emoji:"🔥",price:180000,oldPrice:250000,description:"Acc Free Fire có nhiều trang phục súng VIP, full nhân vật, bảo hành chính chủ 100%.",tone:"orange",rating:5.0,guide:"Đăng nhập qua Facebook/Garena. Tiến hành đổi thông tin bảo mật ngay sau khi nhận acc."},
  {id:"G002",name:"Tài khoản Liên Quân Mobile Full Tướng Full Ngọc",category:"game",label:"LIÊN QUÂN",emoji:"⚔️",price:220000,oldPrice:300000,description:"Tài khoản Liên Quân Rank Cao Thủ, hơn 110 tướng, nhiều trang phục SS tuyệt đẹp.",tone:"purple",rating:4.9,guide:"Đăng nhập tài khoản Garena, kích hoạt mã OTP đổi SĐT ngay."},
  {id:"G003",name:"Acc Roblox Blox Fruit Level Max + Cung Dark Blade",category:"game",label:"ROBLOX",emoji:"🔴",price:150000,oldPrice:200000,description:"Acc Roblox Level 2550, full Melee V2, Trái Ác Quỷ vĩnh viễn.",tone:"blue",rating:5.0,guide:"Đăng nhập Roblox.com, vào cài đặt thêm Email bảo mật của bạn."},
  {id:"G004",name:"Tài khoản Genshin Impact AR 55 + 5 Tướng 5 Tinh",category:"game",label:"GENSHIN",emoji:"✨",price:350000,oldPrice:500000,description:"Acc Genshin Server Asia, khám phá mapa full 100%, bảo đảm không thắt lưng.",tone:"purple",rating:4.8,guide:"Đăng nhập Hoyoverse, đổi email và mật khẩu liên kết."},
  {id:"G005",name:"Acc Valorant Rank Diamond + Skin Vandal Prime",category:"game",label:"VALORANT",emoji:"🎯",price:280000,oldPrice:380000,description:"Acc Valorant nhiều Skin dao và súng VIP, Rank Kim Cương mượt mà.",tone:"blue",rating:4.9,guide:"Đăng nhập Riot Client, cập nhật email chính chủ."},
  {id:"G006",name:"Thẻ Steam Wallet Code $10 USD",category:"game",label:"STEAM",emoji:"🎮",price:245000,oldPrice:260000,description:"Mã nạp Steam Wallet mua game trên nền tảng Steam bản quyền.",tone:"green",rating:5.0,guide:"Vào Steam -> Redeem a Steam Wallet Code -> Nhập mã được cấp."},
-
- // AI & SOFTWARE
  {id:"A001",name:"Tài khoản ChatGPT Plus (GPT-4o) 1 Tháng",category:"ai",label:"AI TOOLS",emoji:"🤖",price:120000,oldPrice:200000,description:"Tài khoản ChatGPT Plus sử dụng mô hình GPT-4o, DALL-E 3 siêu tốc.",tone:"blue",rating:5.0,guide:"Đăng nhập trực tiếp tại chatgpt.com với tài khoản được bàn giao."},
  {id:"A002",name:"Tài khoản Claude 3.5 Sonnet Pro 1 Tháng",category:"ai",label:"AI TOOLS",emoji:"🧠",price:150000,oldPrice:220000,description:"Công cụ AI lập trình và viết lách đỉnh cao nhất hiện nay từ Anthropic.",tone:"purple",rating:5.0,guide:"Đăng nhập tại claude.ai bằng email và mật khẩu được cấp."},
  {id:"S001",name:"Key Windows 11 Pro Bản Quyền Vĩnh Viễn",category:"software",label:"WINDOWS",emoji:"💻",price:99000,oldPrice:300000,description:"Active Windows 11 Pro bản quyền chính hãng, cập nhật bảo mật liên tục.",tone:"blue",rating:4.9,guide:"Vào Settings -> System -> Activation -> Change Product Key và nhập mã."},
  {id:"S002",name:"Tài khoản Microsoft Office 365 (1TB OneDrive)",category:"software",label:"OFFICE",emoji:"📊",price:130000,oldPrice:250000,description:"Sử dụng Word, Excel, PowerPoint bản quyền + 1000GB dung lượng Cloud.",tone:"green",rating:4.9,guide:"Đăng nhập office.com và đổi mật khẩu lần đầu."},
-
- // DIGITAL SERVICES & MEDIA
  {id:"M001",name:"Tài khoản Netflix Premium 4K Ultra HD 1 Tháng",category:"accessories",label:"NETFLIX",emoji:"🎬",price:75000,oldPrice:120000,description:"Xem phim 4K không quảng cáo, Profile riêng tư có mã PIN bảo vệ.",tone:"orange",rating:5.0,guide:"Mở app Netflix -> Đăng nhập email -> Chọn đúng Slot tên bạn."},
  {id:"M002",name:"Nâng cấp Spotify Premium Chính Chủ 1 Năm",category:"accessories",label:"SPOTIFY",emoji:"🎵",price:190000,oldPrice:350000,description:"Nghe nhạc chất lượng cao không quảng cáo trên chính tài khoản của bạn.",tone:"green",rating:5.0,guide:"Gửi email tài khoản Spotify của bạn để chúng tôi kích hoạt Premium."},
  {id:"D001",name:"Tài khoản Canva Pro Edu / Brand 1 Năm",category:"design",label:"CANVA",emoji:"🎨",price:85000,oldPrice:200000,description:"Sử dụng hàng triệu mẫu thiết kế, hình ảnh và công cụ AI Canva Pro.",tone:"purple",rating:5.0,guide:"Chấp nhận lời mời tham gia nhóm Canva Pro gửi qua email của bạn."},
@@ -868,6 +958,7 @@ let appliedDiscount = 0;
 let soundEnabled = true;
 let currentLang = 'vi';
 let activeSpeechProduct = null;
+let isRegisterMode = false;
 
 // DICTIONARY FOR I18N
 const i18n = {
@@ -885,7 +976,7 @@ const i18n = {
  }
 };
 
-// AUDIO SYNTHESIZER (Web Audio API)
+// AUDIO SYNTHESIZER
 function playSound(type) {
  if (!soundEnabled) return;
  try {
@@ -936,7 +1027,180 @@ function saveWishlist(){ localStorage.setItem("hh_market_wishlist",JSON.stringif
 function money(val){ return new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND"}).format(Number(val)||0); }
 function escapeHTML(str){ return String(str??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
-// RENDER PRODUCTS
+// ================= USER ACCOUNT & AUTH SYSTEM =================
+function getCurrentUser() {
+ try { return JSON.parse(localStorage.getItem("hh_current_user")); } catch(e) { return null; }
+}
+
+function renderAuthUI() {
+ const container = document.getElementById("authContainer");
+ const user = getCurrentUser();
+
+ if (user) {
+  const avatar = user.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+  container.innerHTML = `
+   <div class="user-menu-wrap">
+    <div class="user-avatar-btn" onclick="toggleUserDropdown(event)">
+     <img src="${avatar}" alt="Avatar">
+     <span>${escapeHTML(user.name)}</span>
+     <span>▼</span>
+    </div>
+    <div class="user-dropdown" id="userDropdown">
+     <div class="user-dropdown-info">
+      <strong>${escapeHTML(user.name)}</strong>
+      <small>${escapeHTML(user.email)}</small>
+     </div>
+     <button onclick="openProfileModal()">⚙️ Tài khoản & Avatar</button>
+     <button onclick="openOrderTrackModal()">📦 Tra cứu đơn hàng</button>
+     <button onclick="logoutUser()" style="color:#ff3b30">🚪 Đăng xuất</button>
+    </div>
+   </div>`;
+ } else {
+  container.innerHTML = `<button class="btn btn-green" onclick="openAuthModal()" data-i18n="btn_login">Đăng nhập</button>`;
+ }
+}
+
+function toggleUserDropdown(e) {
+ e.stopPropagation();
+ const drop = document.getElementById("userDropdown");
+ if(drop) drop.classList.toggle("show");
+}
+
+window.addEventListener('click', () => {
+ const drop = document.getElementById("userDropdown");
+ if(drop) drop.classList.remove("show");
+});
+
+function openAuthModal() {
+ isRegisterMode = false;
+ updateAuthModalView();
+ document.getElementById("authModalWrap").classList.add("show");
+}
+function closeAuthModal() { document.getElementById("authModalWrap").classList.remove("show"); }
+
+function toggleAuthMode() {
+ isRegisterMode = !isRegisterMode;
+ updateAuthModalView();
+}
+
+function updateAuthModalView() {
+ const title = document.getElementById("authTitle");
+ const sub = document.getElementById("authSub");
+ const regFields = document.getElementById("registerFields");
+ const submitBtn = document.getElementById("authSubmitBtn");
+ const toggleText = document.getElementById("authToggleText");
+ const toggleLink = document.getElementById("authToggleLink");
+
+ if (isRegisterMode) {
+  title.textContent = "✨ Tạo Tài Khoản Mới";
+  sub.textContent = "Đăng ký thành viên Hồng Hải Marketplace";
+  regFields.style.display = "block";
+  submitBtn.textContent = "Đăng Ký Tài Khoản";
+  toggleText.textContent = "Đã có tài khoản?";
+  toggleLink.textContent = "Đăng nhập ngay";
+ } else {
+  title.textContent = "✨ Đăng Nhập Tài Khoản";
+  sub.textContent = "Truy cập hệ thống Hồng Hải Marketplace";
+  regFields.style.display = "none";
+  submitBtn.textContent = "Đăng Nhập Ngay";
+  toggleText.textContent = "Chưa có tài khoản?";
+  toggleLink.textContent = "Đăng ký ngay";
+ }
+}
+
+function handleAuthSubmit() {
+ const email = document.getElementById("authEmail").value.trim();
+ const pass = document.getElementById("authPass").value.trim();
+ 
+ if (!email || !pass) {
+  showToast("Vui lòng điền đầy đủ thông tin!", "error");
+  return;
+ }
+
+ let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
+
+ if (isRegisterMode) {
+  const name = document.getElementById("regName").value.trim() || email.split('@')[0];
+  if (users.some(u => u.email === email)) {
+   showToast("Email này đã được đăng ký trước đó!", "error");
+   return;
+  }
+  const newUser = { name, email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "1.250.000 ₫" };
+  users.push(newUser);
+  localStorage.setItem("hh_all_users", JSON.stringify(users));
+  localStorage.setItem("hh_current_user", JSON.stringify(newUser));
+  showToast("Đăng ký và đăng nhập thành công! 🎉");
+ } else {
+  const found = users.find(u => u.email === email && u.pass === pass);
+  if (found) {
+   localStorage.setItem("hh_current_user", JSON.stringify(found));
+   showToast("Đăng nhập thành công! Chào mừng " + found.name);
+  } else {
+   // Cho phép tài khoản mẫu đăng nhập nhanh nếu chưa có trong DB
+   const defaultUser = { name: email.split('@')[0], email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "1.250.000 ₫" };
+   localStorage.setItem("hh_current_user", JSON.stringify(defaultUser));
+   showToast("Đăng nhập thành công!");
+  }
+ }
+
+ closeAuthModal();
+ renderAuthUI();
+}
+
+function logoutUser() {
+ localStorage.removeItem("hh_current_user");
+ renderAuthUI();
+ showToast("Đã đăng xuất tài khoản");
+}
+
+// PROFILE MODAL & AVATAR UPLOAD
+function openProfileModal() {
+ const user = getCurrentUser();
+ if (!user) { openAuthModal(); return; }
+ document.getElementById("pfName").value = user.name || "";
+ document.getElementById("pfEmail").value = user.email || "";
+ document.getElementById("profilePreviewImg").src = user.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+ document.getElementById("profileModalWrap").classList.add("show");
+}
+function closeProfileModal() { document.getElementById("profileModalWrap").classList.remove("show"); }
+
+function uploadAvatar(input) {
+ if (input.files && input.files[0]) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+   document.getElementById("profilePreviewImg").src = e.target.result;
+   let user = getCurrentUser();
+   if(user) {
+    user.avatar = e.target.result;
+    localStorage.setItem("hh_current_user", JSON.stringify(user));
+    // Cập nhật luôn trong danh sách users
+    let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
+    users = users.map(u => u.email === user.email ? user : u);
+    localStorage.setItem("hh_all_users", JSON.stringify(users));
+   }
+  }
+  reader.readAsDataURL(input.files[0]);
+  showToast("Đã tải lên ảnh đại diện mới!");
+ }
+}
+
+function saveProfileChanges() {
+ let user = getCurrentUser();
+ if(!user) return;
+ const newName = document.getElementById("pfName").value.trim();
+ if(newName) user.name = newName;
+ localStorage.setItem("hh_current_user", JSON.stringify(user));
+ 
+ let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
+ users = users.map(u => u.email === user.email ? user : u);
+ localStorage.setItem("hh_all_users", JSON.stringify(users));
+
+ closeProfileModal();
+ renderAuthUI();
+ showToast("Đã cập nhật thông tin thành công!");
+}
+
+// ================= RENDER PRODUCTS =================
 function renderProducts(){
  const query = document.getElementById("searchInput").value.trim().toLowerCase();
  const sort = document.getElementById("sortSelect").value;
@@ -1017,7 +1281,7 @@ document.querySelectorAll(".category").forEach(button => {
 document.getElementById("searchInput").addEventListener("input", renderProducts);
 document.getElementById("sortSelect").addEventListener("change", renderProducts);
 
-// VOICE SEARCH (WEB SPEECH RECOGNITION API)
+// VOICE SEARCH
 function startVoiceSearch() {
  const micBtn = document.getElementById("micBtn");
  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -1032,7 +1296,6 @@ function startVoiceSearch() {
 
  micBtn.classList.add("recording");
  showToast("🎤 Đang lắng nghe... Hãy nói tên sản phẩm!");
-
  recognition.start();
 
  recognition.onresult = function(event) {
@@ -1042,30 +1305,30 @@ function startVoiceSearch() {
   showToast(`Đã tìm kiếm: "${text}"`);
   micBtn.classList.remove("recording");
  };
-
- recognition.onerror = function(event) {
-  showToast("Không thể nhận diện giọng nói. Vui lòng thử lại.", "error");
-  micBtn.classList.remove("recording");
- };
-
- recognition.onend = function() {
-  micBtn.classList.remove("recording");
- };
+ recognition.onerror = () => micBtn.classList.remove("recording");
+ recognition.onend = () => micBtn.classList.remove("recording");
 }
 
-// AI VOICE ASSISTANT FOR PRODUCT DETAILS (SPEECH SYNTHESIS)
+// ================= AI VOICE ASSISTANT (CUTE & ĐÚNG NGÔN NGỮ) =================
 function speakProductDetails(p) {
  if (!('speechSynthesis' in window)) return;
+ window.speechSynthesis.cancel();
 
- window.speechSynthesis.cancel(); // Stop current speech
+ // Kiểm tra xem tên sản phẩm hoặc mô tả có chứa tiếng Anh hay không để chọn giọng đọc chuẩn xác
+ const hasEnglish = /[a-zA-Z]{4,}/.test(p.name);
+ const langCode = hasEnglish ? 'en-US' : 'vi-VN';
 
- const speechText = `Sản phẩm ${p.name}. Giá niêm yết là ${p.price} đồng. ${p.description}. Hướng dẫn sử dụng: ${p.guide || "Bàn giao tài khoản tự động ngay sau khi hoàn tất thanh toán."}`;
- const utterance = new SpeechSynthesisUtterance(speechText);
- utterance.lang = 'vi-VN';
- utterance.rate = 1.0;
+ const cuteIntro = langCode === 'en-US' 
+  ? `Hey there! Let me introduce you to this super awesome product: ${p.name}. Price is ${p.price} VND. ${p.description}. Grab it right now!`
+  : `Dạ, xin chào bạn nha! Em xin phép giới thiệu sản phẩm siêu hot: ${p.name}. Giá yêu thương là ${p.price} đồng. ${p.description}. Hướng dẫn sử dụng nè: ${p.guide || "Hệ thống bàn giao tự động ngay sau khi thanh toán ạ!"}`;
+
+ const utterance = new SpeechSynthesisUtterance(cuteIntro);
+ utterance.lang = langCode;
+ utterance.rate = 1.05; // Tốc độ hơi nhanh một chút cho có năng lượng & cute
+ utterance.pitch = 1.2; // Tăng độ cao giọng nói để tạo cảm giác cute, dễ thương
 
  utterance.onstart = function() {
-  document.getElementById("mProVoiceStatus").textContent = "AI đang thuyết minh sản phẩm...";
+  document.getElementById("mProVoiceStatus").textContent = "✨ Trợ lý AI đang thuyết minh cực kỳ dễ thương...";
   document.getElementById("mProVoiceBtn").textContent = "⏸️";
  };
 
@@ -1111,8 +1374,6 @@ function showProduct(id){
  };
 
  document.getElementById("modalWrap").classList.add("show");
-
- // Auto start speech
  speakProductDetails(p);
 }
 
@@ -1121,7 +1382,7 @@ function closeModal(){
  document.getElementById("modalWrap").classList.remove("show");
 }
 
-// CART & CHECKOUT WITH VIETQR
+// ================= CART & CHECKOUT =================
 function addToCart(id){
  playSound('cart');
  const p = products.find(x => String(x.id) === String(id));
@@ -1145,7 +1406,7 @@ function changeQty(id, delta){
 function applyVoucher() {
  const code = document.getElementById("voucherInput").value.trim().toUpperCase();
  if(code === "HONGHAI2026" || code === "SALE10") {
-  appliedDiscount = 0.1; // 10%
+  appliedDiscount = 0.1;
   showToast("Áp dụng mã giảm giá 10% thành công! 🎉");
  } else {
   showToast("Mã giảm giá không hợp lệ", "error");
@@ -1192,9 +1453,7 @@ function closeCart(){
  document.getElementById("overlay").classList.remove("show");
  document.getElementById("cartDrawer").classList.remove("show");
 }
-function closeAllDrawers(){
- closeCart();
-}
+function closeAllDrawers(){ closeCart(); }
 
 function checkoutNotice(){
  if(!cart.length){ showToast("Giỏ hàng đang trống", "error"); return; }
@@ -1207,12 +1466,7 @@ function checkoutNotice(){
  total = total * (1 - appliedDiscount);
 
  const orderId = "HHM" + Math.floor(100000 + Math.random() * 900000);
- const bankId = "MB";
- const accountNo = "0866057398";
- const accountName = "BUIDUCLONG";
- const memo = orderId;
-
- const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.png?amount=${total}&addInfo=${encodeURIComponent(memo)}&accountName=${encodeURIComponent(accountName)}`;
+ const qrUrl = `https://img.vietqr.io/image/MB-0866057398-compact2.png?amount=${total}&addInfo=${encodeURIComponent(orderId)}&accountName=${encodeURIComponent("BUIDUCLONG")}`;
 
  document.getElementById("mProTitle").textContent = "Thanh toán VietQR Cấp Tốc";
  document.getElementById("mProEmoji").textContent = "💳";
@@ -1220,12 +1474,12 @@ function checkoutNotice(){
  document.getElementById("mProOldPrice").textContent = "";
  document.getElementById("mProDesc").innerHTML = `
   <div style="text-align:center">
-   <p>Mã đơn hàng: <b style="color:var(--green)">${orderId}</b> (Lưu lại để tra cứu)</p>
-   <img src="${qrUrl}" alt="Mã VietQR Thanh Toán" style="max-width:220px;width:100%;border-radius:12px;margin:10px 0;border:1px solid var(--line)">
+   <p>Mã đơn hàng: <b style="color:var(--green)">${orderId}</b></p>
+   <img src="${qrUrl}" alt="VietQR" style="max-width:220px;width:100%;border-radius:12px;margin:10px 0;border:1px solid var(--line)">
    <p><b>Số tiền:</b> <span style="color:var(--green);font-size:16px;font-weight:bold">${money(total)}</span></p>
-   <p><b>Nội dung chuyển khoản:</b> <code style="background:var(--bg);padding:3px 8px;border-radius:6px;font-weight:bold;color:var(--ink)">${memo}</code></p>
+   <p><b>Nội dung chuyển khoản:</b> <code style="background:var(--bg);padding:3px 8px;border-radius:6px;font-weight:bold">${orderId}</code></p>
   </div>`;
- document.getElementById("mProGuide").textContent = "Sau khi quẹt thẻ/chuyển khoản VietQR, hệ thống sẽ tự động xác minh và bàn giao tài khoản ngay lập tức.";
+ document.getElementById("mProGuide").textContent = "Sau khi thanh toán thành công qua VietQR, hệ thống sẽ tự động xác nhận và bàn giao tài khoản.";
  document.getElementById("mProAddCart").style.display = "none";
  closeCart();
  document.getElementById("modalWrap").classList.add("show");
@@ -1251,7 +1505,6 @@ function trackOrder() {
     <p><b>Mã đơn:</b> ${code}</p>
     <p><b>Trạng thái:</b> <span style="color:var(--green);font-weight:bold">${orders[code].status}</span></p>
     <p><b>Giá trị:</b> ${money(orders[code].amount)}</p>
-    <p><b>Thời gian:</b> ${orders[code].time}</p>
    </div>`;
  } else {
   res.innerHTML = `<p style="color:red">Không tìm thấy mã đơn hàng này.</p>`;
@@ -1276,17 +1529,15 @@ function spinWheel() {
 
 // THEMES & MULTI-LANGUAGE
 function setTheme(theme) {
- body = document.body;
- body.className = "";
- if(theme !== 'default') body.classList.add(`theme-${theme}`);
+ document.body.className = "";
+ if(theme !== 'default') document.body.classList.add(`theme-${theme}`);
  localStorage.setItem("hh_theme", theme);
  showToast(`Đã đổi chủ đề: ${theme}`);
 }
 
 function toggleTheme() {
  const current = localStorage.getItem("hh_theme") || "default";
- const next = current === "dark" ? "default" : "dark";
- setTheme(next);
+ setTheme(current === "dark" ? "default" : "dark");
 }
 
 function toggleLang() {
@@ -1300,10 +1551,7 @@ function toggleLang() {
 }
 
 // AI CHATBOT
-function toggleChat() {
- const box = document.getElementById("chatBox");
- box.classList.toggle("show");
-}
+function toggleChat() { document.getElementById("chatBox").classList.toggle("show"); }
 
 function sendChatMessage() {
  const input = document.getElementById("chatInput");
@@ -1315,13 +1563,11 @@ function sendChatMessage() {
  input.value = "";
 
  setTimeout(() => {
-  let reply = "Cảm ơn bạn đã nhắn tin. Chúng tôi có đầy đủ tài khoản Free Fire, Liên Quân, Roblox, ChatGPT, Netflix giá siêu tốt!";
+  let reply = "Dạ, em nghe đây ạ! Shop có đầy đủ tài khoản game, ChatGPT, Netflix và dịch vụ số uy tín luôn nha! ✨";
   const lower = txt.toLowerCase();
-  if(lower.includes("free fire") || lower.includes("ff")) reply = "Shop có sẵn tài khoản Free Fire Rank Huyền Thoại full skin súng VIP giá chỉ từ 180k!";
-  else if(lower.includes("liên quân")) reply = "Acc Liên Quân Rank Cao Thủ hơn 110 tướng giá chỉ 220k bàn giao ngay!";
-  else if(lower.includes("chatgpt")) reply = "Tài khoản ChatGPT Plus GPT-4o bản quyền dùng 1 tháng chỉ 120.000đ!";
-  else if(lower.includes("netflix")) reply = "Slot Netflix Premium 4K xem phim không quảng cáo giá chỉ 75.000đ/tháng.";
-  
+  if(lower.includes("free fire")) reply = "Dạ Free Fire có acc Huyền Thoại full skin súng siêu vip anh nhé! 🔥";
+  else if(lower.includes("liên quân")) reply = "Dạ Liên Quân Cao Thủ 110 tướng bao ngon luôn ạ! ⚔️";
+  else if(lower.includes("chatgpt")) reply = "Dạ ChatGPT Plus GPT-4o sẵn sàng bàn giao tức thì ạ! 🤖";
   msgs.innerHTML += `<div class="msg ai">${reply}</div>`;
   msgs.scrollTop = msgs.scrollHeight;
  }, 600);
@@ -1363,19 +1609,13 @@ function adminAddProduct() {
  showToast("Đã thêm sản phẩm mới thành công!");
 }
 
-// INIT
+// INIT ON PAGE LOAD
 const savedTheme = localStorage.getItem("hh_theme");
 if(savedTheme) setTheme(savedTheme);
 
+renderAuthUI();
 renderCart();
 renderProducts();
 </script>
 </body>
 </html>
-```
-
-### Các điểm nâng cấp đáng chú ý:
-1. **Trợ lý AI thuyết minh giọng nói (Web Speech API):** Phát giọng đọc Tiếng Việt thuyết minh thông tin, giá bán và hướng dẫn sử dụng sản phẩm tự động khi xem chi tiết.
-2. **Nút Micro 🎤 Tìm kiếm nhanh bằng Giọng nói:** Tự động lắng nghe người dùng đọc tên sản phẩm (VD: *"Free Fire"*, *"Netflix"*, *"ChatGPT"*) và lọc sản phẩm tương ứng ngay lập tức.
-3. **Modal Mệnh Xịn Pro:** Banner sản phẩm ấn tượng, tag "Còn hàng", giá ưu đãi + giá niêm yết, thông số kỹ thuật và hộp hướng dẫn sử dụng.
-4. **Kho sản phẩm mở rộng:** Bao gồm đầy đủ các tựa Game HOT (Free Fire, Liên Quân, Roblox, Genshin, Valorant, Steam) và Dịch vụ số đình đám (ChatGPT Plus, Claude Pro, Windows 11 Key, Netflix 4K, Spotify, Canva Pro, Proxy...).
