@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole { CUSTOMER ADMIN SUPER_ADMIN SUPPORT FINANCE }
+enum ProductType { GAME_ACCOUNT DIGITAL_ITEM SOFTWARE SERVICE }
+enum StockStatus { AVAILABLE RESERVED SOLD DISABLED }
+enum DepositStatus { PENDING PROCESSING COMPLETED FAILED EXPIRED REVERSED }
+enum OrderStatus { PENDING PAID PROCESSING COMPLETED CANCELLED REFUNDED }
+enum LedgerType { DEPOSIT PURCHASE REFUND ADJUSTMENT }
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(CUSTOMER)
+  wallet       Wallet?
+  orders       Order[]
+  deposits     Deposit[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Wallet {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  balance   BigInt   @default(0) // VND, integer only
+  user      User     @relation(fields: [userId], references: [id])
+  entries   LedgerEntry[]
+  updatedAt DateTime @updatedAt
+}
+
+model LedgerEntry {
+  id          String     @id @default(cuid())
+  walletId    String
+  type        LedgerType
+  amount      BigInt     // positive for credit, negative for debit
+  reference   String     @unique
+  description String
+  wallet      Wallet     @relation(fields: [walletId], references: [id])
+  createdAt   DateTime   @default(now())
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  name        String
+  description String
+  type        ProductType
+  category    String
+  price       BigInt
+  active      Boolean     @default(true)
+  stock       InventoryItem[]
+  orderLines  OrderLine[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model InventoryItem {
+  id             String      @id @default(cuid())
+  productId      String
+  encryptedData  String
+  status         StockStatus @default(AVAILABLE)
+  soldOrderLine  OrderLine?
+  product        Product     @relation(fields: [productId], references: [id])
+  createdAt      DateTime    @default(now())
+  @@index([productId, status])
+}
+
+model Deposit {
+  id          String        @id @default(cuid())
+  userId      String
+  amount      BigInt
+  provider    String
+  status      DepositStatus @default(PENDING)
+  providerRef String?       @unique
+  transferCode String       @unique
+  user        User          @relation(fields: [userId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  userId    String
+  status    OrderStatus @default(PENDING)
+  total     BigInt
+  user      User        @relation(fields: [userId], references: [id])
+  lines     OrderLine[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model OrderLine {
+  id              String        @id @default(cuid())
+  orderId         String
+  productId       String
+  inventoryItemId String?       @unique
+  quantity        Int           @default(1)
+  unitPrice       BigInt
+  order           Order         @relation(fields: [orderId], references: [id])
+  product         Product       @relation(fields: [productId], references: [id])
+  inventoryItem  InventoryItem? @relation(fields: [inventoryItemId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  targetType String
+  targetId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+}
