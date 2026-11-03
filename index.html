@@ -378,14 +378,6 @@ footer a:hover{color:#7dffca}
 .qty{display:flex;gap:8px;align-items:center;margin-top:6px}
 .qty button{border:0;background:rgba(0,189,131,.12);color:var(--green);border-radius:6px;width:22px;height:22px;font-weight:800}
 
-.voucher-box{
- display:flex;gap:8px;margin:10px 0;
-}
-.voucher-box input{
- flex:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);
- padding:8px 12px;border-radius:10px;font-size:11px;
-}
-
 .cart-total{border-top:1px solid var(--line);padding-top:15px}
 .cart-total strong{font-size:20px;color:var(--green)}
 .cart-total p{font-size:10px;color:var(--muted);margin:4px 0 12px}
@@ -445,39 +437,40 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
 .modal-actions{display:flex;gap:10px;margin-top:20px}
 .modal-actions button{flex:1}
 
-/* AI CHAT WIDGET */
-.chat-widget{
- position:fixed;bottom:20px;right:20px;z-index:150;
+/* VOICE CSKH ROBOT WIDGET */
+.cskh-widget{
+ position:fixed;bottom:20px;right:20px;z-index:150;text-align:center;
 }
-.chat-trigger{
- width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));
- color:white;border:0;box-shadow:0 8px 25px rgba(0,189,131,.4);font-size:24px;
- display:flex;align-items:center;justify-content:center;transition:.2s;
+.cskh-trigger{
+ width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));
+ color:white;border:0;box-shadow:0 8px 25px rgba(0,189,131,.4);font-size:28px;
+ display:flex;align-items:center;justify-content:center;transition:.2s;cursor:pointer;
 }
-.chat-trigger:hover{transform:scale(1.08)}
-.chat-box{
- position:fixed;bottom:85px;right:20px;width:min(350px,90vw);height:430px;
- background:var(--white);border:1px solid var(--line);border-radius:20px;
- box-shadow:0 15px 40px rgba(0,0,0,.2);display:none;flex-direction:column;
- overflow:hidden;z-index:150;
+.cskh-trigger:hover{transform:scale(1.1)}
+.cskh-label{
+ background:var(--white);color:var(--ink);font-size:9px;font-weight:800;
+ padding:2px 6px;border-radius:10px;border:1px solid var(--line);
+ position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);white-space:nowrap;
+ box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
-.chat-box.show{display:flex}
-.chat-header{
- background:linear-gradient(120deg,var(--green),var(--blue));color:white;
- padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;
+
+/* VOICE CALL MODAL */
+.voice-modal{
+ text-align:center;padding:10px;
 }
-.chat-messages{
- flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;font-size:11px;
+.robot-avatar-lg{
+ width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));
+ color:white;font-size:45px;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;
+ box-shadow:0 10px 25px rgba(0,189,131,.3);position:relative;
 }
-.msg{padding:8px 12px;border-radius:12px;max-width:85%;line-height:1.4}
-.msg.ai{background:var(--bg);border:1px solid var(--line);align-self:flex-start}
-.msg.user{background:var(--green);color:white;align-self:flex-end}
-.chat-input{
- border-top:1px solid var(--line);padding:8px;display:flex;gap:6px;
+.robot-avatar-lg.listening{animation:pulse 1s infinite}
+.voice-status{font-size:12px;font-weight:800;color:var(--green);margin:10px 0}
+.voice-mic-btn{
+ width:70px;height:70px;border-radius:50%;border:0;background:#ff3b30;color:white;font-size:26px;
+ display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 20px rgba(255,59,48,.4);
+ margin-top:15px;transition:.2s;
 }
-.chat-input input{
- flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:11px;background:var(--bg);color:var(--ink);
-}
+.voice-mic-btn:hover{transform:scale(1.08)}
 
 /* PROCESSING NOTIFICATION WITH GEAR (NẠP TIỀN) */
 .process-toast{
@@ -607,7 +600,7 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
      <a class="btn btn-white" href="#catalog" data-i18n="hero_btn1">Khám phá sản phẩm ↗</a>
      <a class="btn btn-outline" href="#services" data-i18n="hero_btn2">Khám phá dịch vụ</a>
     </div>
-    <div class="hero-note">🔒 Giao dịch tự động & xác nhận tức thì qua hệ thống VietQR.</div>
+    <div class="hero-note">🔒 Giao dịch tự động & xác nhận tức thì qua hệ thống Ví Hồng Hải.</div>
    </div>
   </div>
 
@@ -733,23 +726,17 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </footer>
 
-<!-- CART DRAWER -->
+<!-- CART DRAWER (THANH TOÁN TRỰC TIẾP BẰNG SỐ DƯ) -->
 <div class="overlay" id="overlay" onclick="closeAllDrawers()"></div>
 <aside class="drawer" id="cartDrawer" aria-label="Giỏ hàng">
  <div class="drawer-head"><h2>🛒 Giỏ hàng</h2><button class="close" onclick="closeCart()">×</button></div>
  <div class="cart-items" id="cartItems"></div>
- 
- <div class="voucher-box">
-  <input type="text" id="voucherInput" placeholder="Nhập mã giảm giá (VD: HONGHAI2026)">
-  <button class="btn btn-light" onclick="applyVoucher()">Áp dụng</button>
- </div>
 
  <div class="cart-total">
-  <p>Giảm giá: <span id="discountText" style="color:var(--green);font-weight:700">0 ₫</span></p>
   <p>Tổng thanh toán</p>
   <strong id="cartTotal">0 ₫</strong>
-  <p>Giỏ hàng lưu tại trình duyệt. Mua sắm an toàn & nhanh chóng.</p>
-  <button class="btn btn-green" style="width:100%" onclick="checkoutNotice()">Tiếp tục thanh toán →</button>
+  <p>Thanh toán trực tiếp bằng số dư Ví Hồng Hải Pay.</p>
+  <button class="btn btn-green" style="width:100%" onclick="checkoutWithBalance()">Thanh toán ngay →</button>
  </div>
 </aside>
 
@@ -778,6 +765,28 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
     <p><b>Nội dung CK:</b> <code id="depositQrMemo" style="background:var(--white);padding:2px 6px;border-radius:4px;color:var(--blue);font-weight:bold"></code></p>
    </div>
    <button class="btn btn-green" style="width:100%;padding:12px" onclick="confirmDepositPayment()">✓ Xác nhận tôi đã thanh toán</button>
+  </div>
+ </div>
+</div>
+
+<!-- CSKH VOICE BOT WIDGET -->
+<div class="cskh-widget">
+ <button class="cskh-trigger" onclick="openVoiceBotModal()" title="Trò chuyện trực tiếp với CSKH Robot">🤖</button>
+ <div class="cskh-label">CSKH</div>
+</div>
+
+<!-- VOICE BOT MODAL -->
+<div class="modal-wrap" id="voiceBotModalWrap" onclick="if(event.target===this)closeVoiceBotModal()">
+ <div class="modal" style="max-width:400px">
+  <button class="close" onclick="closeVoiceBotModal()" style="position:absolute;right:20px;top:20px">×</button>
+  <div class="voice-modal">
+   <div class="robot-avatar-lg" id="robotAvatar">🤖</div>
+   <h2 style="font-size:18px;font-weight:900">Trợ Lý CSKH Robot</h2>
+   <p class="voice-status" id="voiceStatus">Bấm vào micro để nói chuyện trực tiếp với bot nhé!</p>
+   <p style="font-size:11px;color:var(--muted)">Bạn có thể hỏi về tài khoản game, nạp tiền, hoặc mua hàng.</p>
+   <div>
+    <button class="voice-mic-btn" id="voiceMicBtn" onclick="toggleVoiceBotListening()" title="Bật/Tắt Micro">🎙️</button>
+   </div>
   </div>
  </div>
 </div>
@@ -950,24 +959,6 @@ body.theme-dark .ai-speech-box{background:linear-gradient(120deg,#132c23,#14243b
  </div>
 </div>
 
-<!-- AI CHAT WIDGET -->
-<div class="chat-widget">
- <button class="chat-trigger" onclick="toggleChat()">🤖</button>
- <div class="chat-box" id="chatBox">
-  <div class="chat-header">
-   <span>Trợ lý AI Hồng Hải</span>
-   <button onclick="toggleChat()" style="background:none;border:0;color:white;font-weight:bold;cursor:pointer">×</button>
-  </div>
-  <div class="chat-messages" id="chatMessages">
-   <div class="msg ai">Dạ, em chào bạn nha! Hôm nay bạn cần em tư vấn tài khoản game hay dịch vụ số nào ạ? ✨</div>
-  </div>
-  <div class="chat-input">
-   <input type="text" id="chatInput" placeholder="Hỏi AI tư vấn..." onkeypress="if(event.key==='Enter')sendChatMessage()">
-   <button class="btn btn-green" style="padding:8px 12px" onclick="sendChatMessage()">Gửi</button>
-  </div>
- </div>
-</div>
-
 <!-- TOAST CONTAINER & DYNAMIC NOTIFICATIONS -->
 <div class="toast-container" id="toastContainer"></div>
 
@@ -999,12 +990,12 @@ let products = loadStoredProducts();
 let currentCategory = "all";
 let cart = loadCart();
 let wishlist = loadWishlist();
-let appliedDiscount = 0;
 let soundEnabled = true;
 let currentLang = 'vi';
 let activeSpeechProduct = null;
 let isRegisterMode = false;
-let currentDepositAmount = 0;
+let isVoiceListening = false;
+let speechRecognitionInstance = null;
 
 // DICTIONARY FOR I18N
 const i18n = {
@@ -1063,9 +1054,9 @@ function speakText(text) {
  window.speechSynthesis.cancel();
  
  const utterance = new SpeechSynthesisUtterance(text);
- utterance.lang = 'vi-VN'; // Ép buộc 100% Tiếng Việt chuẩn
+ utterance.lang = 'vi-VN';
  utterance.rate = 1.05;
- utterance.pitch = 1.2; // Giọng cute
+ utterance.pitch = 1.2;
  window.speechSynthesis.speak(utterance);
 }
 
@@ -1087,6 +1078,13 @@ function escapeHTML(str){ return String(str??"").replace(/[&<>"']/g,c=>({"&":"&a
 // ================= USER ACCOUNT & AUTH SYSTEM =================
 function getCurrentUser() {
  try { return JSON.parse(localStorage.getItem("hh_current_user")); } catch(e) { return null; }
+}
+
+function updateCurrentUser(user) {
+ localStorage.setItem("hh_current_user", JSON.stringify(user));
+ let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
+ users = users.map(u => u.email === user.email ? user : u);
+ localStorage.setItem("hh_all_users", JSON.stringify(users));
 }
 
 function renderAuthUI() {
@@ -1185,8 +1183,8 @@ function handleAuthSubmit() {
    showToast("Email này đã được đăng ký trước đó!", "error");
    return;
   }
-  // YÊU CẦU: Số dư tài khoản mới đăng ký đều là 0đ
-  const newUser = { name, email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫" };
+  // Mọi tài khoản mới tạo đều có số dư chính xác là 0 ₫
+  const newUser = { name, email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫", rawBalance: 0 };
   users.push(newUser);
   localStorage.setItem("hh_all_users", JSON.stringify(users));
   localStorage.setItem("hh_current_user", JSON.stringify(newUser));
@@ -1194,10 +1192,11 @@ function handleAuthSubmit() {
  } else {
   const found = users.find(u => u.email === email && u.pass === pass);
   if (found) {
+   if(found.rawBalance === undefined) found.rawBalance = 0;
    localStorage.setItem("hh_current_user", JSON.stringify(found));
    showToast("Đăng nhập thành công! Chào mừng " + found.name);
   } else {
-   const defaultUser = { name: email.split('@')[0], email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫" };
+   const defaultUser = { name: email.split('@')[0], email, pass, avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", balance: "0 ₫", rawBalance: 0 };
    localStorage.setItem("hh_current_user", JSON.stringify(defaultUser));
    showToast("Đăng nhập thành công!");
   }
@@ -1211,6 +1210,57 @@ function logoutUser() {
  localStorage.removeItem("hh_current_user");
  renderAuthUI();
  showToast("Đã đăng xuất tài khoản");
+}
+
+// ================= THANH TOÁN BẰNG SỐ DƯ VÍ =================
+function checkoutWithBalance() {
+ const user = getCurrentUser();
+ if (!user) {
+  showToast("Vui lòng đăng nhập để thanh toán!", "error");
+  openAuthModal();
+  return;
+ }
+ if (!cart.length) {
+  showToast("Giỏ hàng đang trống", "error");
+  return;
+ }
+
+ let total = 0;
+ cart.forEach(item => {
+  const p = products.find(x => String(x.id) === String(item.id));
+  if(p) total += (Number(p.price)||0) * item.qty;
+ });
+
+ const currentRawBalance = user.rawBalance || 0;
+
+ if (currentRawBalance < total) {
+  showToast("Số dư không đủ! Vui lòng nạp thêm tiền vào ví.", "error");
+  speakText("Số dư không đủ để thanh toán ạ. Bạn vui lòng nạp thêm tiền vào ví nhé.");
+  return;
+ }
+
+ // Trừ tiền trong ví
+ user.rawBalance = currentRawBalance - total;
+ user.balance = money(user.rawBalance);
+ updateCurrentUser(user);
+ renderAuthUI();
+
+ const orderId = "HHM" + Math.floor(100000 + Math.random() * 900000);
+ saveOrderState(orderId, total);
+
+ cart = [];
+ saveCart();
+ renderCart();
+ closeCart();
+
+ showToast(`Thanh toán thành công đơn hàng ${orderId}! 🎉`);
+ speakText("Thanh toán thành công rồi ạ! Cảm ơn bạn đã mua hàng tại Hồng Hải Marketplace.");
+}
+
+function saveOrderState(orderId, amount) {
+ let orders = JSON.parse(localStorage.getItem("hh_orders") || "{}");
+ orders[orderId] = { status: "Đã thanh toán thành công (Bàn giao tự động)", amount: amount, time: new Date().toLocaleString() };
+ localStorage.setItem("hh_orders", JSON.stringify(orders));
 }
 
 // ================= NẠP TIỀN TÀI KHOẢN (DEPOSIT FEATURE) =================
@@ -1238,7 +1288,6 @@ function generateDepositQR() {
   return;
  }
 
- currentDepositAmount = amount;
  const user = getCurrentUser();
  const memo = `${user.name} ${amount}`;
  const bankId = "MB";
@@ -1258,22 +1307,100 @@ function generateDepositQR() {
 function confirmDepositPayment() {
  closeDepositModal();
 
- // Tạo thông báo có bánh răng quay ở dưới góc màn hình
  const toastEl = document.createElement("div");
  toastEl.className = "process-toast";
  toastEl.innerHTML = `<span class="gear-spin">⚙️</span> Hệ thống đang kiểm tra giao dịch nạp tiền...`;
  document.body.appendChild(toastEl);
 
- // Giọng đọc AI thông báo đang chờ xử lý
  speakText("Hệ thống đang kiểm tra giao dịch, bạn vui lòng chờ trong giây lát nha.");
 
  setTimeout(() => {
   toastEl.remove();
-  
-  // Thông báo kết quả nạp tiền thất bại / hệ thống chưa nhận được tiền
   showToast("Nạp tiền không thành công! Hệ thống chưa nhận được tiền. Liên hệ admin để được hỗ trợ.", "error");
   speakText("Nạp tiền không thành công ạ. Hệ thống chưa nhận được tiền. Nếu có trường hợp gì, bạn hãy liên hệ admin để được xử lý ngay nhé!");
  }, 5000);
+}
+
+// ================= CSKH VOICE BOT (NÓI CHUYỆN TRỰC TIẾP) =================
+function openVoiceBotModal() {
+ document.getElementById("voiceBotModalWrap").classList.add("show");
+ speakText("Dạ, em là trợ lý robot CSKH đây ạ. Em nghe bạn nói đây, bạn cần em giúp gì nào?");
+}
+
+function closeVoiceBotModal() {
+ if (speechRecognitionInstance) {
+  try { speechRecognitionInstance.stop(); } catch(e){}
+ }
+ isVoiceListening = false;
+ document.getElementById("robotAvatar").classList.remove("listening");
+ document.getElementById("voiceStatus").textContent = "Bấm vào micro để nói chuyện trực tiếp với bot nhé!";
+ document.getElementById("voiceBotModalWrap").classList.remove("show");
+}
+
+function toggleVoiceBotListening() {
+ if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+  showToast("Trình duyệt không hỗ trợ nhận diện giọng nói.", "error");
+  return;
+ }
+
+ const avatar = document.getElementById("robotAvatar");
+ const status = document.getElementById("voiceStatus");
+
+ if (isVoiceListening) {
+  if (speechRecognitionInstance) speechRecognitionInstance.stop();
+  isVoiceListening = false;
+  avatar.classList.remove("listening");
+  status.textContent = "Đã dừng nghe.";
+  return;
+ }
+
+ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+ speechRecognitionInstance = new SpeechRecognition();
+ speechRecognitionInstance.lang = 'vi-VN';
+ speechRecognitionInstance.interimResults = false;
+
+ speechRecognitionInstance.onstart = function() {
+  isVoiceListening = true;
+  avatar.classList.add("listening");
+  status.textContent = "🎙️ Đang lắng nghe bạn nói... Hãy nói nhé!";
+  speakText("Em đang nghe đây ạ!");
+ };
+
+ speechRecognitionInstance.onresult = function(event) {
+  const text = event.results[0][0].transcript.toLowerCase();
+  status.textContent = `Bạn vừa nói: "${text}"`;
+  
+  // Xử lý phản hồi của Bot bằng giọng nói
+  let botReply = "Dạ, em đã ghi nhận thông tin của bạn rồi ạ.";
+  const lower = text;
+  if (lower.includes("free fire") || lower.includes("game")) {
+   botReply = "Dạ, kho game Free Fire và Liên Quân bên em luôn sẵn sàng acc VIP, bảo hành uy tín anh nhé!";
+  } else if (lower.includes("nạp tiền") || lower.includes("số dư")) {
+   botReply = "Dạ để nạp tiền, bạn bấm vào nút nạp tiền màu xanh ở góc màn hình rồi quét mã QR chuyển khoản nha!";
+  } else if (lower.includes("mua") || lower.includes("thanh toán")) {
+   botReply = "Dạ bạn chọn sản phẩm thêm vào giỏ hàng rồi bấm thanh toán bằng số dư ví là xong ạ!";
+  } else if (lower.includes("admin") || lower.includes("lỗi")) {
+   botReply = "Dạ nếu có lỗi gì, bạn vui lòng liên hệ trực tiếp qua Zalo CSKH để được admin hỗ trợ liền nha!";
+  }
+
+  setTimeout(() => {
+   speakText(botReply);
+   status.textContent = `Robot: "${botReply}"`;
+  }, 600);
+ };
+
+ speechRecognitionInstance.onerror = function() {
+  isVoiceListening = false;
+  avatar.classList.remove("listening");
+  status.textContent = "Không nghe rõ. Bạn bấm lại micro nhé!";
+ };
+
+ speechRecognitionInstance.onend = function() {
+  isVoiceListening = false;
+  avatar.classList.remove("listening");
+ };
+
+ speechRecognitionInstance.start();
 }
 
 // PROFILE MODAL & AVATAR UPLOAD
@@ -1296,10 +1423,7 @@ function uploadAvatar(input) {
    let user = getCurrentUser();
    if(user) {
     user.avatar = e.target.result;
-    localStorage.setItem("hh_current_user", JSON.stringify(user));
-    let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
-    users = users.map(u => u.email === user.email ? user : u);
-    localStorage.setItem("hh_all_users", JSON.stringify(users));
+    updateCurrentUser(user);
    }
   }
   reader.readAsDataURL(input.files[0]);
@@ -1312,11 +1436,7 @@ function saveProfileChanges() {
  if(!user) return;
  const newName = document.getElementById("pfName").value.trim();
  if(newName) user.name = newName;
- localStorage.setItem("hh_current_user", JSON.stringify(user));
- 
- let users = JSON.parse(localStorage.getItem("hh_all_users") || "[]");
- users = users.map(u => u.email === user.email ? user : u);
- localStorage.setItem("hh_all_users", JSON.stringify(users));
+ updateCurrentUser(user);
 
  closeProfileModal();
  renderAuthUI();
@@ -1335,7 +1455,7 @@ function renderProducts(){
 
  if(sort === "low") list.sort((a,b) => a.price - b.price);
  if(sort === "high") list.sort((a,b) => b.price - a.price);
- if(sort === "name") list.sort((a,b) => b.name.localeCompare(b.name,"vi"));
+ if(sort === "name") list.sort((a,b) => a.name.localeCompare(b.name,"vi"));
 
  const grid = document.getElementById("productGrid");
  if(!list.length){
@@ -1437,13 +1557,12 @@ function speakProductDetails(p) {
  if (!('speechSynthesis' in window)) return;
  window.speechSynthesis.cancel();
 
- // Ép buộc sử dụng giọng Tiếng Việt chuẩn để tránh tình trạng đọc nhầm sang tiếng nước ngoài
  const cuteIntro = `Dạ, xin chào bạn nha! Em xin phép giới thiệu sản phẩm siêu hot là: ${p.name}. Giá yêu thương là ${p.price} đồng. ${p.description}. Hướng dẫn sử dụng nè: ${p.guide || "Hệ thống bàn giao tự động ngay sau khi thanh toán ạ!"}`;
 
  const utterance = new SpeechSynthesisUtterance(cuteIntro);
  utterance.lang = 'vi-VN';
  utterance.rate = 1.05; 
- utterance.pitch = 1.2; // Giọng cute dễ thương
+ utterance.pitch = 1.2;
 
  utterance.onstart = function() {
   document.getElementById("mProVoiceStatus").textContent = "✨ Trợ lý AI đang thuyết minh cực kỳ dễ thương...";
@@ -1521,18 +1640,6 @@ function changeQty(id, delta){
  saveCart(); renderCart();
 }
 
-function applyVoucher() {
- const code = document.getElementById("voucherInput").value.trim().toUpperCase();
- if(code === "HONGHAI2026" || code === "SALE10") {
-  appliedDiscount = 0.1;
-  showToast("Áp dụng mã giảm giá 10% thành công! 🎉");
- } else {
-  showToast("Mã giảm giá không hợp lệ", "error");
-  appliedDiscount = 0;
- }
- renderCart();
-}
-
 function renderCart(){
  const count = cart.reduce((sum,x) => sum + x.qty, 0);
  document.getElementById("cartCount").textContent = count;
@@ -1556,11 +1663,7 @@ function renderCart(){
   </div>`;
  }).join("") : '<div class="empty">Giỏ hàng của bạn đang trống.</div>';
 
- const discountVal = rawTotal * appliedDiscount;
- const finalTotal = rawTotal - discountVal;
-
- document.getElementById("discountText").textContent = money(discountVal);
- document.getElementById("cartTotal").textContent = money(finalTotal);
+ document.getElementById("cartTotal").textContent = money(rawTotal);
 }
 
 function openCart(){
@@ -1572,43 +1675,6 @@ function closeCart(){
  document.getElementById("cartDrawer").classList.remove("show");
 }
 function closeAllDrawers(){ closeCart(); }
-
-function checkoutNotice(){
- if(!cart.length){ showToast("Giỏ hàng đang trống", "error"); return; }
- 
- let total = 0;
- cart.forEach(item => {
-  const p = products.find(x => String(x.id) === String(item.id));
-  if(p) total += (Number(p.price)||0) * item.qty;
- });
- total = total * (1 - appliedDiscount);
-
- const orderId = "HHM" + Math.floor(100000 + Math.random() * 900000);
- const qrUrl = `https://img.vietqr.io/image/MB-0866057398-compact2.png?amount=${total}&addInfo=${encodeURIComponent(orderId)}&accountName=${encodeURIComponent("BUIDUCLONG")}`;
-
- document.getElementById("mProTitle").textContent = "Thanh toán VietQR Cấp Tốc";
- document.getElementById("mProEmoji").textContent = "💳";
- document.getElementById("mProPrice").textContent = money(total);
- document.getElementById("mProOldPrice").textContent = "";
- document.getElementById("mProDesc").innerHTML = `
-  <div style="text-align:center">
-   <p>Mã đơn hàng: <b style="color:var(--green)">${orderId}</b></p>
-   <img src="${qrUrl}" alt="VietQR" style="max-width:220px;width:100%;border-radius:12px;margin:10px 0;border:1px solid var(--line)">
-   <p><b>Số tiền:</b> <span style="color:var(--green);font-size:16px;font-weight:bold">${money(total)}</span></p>
-   <p><b>Nội dung chuyển khoản:</b> <code style="background:var(--bg);padding:3px 8px;border-radius:6px;font-weight:bold">${orderId}</code></p>
-  </div>`;
- document.getElementById("mProGuide").textContent = "Sau khi thanh toán thành công qua VietQR, hệ thống sẽ tự động xác nhận và bàn giao tài khoản.";
- document.getElementById("mProAddCart").style.display = "none";
- closeCart();
- document.getElementById("modalWrap").classList.add("show");
- saveOrderState(orderId, total);
-}
-
-function saveOrderState(orderId, amount) {
- let orders = JSON.parse(localStorage.getItem("hh_orders") || "{}");
- orders[orderId] = { status: "Đang chờ xác nhận thanh toán", amount: amount, time: new Date().toLocaleString() };
- localStorage.setItem("hh_orders", JSON.stringify(orders));
-}
 
 // ORDER TRACKING
 function openOrderTrackModal() { document.getElementById("trackModalWrap").classList.add("show"); }
@@ -1639,8 +1705,7 @@ function spinWheel() {
  wheel.style.transform = `rotate(${deg}deg)`;
  document.getElementById("spinBtn").disabled = true;
  setTimeout(() => {
-  showToast("Chúc mừng! Bạn đã nhận voucher giảm 10%: HONGHAI2026 🎉");
-  document.getElementById("voucherInput").value = "HONGHAI2026";
+  showToast("Chúc mừng! Bạn đã nhận phần quà may mắn 🎉");
   closeWheel();
  }, 3200);
 }
@@ -1666,29 +1731,6 @@ function toggleLang() {
   if(i18n[currentLang][key]) el.innerHTML = i18n[currentLang][key];
  });
  showToast(currentLang === 'vi' ? "Đã chuyển sang Tiếng Việt" : "Switched to English");
-}
-
-// AI CHATBOT
-function toggleChat() { document.getElementById("chatBox").classList.toggle("show"); }
-
-function sendChatMessage() {
- const input = document.getElementById("chatInput");
- const txt = input.value.trim();
- if(!txt) return;
-
- const msgs = document.getElementById("chatMessages");
- msgs.innerHTML += `<div class="msg user">${escapeHTML(txt)}</div>`;
- input.value = "";
-
- setTimeout(() => {
-  let reply = "Dạ, em nghe đây ạ! Shop có đầy đủ tài khoản game, ChatGPT, Netflix và dịch vụ số uy tín luôn nha! ✨";
-  const lower = txt.toLowerCase();
-  if(lower.includes("free fire")) reply = "Dạ Free Fire có acc Huyền Thoại full skin súng siêu vip anh nhé! 🔥";
-  else if(lower.includes("liên quân")) reply = "Dạ Liên Quân Cao Thủ 110 tướng bao ngon luôn ạ! ⚔️";
-  else if(lower.includes("chatgpt")) reply = "Dạ ChatGPT Plus GPT-4o sẵn sàng bàn giao tức thì ạ! 🤖";
-  msgs.innerHTML += `<div class="msg ai">${reply}</div>`;
-  msgs.scrollTop = msgs.scrollHeight;
- }, 600);
 }
 
 // ADMIN PANEL
